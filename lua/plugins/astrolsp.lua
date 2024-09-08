@@ -56,6 +56,7 @@ return {
       vtsls = {
         settings = {
           typescript = {
+            updateImportsOnFileMove = { enabled = "always" },
             tsserver = {
               useSeparateSyntaxServer = false,
               useSyntaxServer = "never",
