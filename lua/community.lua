@@ -53,6 +53,7 @@ return {
   { import = "astrocommunity.motion.mini-bracketed" },
   { import = "astrocommunity.motion.mini-move" },
   { import = "astrocommunity.motion.vim-matchup" },
+  { import = "astrocommunity.editing-support.mini-splitjoin" },
   { import = "astrocommunity.editing-support.dial-nvim" },
   { import = "astrocommunity.editing-support.undotree" },
   { import = "astrocommunity.editing-support.telescope-undo-nvim" },
