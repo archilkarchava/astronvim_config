@@ -47,6 +47,7 @@ return {
       -- first key is the mode
       n = {
         ["<M-Tab>"] = { "<C-^>" },
+        ["<M-c>"] = { "<cmd>tabclose<cr>" },
         x = { '"_x' },
         X = { '"_X' },
         -- second key is the lefthand side of the map
