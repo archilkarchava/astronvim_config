@@ -29,6 +29,7 @@ return {
   { import = "astrocommunity.pack.typescript" },
   { import = "astrocommunity.pack.astro" },
   { import = "astrocommunity.pack.svelte" },
+  { import = "astrocommunity.pack.vue" },
   { import = "astrocommunity.pack.tailwindcss" },
   { import = "astrocommunity.pack.vue" },
   { import = "astrocommunity.pack.sql" },
