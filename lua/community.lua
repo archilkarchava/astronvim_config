@@ -31,7 +31,6 @@ return {
   { import = "astrocommunity.pack.svelte" },
   { import = "astrocommunity.pack.vue" },
   { import = "astrocommunity.pack.tailwindcss" },
-  { import = "astrocommunity.pack.vue" },
   { import = "astrocommunity.pack.sql" },
   { import = "astrocommunity.pack.yaml" },
   { import = "astrocommunity.pack.json" },
