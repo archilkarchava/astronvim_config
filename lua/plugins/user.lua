@@ -520,6 +520,26 @@ return {
       },
     },
   },
+  {
+    "hrsh7th/nvim-cmp",
+    optional = true,
+    opts = function(_, opts)
+      local cmp = require "cmp"
+      opts.sorting = opts.sorting or {}
+      local compare = cmp.config.compare
+      opts.sorting.comparators = {
+        compare.offset,
+        compare.exact,
+        compare.score,
+        compare.kind,
+        compare.recently_used,
+        compare.locality,
+        compare.sort_text,
+        compare.length,
+        compare.order,
+      }
+    end,
+  },
 
   -- -- == Examples of Adding Plugins ==
   --
