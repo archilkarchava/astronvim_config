@@ -505,6 +505,20 @@ return {
       },
     },
   },
+  {
+    "sindrets/diffview.nvim",
+    optional = true,
+    dependencies = {
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          local maps = opts.mappings
+          local prefix = "<Leader>g"
+          maps.n[prefix .. "D"] = { "<cmd>DiffviewOpen<cr>", desc = "Open Diffview" }
+        end,
+      },
+    },
+  },
 
   -- -- == Examples of Adding Plugins ==
   --
