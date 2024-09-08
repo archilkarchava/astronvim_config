@@ -48,6 +48,7 @@ return {
       n = {
         ["<M-Tab>"] = { "<C-^>" },
         ["<M-c>"] = { "<cmd>tabclose<cr>" },
+        ["<leader>W"] = { "<cmd>noautocmd w<cr>", desc = "Save without running auto-commands" },
         x = { '"_x' },
         X = { '"_X' },
         -- second key is the lefthand side of the map
