@@ -65,7 +65,7 @@ return {
           },
           vtsls = {
             enableMoveToFileCodeAction = false,
-            autoUseWorkspaceTsdk = true,
+            autoUseWorkspaceTsdk = false,
             tsserver = {
               globalPlugins = {
                 {
