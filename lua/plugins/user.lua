@@ -459,17 +459,36 @@ return {
     },
   },
   {
-    "nvim-neotest/neotest-jest",
+    "nvim-neotest/neotest",
     optional = true,
-    opts = {
-      cwd = function(file)
-        local lib = require "neotest.lib"
-        local rootPath = lib.files.match_root_pattern "package.json"(file)
-        if rootPath then return rootPath end
-        return vim.fn.getcwd()
-      end,
-      jest_test_discovery = false,
+    dependencies = {
+      {
+        "nvim-neotest/neotest-jest",
+        optional = true,
+        opts = {
+          cwd = function(file)
+            local lib = require "neotest.lib"
+            local rootPath = lib.files.match_root_pattern "package.json"(file)
+            if rootPath then return rootPath end
+            return vim.fn.getcwd()
+          end,
+          jest_test_discovery = false,
+        },
+      },
     },
+  },
+  {
+    "nvim-neotest/neotest",
+    optional = true,
+    dependencies = {
+      {
+        "marilari88/neotest-vitest",
+      },
+    },
+    opts = function(_, opts)
+      if not opts.adapters then opts.adapters = {} end
+      table.insert(opts.adapters, require "neotest-vitest" { vitestCommand = "bunx vitest" })
+    end,
   },
   {
     "mbbill/undotree",
