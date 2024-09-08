@@ -295,43 +295,8 @@ return {
   },
   {
     "echasnovski/mini.bracketed",
-    keys = {
-      {
-        "<M-O>",
-        function() pcall(require("mini.bracketed").jump, "backward", { wrap = false }) end,
-        mode = "n",
-      },
-      {
-        "<M-I>",
-        function() pcall(require("mini.bracketed").jump, "forward", { wrap = false }) end,
-        mode = "n",
-      },
-    },
     opts = {
-      -- First-level elements are tables describing behavior of a target:
-      --
-      -- - <suffix> - single character suffix. Used after `[` / `]` in mappings.
-      --   For example, with `b` creates `[B`, `[b`, `]b`, `]B` mappings.
-      --   Supply empty string `''` to not create mappings.
-      --
-      -- - <options> - table overriding target options.
-      --
-      -- See `:h mini_bracketed.config` for more info.
-
-      buffer = { suffix = vim.g.vscode and "" or "b", options = {} },
-      comment = { suffix = "/", options = {} },
-      conflict = { suffix = vim.g.vscode and "" or "x", options = {} },
-      diagnostic = { suffix = vim.g.vscode and "" or "d", options = {} },
-      file = { suffix = vim.g.vscode and "" or "f", options = {} },
-      indent = { suffix = "i", options = {} },
-      jump = { suffix = "j", options = {} },
-      location = { suffix = "l", options = {} },
-      oldfile = { suffix = vim.g.vscode and "" or "o", options = {} },
-      quickfix = { suffix = vim.g.vscode and "" or "q", options = {} },
-      treesitter = { suffix = "t", options = {} },
-      undo = { suffix = "", options = {} },
-      window = { suffix = vim.g.vscode and "" or "w", options = {} },
-      yank = { suffix = "y", options = {} },
+      treesitter = { suffix = "", options = {} },
     },
   },
   {
