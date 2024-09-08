@@ -55,9 +55,16 @@ return {
       },
       vtsls = {
         settings = {
+          typescript = {
+            tsserver = {
+              useSeparateSyntaxServer = false,
+              useSyntaxServer = "never",
+              maxTsServerMemory = 8192,
+            },
+          },
           vtsls = {
             enableMoveToFileCodeAction = true,
-            autoUseWorkspaceTsdk = false,
+            autoUseWorkspaceTsdk = true,
             tsserver = {
               globalPlugins = {
                 {
