@@ -47,25 +47,6 @@ return {
     end,
   },
   {
-    "archilkarchava/supermaven-nvim",
-    -- event = "User AstroFile",
-    event = "VeryLazy",
-    opts = {
-      keymaps = {
-        accept_suggestion = "<C-f>",
-        clear_suggestion = "<C-]>",
-        accept_word = "<C-x>",
-      },
-      -- ignore_filetypes = { cpp = true },
-      -- color = {
-      --   suggestion_color = "#ffffff",
-      --   cterm = 244,
-      -- },
-      disable_inline_completion = false, -- disables inline completion for use with cmp
-      disable_keymaps = false, -- disables built in keymaps for more manual control
-    },
-  },
-  {
     "chrisgrieser/nvim-various-textobjs",
     cond = true,
     keys = {
@@ -280,79 +261,6 @@ return {
     "echasnovski/mini.bracketed",
     opts = {
       treesitter = { suffix = "", options = {} },
-    },
-  },
-  {
-    "yetone/avante.nvim",
-    event = "VeryLazy",
-    build = ":AvanteBuild",
-    opts = {
-      ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
-      provider = "copilot", -- Recommend using Claude
-    },
-    dependencies = {
-      "stevearc/dressing.nvim",
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-      {
-        "AstroNvim/astrocore",
-        opts = function(_, opts)
-          local maps = assert(opts.mappings)
-          local prefix = "<Leader>a"
-
-          maps.n[prefix] = { desc = "Avante" }
-        end,
-      },
-      --- The below dependencies are optional,
-      {
-        -- support for image pasting
-        "HakonHarnes/img-clip.nvim",
-        event = "VeryLazy",
-        opts = {
-          -- recommended settings
-          default = {
-            embed_image_as_base64 = false,
-            prompt_for_file_name = false,
-            drag_and_drop = {
-              insert_mode = true,
-            },
-            -- required for Windows users
-            use_absolute_path = true,
-          },
-        },
-      },
-    },
-    specs = {
-      { -- if copilot.lua is available, default to copilot provider
-        "zbirenbaum/copilot.lua",
-        optional = true,
-        specs = {
-          {
-            "yetone/avante.nvim",
-            opts = {
-              provider = "copilot",
-            },
-          },
-        },
-      },
-      {
-        -- make sure `Avante` is added as a filetype
-        "MeanderingProgrammer/render-markdown.nvim",
-        optional = true,
-        opts = function(_, opts)
-          if not opts.file_types then opts.filetypes = { "markdown" } end
-          opts.file_types = require("astrocore").list_insert_unique(opts.file_types, { "Avante" })
-        end,
-      },
-      {
-        -- make sure `Avante` is added as a filetype
-        "OXY2DEV/markview.nvim",
-        optional = true,
-        opts = function(_, opts)
-          if not opts.filetypes then opts.filetypes = { "markdown", "quarto", "rmd" } end
-          opts.filetypes = require("astrocore").list_insert_unique(opts.filetypes, { "Avante" })
-        end,
-      },
     },
   },
   {

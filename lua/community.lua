@@ -42,7 +42,7 @@ return {
   { import = "astrocommunity.markdown-and-latex.markview-nvim" },
   { import = "astrocommunity.search.grug-far-nvim" },
   -- { import = "astrocommunity.completion.avante-nvim" },
-  -- { import = "astrocommunity.completion.copilot-lua" },
+  { import = "astrocommunity.completion.copilot-lua" },
   { import = "astrocommunity.test.neotest" },
   { import = "astrocommunity.test.nvim-coverage" },
   { import = "astrocommunity.motion.harpoon" },
