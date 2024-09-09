@@ -162,7 +162,41 @@ return {
     },
   },
   {
+    "ggandor/leap.nvim",
+    dependencies = {
+      "tpope/vim-repeat",
+      {
+        "AstroNvim/astrocore",
+        opts = {
+          mappings = {
+            n = {
+              ["s"] = { "<Plug>(leap)", desc = "Leap" },
+              ["gs"] = { "<Plug>(leap-from-window)", desc = "Leap from window" },
+            },
+            x = {
+              ["s"] = { "<Plug>(leap)", desc = "Leap" },
+              ["gs"] = { "<Plug>(leap-from-window)", desc = "Leap from window" },
+            },
+            o = {
+              ["s"] = { "<Plug>(leap)", desc = "Leap" },
+              ["gs"] = { "<Plug>(leap-from-window)", desc = "Leap from window" },
+            },
+          },
+        },
+      },
+    },
+    specs = {
+      {
+        "catppuccin",
+        optional = true,
+        opts = { integrations = { leap = true } },
+      },
+    },
+    opts = {},
+  },
+  {
     "folke/flash.nvim",
+    optional = true,
     dependencies = {
       {
         "AstroNvim/astrocore",
@@ -195,73 +229,6 @@ return {
         },
       },
     },
-    keys = function(_, keys)
-      local function wrapped_flash()
-        if vim.g.vscode then vim.cmd "normal! zz" end
-        return require "flash"
-      end
-      local mappings = {
-        {
-          "s",
-          mode = { "n", "o", "x" },
-          function()
-            wrapped_flash().jump {
-              jump = {
-                inclusive = false,
-              },
-            }
-          end,
-          desc = "Flash",
-        },
-        {
-          "s<Enter>",
-          mode = { "n", "o", "x" },
-          function()
-            wrapped_flash().jump {
-              continue = true,
-            }
-          end,
-          desc = "Flash continue last search",
-        },
-      }
-
-      if not vim.g.vscode then
-        vim.list_extend(mappings, {
-          {
-            "r",
-            mode = "o",
-            function() require("flash").remote() end,
-            desc = "Remote Flash",
-          },
-          {
-            "S",
-            mode = { "n", "x", "o" },
-            function() require("flash").treesitter() end,
-            desc = "Flash treesitter",
-          },
-        })
-      end
-
-      return vim.list_extend(keys, mappings)
-    end,
-    config = function(_, opts)
-      local function set_highlights()
-        vim.api.nvim_set_hl(0, "FlashBackdrop", { fg = "gray" })
-        if vim.g.vscode then
-          vim.api.nvim_set_hl(0, "FlashLabel", {
-            fg = "#ff0000",
-            bold = true,
-            nocombine = true,
-          })
-          vim.api.nvim_set_hl(0, "FlashMatch", { fg = "NONE", bg = "#613315" })
-        end
-      end
-      vim.api.nvim_create_autocmd({ "ColorScheme" }, {
-        callback = set_highlights,
-      })
-      set_highlights()
-      require("flash").setup(opts)
-    end,
   },
   {
     "echasnovski/mini.ai",
