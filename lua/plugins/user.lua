@@ -163,6 +163,7 @@ return {
       "tpope/vim-repeat",
       {
         "AstroNvim/astrocore",
+        ---@type AstroCoreOpts
         opts = {
           mappings = {
             n = {
@@ -196,6 +197,7 @@ return {
     dependencies = {
       {
         "AstroNvim/astrocore",
+        ---@type AstroCoreOpts
         opts = {
           mappings = {
             x = {
@@ -324,6 +326,7 @@ return {
     dependencies = {
       {
         "AstroNvim/astrocore",
+        ---@type AstroCoreOpts
         opts = {
           mappings = {
             n = {
@@ -424,6 +427,7 @@ return {
     dependencies = {
       {
         "AstroNvim/astrocore",
+        ---@type AstroCoreOpts
         opts = {
           mappings = {
             n = {
@@ -440,8 +444,9 @@ return {
     dependencies = {
       {
         "AstroNvim/astrocore",
+        ---@param opts AstroCoreOpts
         opts = function(_, opts)
-          local maps = opts.mappings
+          local maps = assert(opts.mappings)
           local prefix = "<Leader>g"
           maps.n[prefix .. "D"] = { "<cmd>DiffviewOpen<cr>", desc = "Open Diffview" }
         end,
