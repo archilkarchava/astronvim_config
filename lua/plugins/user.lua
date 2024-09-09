@@ -10,6 +10,7 @@ return {
     optional = true,
     opts = {
       flavour = "mocha",
+      term_colors = true,
     },
   },
   { -- override nvim-cmp plugin
