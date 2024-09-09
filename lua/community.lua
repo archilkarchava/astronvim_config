@@ -40,6 +40,7 @@ return {
   { import = "astrocommunity.docker.lazydocker" },
   { import = "astrocommunity.markdown-and-latex.render-markdown-nvim" },
   { import = "astrocommunity.markdown-and-latex.markview-nvim" },
+  -- { import = "astrocommunity.scrolling.neoscroll-nvim" },
   { import = "astrocommunity.search.grug-far-nvim" },
   -- { import = "astrocommunity.completion.avante-nvim" },
   { import = "astrocommunity.completion.copilot-lua" },
