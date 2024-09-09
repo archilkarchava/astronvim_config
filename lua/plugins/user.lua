@@ -276,7 +276,12 @@ return {
   },
   {
     "jedrzejboczar/exrc.nvim",
-    dependencies = { "neovim/nvim-lspconfig" },
+    dependencies = {
+      {
+        "neovim/nvim-lspconfig",
+        optional = true,
+      },
+    },
     opts = {},
   },
   {
