@@ -309,7 +309,13 @@ return {
         end,
       },
     },
-    opts = {},
+    opts = {
+      on_dir_changed = { -- Automatically load exrc files on DirChanged autocmd
+        enabled = true,
+        -- Wait until CursorHold and use vim.ui.select to confirm files to load, instead of loading unconditionally
+        use_ui_select = false,
+      },
+    },
   },
   {
     "gbprod/substitute.nvim",
