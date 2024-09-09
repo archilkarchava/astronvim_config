@@ -15,6 +15,7 @@ return {
   },
   { -- override nvim-cmp plugin
     "hrsh7th/nvim-cmp",
+    optional = true,
     -- override the options table that is used in the `require("cmp").setup()` call
     opts = function(_, opts)
       -- opts parameter is the default options table
@@ -29,6 +30,19 @@ return {
             cmp.complete()
           end
         end,
+      }
+      opts.sorting = opts.sorting or {}
+      local compare = cmp.config.compare
+      opts.sorting.comparators = {
+        compare.offset,
+        compare.exact,
+        compare.score,
+        compare.kind,
+        compare.recently_used,
+        compare.locality,
+        compare.sort_text,
+        compare.length,
+        compare.order,
       }
     end,
   },
@@ -487,26 +501,6 @@ return {
         end,
       },
     },
-  },
-  {
-    "hrsh7th/nvim-cmp",
-    optional = true,
-    opts = function(_, opts)
-      local cmp = require "cmp"
-      opts.sorting = opts.sorting or {}
-      local compare = cmp.config.compare
-      opts.sorting.comparators = {
-        compare.offset,
-        compare.exact,
-        compare.score,
-        compare.kind,
-        compare.recently_used,
-        compare.locality,
-        compare.sort_text,
-        compare.length,
-        compare.order,
-      }
-    end,
   },
 
   -- -- == Examples of Adding Plugins ==
