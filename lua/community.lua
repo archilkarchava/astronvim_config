@@ -61,7 +61,6 @@ return {
   { import = "astrocommunity.editing-support.undotree" },
   { import = "astrocommunity.editing-support.telescope-undo-nvim" },
   { import = "astrocommunity.utility.lua-json5" },
-  { import = "astrocommunity.utility.telescope-fzy-native-nvim" },
   { import = "astrocommunity.fuzzy-finder.telescope-zoxide" },
   -- { import = "astrocommunity.fuzzy-finder.fzf-lua" },
 }
