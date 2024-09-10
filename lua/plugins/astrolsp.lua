@@ -85,7 +85,9 @@ return {
         },
         graphql = {
           filetypes = { "graphql", "javascript", "javascriptreact", "typescript", "typescriptreact", "svelte" },
-          root_dir = require("lspconfig.util").root_pattern(".graphqlrc*", ".graphql.config.*", "graphql.config.*"),
+          root_dir = function(...)
+            return require("lspconfig.util").root_pattern(".graphqlrc*", ".graphql.config.*", "graphql.config.*")(...)
+          end,
         },
       },
       -- customize how language servers are attached
