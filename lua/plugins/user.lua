@@ -323,8 +323,6 @@ return {
   },
   {
     "gbprod/substitute.nvim",
-    vscode = true,
-    version = "*",
     dependencies = {
       {
         "AstroNvim/astrocore",
