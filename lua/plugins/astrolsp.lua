@@ -78,7 +78,9 @@ return {
             },
           },
           root_dir = function(...)
-            return require("lspconfig.util").root_pattern(".git", "tsconfig.json", "package.json", "jsconfig.json")(...)
+            local util = require "lspconfig.util"
+            return util.root_pattern("tsconfig.json", "jsconfig.json")(...)
+              or util.root_pattern("package.json", ".git")(...)
           end,
         },
         graphql = {
