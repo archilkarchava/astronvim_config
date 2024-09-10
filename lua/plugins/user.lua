@@ -485,6 +485,76 @@ return {
       },
     },
   },
+  {
+    "danymat/neogen",
+    dependencies = {
+      { "AstroNvim/astroui", opts = { icons = { Annotation = "󰷉" } } },
+      {
+        "AstroNvim/astrocore",
+        ---@param opts AstroCoreOpts
+        opts = function(_, opts)
+          local maps = assert(opts.mappings)
+          local prefix = "<Leader>A"
+          maps.n[prefix] = { desc = require("astroui").get_icon("Annotation", 1, true) .. "Annotation" }
+          maps.n[prefix .. "<CR>"] = { function() require("neogen").generate { type = "any" } end, desc = "Current" }
+          maps.n[prefix .. "c"] = { function() require("neogen").generate { type = "class" } end, desc = "Class" }
+          maps.n[prefix .. "f"] = { function() require("neogen").generate { type = "func" } end, desc = "Function" }
+          maps.n[prefix .. "t"] = { function() require("neogen").generate { type = "type" } end, desc = "Type" }
+          maps.n[prefix .. "F"] = { function() require("neogen").generate { type = "file" } end, desc = "File" }
+        end,
+      },
+    },
+    cmd = "Neogen",
+    opts = {
+      snippet_engine = "luasnip",
+      languages = {
+        lua = { template = { annotation_convention = "emmylua" } },
+        typescript = { template = { annotation_convention = "tsdoc" } },
+        typescriptreact = { template = { annotation_convention = "tsdoc" } },
+      },
+    },
+  },
+  {
+    "kkoomen/vim-doge",
+    lazy = false,
+    build = ":call doge#install()",
+    cmd = "DogeGenerate",
+    dependencies = {
+      { "AstroNvim/astroui", opts = { icons = { Annotation = "󰷉" } } },
+      {
+        "AstroNvim/astrocore",
+        ---@param opts AstroCoreOpts
+        opts = function(_, opts)
+          if not opts.options then opts.options = {} end
+          if not opts.options.g then opts.options.g = {} end
+          if not opts.options.opt then opts.options.opt = {} end
+          opts.options.g.doge_enable_mappings = false
+          opts.options.g.doge_comment_interactive = false
+          -- Workaround for Doge's cmdheight requirement
+          if opts.options.g.doge_comment_interactive and opts.options.opt.cmdheight == 0 then
+            opts.options.opt.cmdheight = 1
+          end
+          local maps = assert(opts.mappings)
+          local prefix = "<Leader>A"
+          maps.n[prefix] = { desc = require("astroui").get_icon("Annotation", 1, true) .. "Annotation" }
+          maps.n[prefix .. "d"] = {
+            "<Plug>(doge-generate)",
+            desc = "Generate annotation with Doge",
+          }
+          if not opts.options.g.doge_enable_mappings and opts.options.g.doge_comment_interactive then
+            local jump_forward_mapping = "<M-a>"
+            local jump_backward_mapping = "<M-A>"
+            opts.options.g.doge_mapping_comment_jump_forward = jump_forward_mapping
+            opts.options.g.doge_mapping_comment_jump_backward = jump_backward_mapping
+            for _, mode in ipairs { "n", "i", "s" } do
+              maps[mode][jump_forward_mapping] = { "<Plug>(doge-comment-jump-forward)" }
+              maps[mode][jump_backward_mapping] = { "<Plug>(doge-comment-jump-backward)" }
+            end
+          end
+        end,
+      },
+    },
+  },
 
   -- -- == Examples of Adding Plugins ==
   --
