@@ -271,10 +271,12 @@ return {
       "Z",
       "Lz",
       "Tz",
-      "Zi",
-      "Lzi",
-      "Tzi",
     },
+    config = function()
+      for _, value in ipairs { "Zi", "Tzi", "Lzi" } do
+        vim.api.nvim_del_user_command(value)
+      end
+    end,
   },
   {
     "jedrzejboczar/exrc.nvim",
