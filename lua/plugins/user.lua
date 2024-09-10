@@ -48,112 +48,42 @@ return {
   },
   {
     "chrisgrieser/nvim-various-textobjs",
-    cond = true,
-    keys = {
-      -- exception: indentation textobj requires two parameters, the first for
-      -- exclusion of the starting border, the second for the exclusion of ending
-      -- border
+    dependencies = {
       {
-        "ii",
-        '<Cmd>lua require("various-textobjs").indentation("inner", "inner")<CR>',
-        mode = { "o", "x" },
-        desc = "Inside indent",
-      },
-      {
-        "iI",
-        '<Cmd>lua require("various-textobjs").indentation("inner", "inner")<CR>',
-        mode = { "o", "x" },
-        desc = "Inside indent",
-      },
-      {
-        "ai",
-        '<Cmd>lua require("various-textobjs").indentation("outer", "inner")<CR>',
-        mode = { "o", "x" },
-        desc = "around indent",
-      },
-      {
-        "aI",
-        '<Cmd>lua require("various-textobjs").indentation("outer", "outer")<CR>',
-        mode = { "o", "x" },
-        desc = "Around indent",
-      },
-      {
-        "ie",
-        '<Cmd>lua require("various-textobjs").entireBuffer()<CR>',
-        mode = { "o", "x" },
-        desc = "Entire buffer",
-      },
-      {
-        "ae",
-        '<Cmd>lua require("various-textobjs").entireBuffer()<CR>',
-        mode = { "o", "x" },
-        desc = "Entire buffer",
-      },
-      {
-        "<Leader>r",
-        '<Cmd>lua require("various-textobjs").restOfParagraph()<CR>',
-        mode = { "o", "x" },
-        desc = "Rest of paragraph",
-      },
-      {
-        "R",
-        '<Cmd>lua require("various-textobjs").restOfIndentation()<CR>',
-        mode = { "o", "x" },
-        desc = "Rest of indentation",
-      },
-      {
-        "|",
-        '<Cmd>lua require("various-textobjs").column()<CR>',
-        mode = { "o", "x" },
-        desc = "Column",
-      },
-      {
-        "ik",
-        '<Cmd>lua require("various-textobjs").key("inner")<CR>',
-        mode = { "o", "x" },
-        desc = "Inside key",
-      },
-      {
-        "ak",
-        '<Cmd>lua require("various-textobjs").key("outer")<CR>',
-        mode = { "o", "x" },
-        desc = "Around key",
-      },
-      {
-        "iv",
-        '<Cmd>lua require("various-textobjs").value("inner")<CR>',
-        mode = { "o", "x" },
-        desc = "Inside value",
-      },
-      {
-        "av",
-        '<Cmd>lua require("various-textobjs").value("outer")<CR>',
-        mode = { "o", "x" },
-        desc = "Around value",
-      },
-      {
-        "im",
-        '<Cmd>lua require("various-textobjs").chainMember("inner")<CR>',
-        mode = { "o", "x" },
-        desc = "Inside chain member",
-      },
-      {
-        "am",
-        '<Cmd>lua require("various-textobjs").chainMember("outer")<CR>',
-        mode = { "o", "x" },
-        desc = "Around chain member",
-      },
-      {
-        "i<Leader>w",
-        '<Cmd>lua require("various-textobjs").subword("inner")<CR>',
-        mode = { "o", "x" },
-        desc = "Inside subword",
-      },
-      {
-        "a<Leader>w",
-        '<Cmd>lua require("various-textobjs").subword("outer")<CR>',
-        mode = { "o", "x" },
-        desc = "Around subword",
+        "AstroNvim/astrocore",
+        ---@param opts AstroCoreOpts
+        opts = function(_, opts)
+          local maps = assert(opts.mappings)
+          for _, mode in ipairs { "o", "x" } do
+            maps[mode]["ii"] =
+              { function() require("various-textobjs").indentation("inner", "inner") end, desc = "Inside indent" }
+            maps[mode]["iI"] =
+              { function() require("various-textobjs").indentation("inner", "inner") end, desc = "Inside indent" }
+            maps[mode]["ai"] =
+              { function() require("various-textobjs").indentation("outer", "inner") end, desc = "around indent" }
+            maps[mode]["aI"] =
+              { function() require("various-textobjs").indentation("outer", "outer") end, desc = "Around indent" }
+            maps[mode]["ie"] = { function() require("various-textobjs").entireBuffer() end, desc = "Entire buffer" }
+            maps[mode]["ae"] = { function() require("various-textobjs").entireBuffer() end, desc = "Entire buffer" }
+            maps[mode]["<Leader>r"] =
+              { function() require("various-textobjs").restOfParagraph() end, desc = "Rest of paragraph" }
+            maps[mode]["R"] =
+              { function() require("various-textobjs").restOfIndentation() end, desc = "Rest of indentation" }
+            maps[mode]["|"] = { function() require("various-textobjs").column() end, desc = "Column" }
+            maps[mode]["ik"] = { function() require("various-textobjs").key "inner" end, desc = "Inside key" }
+            maps[mode]["ak"] = { function() require("various-textobjs").key "outer" end, desc = "Around key" }
+            maps[mode]["iv"] = { function() require("various-textobjs").value "inner" end, desc = "Inside value" }
+            maps[mode]["av"] = { function() require("various-textobjs").value "outer" end, desc = "Around value" }
+            maps[mode]["im"] =
+              { function() require("various-textobjs").chainMember "inner" end, desc = "Inside chain member" }
+            maps[mode]["am"] =
+              { function() require("various-textobjs").chainMember "outer" end, desc = "Around chain member" }
+            maps[mode]["i<Leader>w"] =
+              { function() require("various-textobjs").subword "inner" end, desc = "Inside subword" }
+            maps[mode]["a<Leader>w"] =
+              { function() require("various-textobjs").subword "outer" end, desc = "Around subword" }
+          end
+        end,
       },
     },
   },
@@ -163,23 +93,14 @@ return {
       "tpope/vim-repeat",
       {
         "AstroNvim/astrocore",
-        ---@type AstroCoreOpts
-        opts = {
-          mappings = {
-            n = {
-              ["s"] = { "<Plug>(leap)", desc = "Leap" },
-              ["gs"] = { "<Plug>(leap-from-window)", desc = "Leap from window" },
-            },
-            x = {
-              ["s"] = { "<Plug>(leap)", desc = "Leap" },
-              ["gs"] = { "<Plug>(leap-from-window)", desc = "Leap from window" },
-            },
-            o = {
-              ["s"] = { "<Plug>(leap)", desc = "Leap" },
-              ["gs"] = { "<Plug>(leap-from-window)", desc = "Leap from window" },
-            },
-          },
-        },
+        ---@param opts AstroCoreOpts
+        opts = function(_, opts)
+          local maps = assert(opts.mappings)
+          for _, mode in ipairs { "n", "x", "o" } do
+            maps[mode]["s"] = { "<Plug>(leap)", desc = "Leap" }
+            maps[mode]["gs"] = { "<Plug>(leap-from-window)", desc = "Leap from window" }
+          end
+        end,
       },
     },
     specs = {
@@ -261,6 +182,7 @@ return {
   },
   {
     "echasnovski/mini.bracketed",
+    optional = true,
     opts = {
       treesitter = { suffix = "", options = {} },
     },
@@ -287,11 +209,7 @@ return {
       },
       {
         "AstroNvim/astroui",
-        opts = {
-          icons = {
-            Exrc = "",
-          },
-        },
+        opts = { icons = { Exrc = "" } },
       },
       {
         "AstroNvim/astrocore",
