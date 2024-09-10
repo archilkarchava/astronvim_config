@@ -462,6 +462,7 @@ return {
         "jdtls",
         "marksman",
         "lua_ls",
+        "copilot",
       },
     },
     dependencies = {
