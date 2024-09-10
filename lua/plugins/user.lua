@@ -516,6 +516,7 @@ return {
   },
   {
     "kkoomen/vim-doge",
+    enabled = false,
     lazy = false,
     build = ":call doge#install()",
     cmd = "DogeGenerate",
