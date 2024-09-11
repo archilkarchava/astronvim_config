@@ -18,7 +18,6 @@ return {
 
   { import = "astrocommunity.debugging.nvim-dap-virtual-text" },
   { import = "astrocommunity.git.diffview-nvim" },
-  { import = "astrocommunity.git.git-blame-nvim" },
   { import = "astrocommunity.git.neogit" },
   { import = "astrocommunity.file-explorer.oil-nvim" },
   { import = "astrocommunity.file-explorer.telescope-file-browser-nvim" },

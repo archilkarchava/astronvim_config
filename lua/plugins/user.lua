@@ -324,10 +324,17 @@ return {
     },
   },
   {
-    "f-person/git-blame.nvim",
+    "lewis6991/gitsigns.nvim",
     optional = true,
     opts = {
-      enabled = false,
+      current_line_blame_opts = {
+        virt_text = true,
+        virt_text_pos = "eol", -- 'eol' | 'overlay' | 'right_align'
+        delay = 300,
+        ignore_whitespace = false,
+        virt_text_priority = 100,
+        use_focus = true,
+      },
     },
     dependencies = {
       {
@@ -336,7 +343,7 @@ return {
         opts = {
           mappings = {
             n = {
-              ["<leader>gB"] = { "<cmd>GitBlameToggle<cr>", desc = "Toggle inline git blame" },
+              ["<leader>gB"] = { "<cmd>Gitsigns toggle_current_line_blame<cr>", desc = "Toggle inline git blame" },
             },
           },
         },
