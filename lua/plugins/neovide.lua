@@ -16,7 +16,8 @@ return {
         silent = true,
       }
     end
-    return astrocore.extend_tbl(opts, {
+    ---@type AstroCoreOpts
+    local modified_opts = {
       mappings = maps,
       options = {
         opt = {
@@ -33,6 +34,7 @@ return {
           neovide_padding_left = 0,
         },
       },
-    })
+    }
+    return astrocore.extend_tbl(opts, modified_opts)
   end,
 }
