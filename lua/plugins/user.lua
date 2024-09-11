@@ -65,7 +65,7 @@ return {
               { function() require("various-textobjs").indentation("outer", "outer") end, desc = "Around indent" }
             maps[mode]["ie"] = { function() require("various-textobjs").entireBuffer() end, desc = "Entire buffer" }
             maps[mode]["ae"] = { function() require("various-textobjs").entireBuffer() end, desc = "Entire buffer" }
-            maps[mode]["<Leader>r"] =
+            maps[mode]["<leader>r"] =
               { function() require("various-textobjs").restOfParagraph() end, desc = "Rest of paragraph" }
             maps[mode]["R"] =
               { function() require("various-textobjs").restOfIndentation() end, desc = "Rest of indentation" }
@@ -78,9 +78,9 @@ return {
               { function() require("various-textobjs").chainMember "inner" end, desc = "Inside chain member" }
             maps[mode]["am"] =
               { function() require("various-textobjs").chainMember "outer" end, desc = "Around chain member" }
-            maps[mode]["i<Leader>w"] =
+            maps[mode]["i<leader>w"] =
               { function() require("various-textobjs").subword "inner" end, desc = "Inside subword" }
-            maps[mode]["a<Leader>w"] =
+            maps[mode]["a<leader>w"] =
               { function() require("various-textobjs").subword "outer" end, desc = "Around subword" }
           end
         end,
@@ -328,6 +328,19 @@ return {
     optional = true,
     opts = {
       enabled = false,
+    },
+    dependencies = {
+      {
+        "AstroNvim/astrocore",
+        ---@type AstroCoreOpts
+        opts = {
+          mappings = {
+            n = {
+              ["<leader>gB"] = { "<cmd>GitBlameToggle<cr>", desc = "Toggle inline git blame" },
+            },
+          },
+        },
+      },
     },
   },
   {
