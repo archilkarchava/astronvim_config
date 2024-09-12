@@ -5,6 +5,29 @@
 -- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
 --       as this provides autocomplete and documentation while editing
 
+---@param value boolean | nil
+local function set_gofumpt(value)
+  local cur_buf_clients = vim.lsp.get_clients { name = "gopls", bufnr = 0 }
+  if not next(cur_buf_clients) then
+    vim.notify("gopls client is not attached to the current buffer", vim.log.levels.WARN)
+    return
+  end
+  --- @type boolean | nil
+  local prev_value
+  local new_value = value
+  for _, client in ipairs(cur_buf_clients) do
+    prev_value = client.config.settings.gopls.gofumpt
+    if type(value) == "boolean" then
+      new_value = value
+    else
+      new_value = not prev_value
+    end
+    client.config.settings.gopls.gofumpt = new_value
+    client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
+  end
+  vim.notify(new_value and "Enabled gofumpt for the current client" or "Disabled gofumpt for the current client")
+end
+
 ---@type LazySpec
 return {
   {
@@ -149,6 +172,39 @@ return {
               return client.supports_method "textDocument/semanticTokens/full" and vim.lsp.semantic_tokens
             end,
           },
+        },
+      },
+      commands = {
+        GofumptEnable = {
+          function() set_gofumpt(true) end,
+          cond = function(client) return client.name == "gopls" end,
+          desc = "Enable gofumpt",
+        },
+        GofumptDisable = {
+          function() set_gofumpt(false) end,
+          cond = function(client) return client.name == "gopls" end,
+          desc = "Disable gofumpt",
+        },
+        GofumptToggle = {
+          function() set_gofumpt() end,
+          cond = function(client) return client.name == "gopls" end,
+          desc = "Toggle gofumpt",
+        },
+        GofumptStatus = {
+          function()
+            local cur_buf_clients = vim.lsp.get_clients { name = "gopls", bufnr = 0 }
+            if not next(cur_buf_clients) then
+              vim.notify("gopls client is not attached to the current buffer", vim.log.levels.WARN)
+              return
+            end
+            local is_gofumpt_enabled = cur_buf_clients[1].config.settings.gopls.gofumpt
+            vim.notify(
+              is_gofumpt_enabled and "gofumpt is enabled for the current client"
+                or "gofumpt is disabled for the current client"
+            )
+          end,
+          cond = function(client) return client.name == "gopls" end,
+          desc = "Show gofumpt status",
         },
       },
       -- A custom `on_attach` function to be run after the default `on_attach` function
