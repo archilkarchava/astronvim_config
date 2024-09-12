@@ -13,13 +13,10 @@ return {
       term_colors = true,
     },
   },
-  { -- override nvim-cmp plugin
+  {
     "hrsh7th/nvim-cmp",
     optional = true,
-    -- override the options table that is used in the `require("cmp").setup()` call
     opts = function(_, opts)
-      -- opts parameter is the default options table
-      -- the function is lazy loaded so cmp is able to be required
       local cmp = require "cmp"
       -- modify the mapping part of the table
       opts.mapping["<C-i>"] = cmp.mapping {
@@ -30,19 +27,6 @@ return {
             cmp.complete()
           end
         end,
-      }
-      opts.sorting = opts.sorting or {}
-      local compare = cmp.config.compare
-      opts.sorting.comparators = {
-        compare.offset,
-        compare.exact,
-        compare.score,
-        compare.kind,
-        compare.recently_used,
-        compare.locality,
-        compare.sort_text,
-        compare.length,
-        compare.order,
       }
     end,
   },
