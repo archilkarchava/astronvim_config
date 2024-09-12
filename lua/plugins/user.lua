@@ -76,6 +76,7 @@ return {
   },
   {
     "ggandor/leap.nvim",
+    event = "VeryLazy",
     dependencies = {
       "tpope/vim-repeat",
       {
@@ -98,6 +99,13 @@ return {
       },
     },
     opts = {},
+  },
+  {
+    "ggandor/flit.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      { "ggandor/leap.nvim" },
+    },
   },
   {
     "folke/flash.nvim",
