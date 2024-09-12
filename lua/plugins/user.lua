@@ -443,6 +443,7 @@ return {
   },
   {
     "chrisgrieser/nvim-chainsaw",
+    event = "VeryLazy",
     optional = true,
     opts = {
       logStatements = {
