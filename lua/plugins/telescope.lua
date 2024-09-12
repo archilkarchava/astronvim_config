@@ -1,0 +1,18 @@
+---@type LazySpec
+return {
+  {
+    "AstroNvim/astrolsp",
+    ---@param opts AstroLSPOpts
+    opts = function(_, opts)
+      if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
+      if opts.mappings.n["<leader>lR"] then
+        opts.mappings.n["<leader>lR"][1] = function()
+          require("telescope.builtin").lsp_references {
+            trim_text = true,
+            show_line = false,
+          }
+        end
+      end
+    end,
+  },
+}
