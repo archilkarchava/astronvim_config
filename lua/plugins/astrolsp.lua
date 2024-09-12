@@ -47,6 +47,13 @@ return {
       -- customize language server configuration options passed to `lspconfig`
       ---@diagnostic disable: missing-fields
       config = {
+        gopls = {
+          settings = {
+            gopls = {
+              gofumpt = false,
+            },
+          },
+        },
         -- clangd = { capabilities = { offsetEncoding = "utf-8" } },
         vtsls = {
           settings = {
