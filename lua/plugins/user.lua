@@ -18,8 +18,8 @@ return {
     optional = true,
     opts = function(_, opts)
       local cmp = require "cmp"
-      -- modify the mapping part of the table
-      opts.mapping["<C-i>"] = cmp.mapping {
+      local is_macos = vim.uv.os_uname().sysname == "Darwin"
+      local toggle_cmp = cmp.mapping {
         i = function()
           if cmp.visible() then
             cmp.abort()
@@ -28,6 +28,8 @@ return {
           end
         end,
       }
+      opts.mapping["<C-i>"] = toggle_cmp
+      if is_macos then opts.mapping["<D-i>"] = toggle_cmp end
     end,
   },
   {
