@@ -16,6 +16,7 @@ return {
   -- { import = "astrocommunity.colorscheme.github-nvim-theme" },
   { import = "astrocommunity.colorscheme.catppuccin" },
 
+  { import = "astrocommunity.debugging.nvim-chainsaw" },
   { import = "astrocommunity.debugging.nvim-dap-virtual-text" },
   { import = "astrocommunity.git.diffview-nvim" },
   { import = "astrocommunity.git.neogit" },
