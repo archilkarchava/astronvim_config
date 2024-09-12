@@ -569,6 +569,11 @@ return {
     event = "VeryLazy",
     optional = true,
   },
+  {
+    "folke/trouble.nvim",
+    event = "VeryLazy",
+    optional = true,
+  },
 
   -- -- == Examples of Adding Plugins ==
   --
