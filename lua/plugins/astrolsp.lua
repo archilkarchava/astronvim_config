@@ -151,13 +151,14 @@ return {
     "yioneko/nvim-vtsls",
     optional = true,
     dependencies = {
-      "AstroNvim/astrocore",
-      ---@type AstroCoreOpts
+      "AstroNvim/astrolsp",
+      ---@type AstroLSPOpts
       opts = {
         commands = {
           TSServerRestart = {
             function() require("vtsls").commands.restart_tsserver() end,
             desc = "Restart TSServer",
+            cond = function(client) return client.name == "vtsls" end,
           },
         },
       },
