@@ -58,6 +58,11 @@ return {
                 maxTsServerMemory = 8192,
               },
             },
+            javascript = {
+              suggest = {
+                names = false,
+              },
+            },
             vtsls = {
               autoUseWorkspaceTsdk = false,
               tsserver = {
