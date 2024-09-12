@@ -84,6 +84,9 @@ return {
         x = { '"_x' },
         X = { '"_X' },
       },
+      i = {
+        ["<D-z>"] = { "<cmd>undo<cr>", silent = true },
+      },
     },
     filetypes = {
       filename = { -- (((
