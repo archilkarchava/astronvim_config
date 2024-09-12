@@ -34,6 +34,7 @@ return {
   },
   {
     "chrisgrieser/nvim-various-textobjs",
+    event = "VeryLazy",
     dependencies = {
       {
         "AstroNvim/astrocore",
