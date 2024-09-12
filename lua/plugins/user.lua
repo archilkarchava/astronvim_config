@@ -230,6 +230,7 @@ return {
   },
   {
     "gbprod/substitute.nvim",
+    event = "VeryLazy",
     dependencies = {
       {
         "AstroNvim/astrocore",
