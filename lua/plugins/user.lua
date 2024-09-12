@@ -49,7 +49,7 @@ return {
               { function() require("various-textobjs").indentation("outer", "outer") end, desc = "Around indent" }
             maps[mode]["ie"] = { function() require("various-textobjs").entireBuffer() end, desc = "Entire buffer" }
             maps[mode]["ae"] = { function() require("various-textobjs").entireBuffer() end, desc = "Entire buffer" }
-            maps[mode]["<leader>r"] =
+            maps[mode]["<leader>R"] =
               { function() require("various-textobjs").restOfParagraph() end, desc = "Rest of paragraph" }
             maps[mode]["R"] =
               { function() require("various-textobjs").restOfIndentation() end, desc = "Rest of indentation" }
