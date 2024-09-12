@@ -555,6 +555,11 @@ return {
       },
     },
   },
+  {
+    "ThePrimeagen/harpoon",
+    event = "VeryLazy",
+    optional = true,
+  },
 
   -- -- == Examples of Adding Plugins ==
   --
