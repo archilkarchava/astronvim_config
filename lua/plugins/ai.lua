@@ -152,9 +152,9 @@ return {
         "AstroNvim/astroui",
         opts = {
           icons = {
-            AI = "",
             Copilot = "",
             Supermaven = "",
+            Suggestions = "",
           },
         },
       },
@@ -183,12 +183,10 @@ return {
           }
 
           local utils = require "astrocore"
-          local ai_prefix = "<Leader>a"
+          local prefix = "<Leader>s"
 
-          maps.n[ai_prefix] = { desc = require("astroui").get_icon("AI", 1, true) .. "AI" }
-          local suggestions_prefix = ai_prefix .. "i"
-          maps.n[suggestions_prefix] = { desc = "Inline suggestions provider" }
-          maps.n[suggestions_prefix .. "s"] = {
+          maps.n[prefix] = { desc = require("astroui").get_icon("Suggestions", 1, true) .. "Suggestions provider" }
+          maps.n[prefix .. "s"] = {
             function()
               copilot_helpers.disable()
               supermaven_helpers.enable()
@@ -196,7 +194,7 @@ return {
             desc = require("astroui").get_icon("Supermaven", 1, true) .. "Supermaven",
           }
           if utils.is_available "copilot.lua" then
-            maps.n[suggestions_prefix .. "c"] = {
+            maps.n[prefix .. "c"] = {
               function()
                 supermaven_helpers.disable()
                 copilot_helpers.enable()
@@ -204,7 +202,7 @@ return {
               desc = require("astroui").get_icon("Copilot", 1, true) .. "Copilot",
             }
           end
-          maps.n[suggestions_prefix .. "d"] = {
+          maps.n[prefix .. "d"] = {
             function()
               supermaven_helpers.disable()
               copilot_helpers.disable()
@@ -236,8 +234,16 @@ return {
     opts = {
       ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
       provider = "copilot", -- Recommend using Claude
+      auto_suggestions_provider = "copilot",
+      behavior = {
+        auto_suggestions = false,
+      },
     },
     dependencies = {
+      {
+        "AstroNvim/astroui",
+        opts = { icons = { Avante = "" } },
+      },
       "stevearc/dressing.nvim",
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
@@ -247,7 +253,9 @@ return {
           local maps = assert(opts.mappings)
           local prefix = "<Leader>a"
 
-          if maps.n[prefix] == nil then maps.n[prefix] = { desc = "Avante" } end
+          if maps.n[prefix] == nil then
+            maps.n[prefix] = { desc = require("astroui").get_icon("Avante", 1, true) .. "Avante" }
+          end
         end,
       },
       --- The below dependencies are optional,
