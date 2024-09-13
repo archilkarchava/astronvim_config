@@ -15,6 +15,16 @@ return {
         desc = "Paste from system clipboard",
         silent = true,
       }
+      maps["n"]["<D-c>"] = {
+        '"+yy',
+        desc = "Copy line to clipboard",
+        silent = true,
+      }
+      maps["v"]["<D-c>"] = {
+        '"+ygv',
+        desc = "Copy to clipboard",
+        silent = true,
+      }
     end
     ---@type AstroCoreOpts
     local modified_opts = {
