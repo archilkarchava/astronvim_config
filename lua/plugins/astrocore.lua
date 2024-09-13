@@ -20,12 +20,10 @@ return {
         maps[mode]["<D-z>"] = {
           "<cmd>undo<cr>",
           desc = "Undo",
-          silent = true,
         }
         maps[mode]["<D-Z>"] = {
           "<cmd>redo<cr>",
           desc = "Redo",
-          silent = true,
         }
       end
     end
@@ -36,6 +34,7 @@ return {
       maps[mode]["<C-d>"] = { "<C-d>zz" }
       maps[mode]["<C-u>"] = { "<C-u>zz" }
     end
+
     ---@type AstroCoreOpts
     local modified_opts = {
       -- Configure core features of AstroNvim
