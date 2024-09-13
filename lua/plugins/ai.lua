@@ -235,6 +235,9 @@ return {
       ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
       provider = "copilot", -- Recommend using Claude
       auto_suggestions_provider = "copilot",
+      hints = {
+        enabled = false,
+      },
       behavior = {
         auto_suggestions = false,
       },
