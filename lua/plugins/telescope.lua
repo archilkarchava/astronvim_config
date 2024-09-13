@@ -30,7 +30,12 @@ return {
       opts.mappings.n["<Leader>lR"][1] = function()
         require("telescope.builtin").lsp_references {
           trim_text = true,
-          show_line = false,
+          show_line = true,
+          layout_strategy = "vertical",
+          layout_config = {
+            height = 0.95,
+            preview_cutoff = 0,
+          },
         }
       end
     end
