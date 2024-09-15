@@ -1,9 +1,21 @@
 -- if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
 
----@type "supermaven" | "copilot" | "none"
-local default_autocomplete_provider = "supermaven"
+---@alias SuggestionsProvider "supermaven" | "copilot" | "none"
+
+local suggestion_providers = {
+  copilot = "copilot",
+  supermaven = "supermaven",
+  none = "none",
+}
+
+---@type SuggestionsProvider
+local default_suggestions_provider = suggestion_providers.supermaven
+
+---@type SuggestionsProvider
+vim.g.current_suggestions_provider = default_suggestions_provider
 
 local function supermaven_cond_toggle()
+  if vim.g.current_suggestions_provider == suggestion_providers.none then return end
   local ok_api, api = pcall(require, "supermaven-nvim.api")
   local ok_config, config = pcall(require, "supermaven-nvim.config")
   if not ok_api or not ok_config then return end
@@ -118,7 +130,7 @@ return {
     },
     config = function(_, opts)
       require("copilot").setup(opts)
-      if default_autocomplete_provider ~= "copilot" then vim.cmd "Copilot disable" end
+      if default_suggestions_provider ~= suggestion_providers.copilot then copilot_helpers.disable() end
     end,
   },
   {
@@ -140,8 +152,9 @@ return {
         disable_inline_completion = false, -- disables inline completion for use with cmp
         disable_keymaps = true, -- disables built in keymaps for more manual control
         condition = function()
-          if default_autocomplete_provider == "none" then return true end
-          if copilot_helpers.is_running() then return true end
+          if copilot_helpers.is_running() or vim.g.current_suggestions_provider == suggestion_providers.none then
+            return true
+          end
           if type(opts.condition) == "function" then return opts.condition() end
           return false
         end,
@@ -190,6 +203,7 @@ return {
             function()
               copilot_helpers.disable()
               supermaven_helpers.enable()
+              vim.g.current_suggestions_provider = suggestion_providers.supermaven
             end,
             desc = require("astroui").get_icon("Supermaven", 1, true) .. "Supermaven",
           }
@@ -198,6 +212,7 @@ return {
               function()
                 supermaven_helpers.disable()
                 copilot_helpers.enable()
+                vim.g.current_suggestions_provider = suggestion_providers.copilot
               end,
               desc = require("astroui").get_icon("Copilot", 1, true) .. "Copilot",
             }
@@ -206,6 +221,7 @@ return {
             function()
               supermaven_helpers.disable()
               copilot_helpers.disable()
+              vim.g.current_suggestions_provider = suggestion_providers.none
             end,
             desc = "Disable all",
           }
