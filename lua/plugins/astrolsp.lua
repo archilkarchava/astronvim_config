@@ -124,6 +124,42 @@ return {
             return require("lspconfig.util").root_pattern(".graphqlrc*", ".graphql.config.*", "graphql.config.*")(...)
           end,
         },
+        stylelint_lsp = {
+          settings = {
+            stylelintplus = {
+              autoFixOnFormat = true,
+              autoFixOnSave = true,
+            },
+          },
+          filetypes = {
+            "css",
+            "scss",
+            "postcss",
+            "less",
+            "sass",
+            "html",
+            "svelte",
+            "vue",
+            "javascript",
+            "javascriptreact",
+            "typescript",
+            "typescriptreact",
+          },
+          root_dir = function(...)
+            return require("lspconfig.util").root_pattern(
+              "stylelint.config.js",
+              ".stylelintrc.js",
+              ".stylelintrc",
+              "stylelint.config.mjs",
+              ".stylelintrc.mjs",
+              "stylelint.config.cjs",
+              ".stylelintrc.cjs",
+              ".stylelintrc.json",
+              ".stylelintrc.yml",
+              ".stylelintrc.yaml"
+            )(...)
+          end,
+        },
       },
       -- customize how language servers are attached
       handlers = {

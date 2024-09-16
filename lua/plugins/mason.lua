@@ -9,48 +9,8 @@ return {
       opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, {
         "rust_analyzer",
         "graphql",
+        "stylelint_lsp",
       })
-    end,
-  },
-  {
-    "jay-babu/mason-null-ls.nvim",
-    opts = function(_, opts)
-      opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, {
-        "stylelint",
-      })
-      local handlers = opts.handlers or {}
-      handlers.stylelint = function()
-        require("null-ls").register(require("null-ls").builtins.formatting.stylelint.with {
-          filetypes = {
-            "css",
-            "scss",
-            "postcss",
-            "less",
-            "sass",
-            "html",
-            "svelte",
-            "vue",
-            "javascript",
-            "javascriptreact",
-            "typescript",
-            "typescriptreact",
-          },
-          condition = function(utils)
-            return utils.root_has_file(
-              "stylelint.config.js",
-              ".stylelintrc.js",
-              ".stylelintrc",
-              "stylelint.config.mjs",
-              ".stylelintrc.mjs",
-              "stylelint.config.cjs",
-              ".stylelintrc.cjs",
-              ".stylelintrc.json",
-              ".stylelintrc.yml",
-              ".stylelintrc.yaml"
-            )
-          end,
-        })
-      end
     end,
   },
 }
