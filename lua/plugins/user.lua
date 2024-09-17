@@ -568,6 +568,22 @@ return {
     "ThePrimeagen/harpoon",
     event = "VeryLazy",
     optional = true,
+    dependencies = {
+      {
+        "AstroNvim/astrocore",
+        ---@param opts AstroCoreOpts
+        opts = function(_, opts)
+          if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
+          local maps = assert(opts.mappings)
+          for _, mode in ipairs { "n", "i", "x" } do
+            for i = 1, 9 do
+              maps[mode]["<M-" .. i .. ">"] =
+                { function() require("harpoon"):list():select(i) end, desc = "Harpoon select entry #" .. i }
+            end
+          end
+        end,
+      },
+    },
   },
   {
     "folke/trouble.nvim",
