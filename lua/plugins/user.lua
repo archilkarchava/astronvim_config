@@ -504,9 +504,9 @@ return {
             function() require("chainsaw").assertLog() end,
             desc = "Assert log",
           }
-          maps.n[prefix .. "b"] = {
-            function() require("chainsaw").beepLog() end,
-            desc = "Beep log",
+          maps.n[prefix .. "e"] = {
+            function() require("chainsaw").emojiLog() end,
+            desc = "Emoji log",
           }
           maps.n[prefix .. "m"] = {
             function() require("chainsaw").messageLog() end,
