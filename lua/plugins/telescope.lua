@@ -29,9 +29,13 @@ return {
     if opts.mappings.n["<Leader>lR"] then
       opts.mappings.n["<Leader>lR"][1] = function()
         require("telescope.builtin").lsp_references {
-          trim_text = true,
+          trim_text = false,
           show_line = true,
+          fname_width = 70,
           layout_strategy = "vertical",
+          path_display = {
+            shorten = 2,
+          },
           layout_config = {
             height = 0.95,
             preview_cutoff = 0,
