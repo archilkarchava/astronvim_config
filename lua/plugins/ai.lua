@@ -196,9 +196,10 @@ return {
           }
 
           local utils = require "astrocore"
-          local prefix = "<Leader>s"
+          local prefix = "<Leader>i"
 
-          maps.n[prefix] = { desc = require("astroui").get_icon("Suggestions", 1, true) .. "Suggestions provider" }
+          maps.n[prefix] =
+            { desc = require("astroui").get_icon("Suggestions", 1, true) .. "Inline suggestions provider" }
           maps.n[prefix .. "s"] = {
             function()
               copilot_helpers.disable()
