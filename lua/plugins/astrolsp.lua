@@ -131,6 +131,7 @@ return {
               autoFixOnSave = true,
             },
           },
+          on_attach = function(client) client.server_capabilities.codeActionProvider = false end,
           filetypes = {
             "css",
             "scss",
