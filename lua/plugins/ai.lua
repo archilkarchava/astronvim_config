@@ -258,6 +258,11 @@ return {
       behavior = {
         auto_suggestions = false,
       },
+      mappings = {
+        diff = {
+          cursor = "cC",
+        },
+      },
     },
     dependencies = {
       {
