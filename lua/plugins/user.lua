@@ -604,6 +604,12 @@ return {
     event = "VeryLazy",
     optional = true,
   },
+  {
+    "akinsho/git-conflict.nvim",
+    event = "User AstroGitFile",
+    version = "*",
+    opts = {},
+  },
 
   -- -- == Examples of Adding Plugins ==
   --
