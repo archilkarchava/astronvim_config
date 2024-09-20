@@ -140,6 +140,7 @@ return {
             "sass",
             "html",
             "svelte",
+            "sugarss",
             "vue",
             "javascript",
             "javascriptreact",
