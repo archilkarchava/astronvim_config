@@ -278,6 +278,7 @@ return {
     opts = {
       discovery = {
         enabled = true,
+        filter_dir = function(name) return name ~= "node_modules" end,
       },
     },
   },
@@ -291,12 +292,10 @@ return {
         opts = {
           cwd = function(file)
             local lib = require "neotest.lib"
-            local rootPath = lib.files.match_root_pattern "package.json"(file)
-            if rootPath then return rootPath end
-            return vim.fn.getcwd()
+            local root_path = lib.files.match_root_pattern "package.json"(file)
+            return root_path or vim.fn.getcwd()
           end,
           jest_test_discovery = false,
-          filter_dir = function(name) return name ~= "node_modules" end,
         },
       },
     },
