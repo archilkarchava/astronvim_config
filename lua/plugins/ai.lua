@@ -107,8 +107,8 @@ local function clear_suggestion()
 end
 
 local keymaps = {
-  accept_suggestion = { "<C-f>", accept_suggestion, desc = "Accept suggestion", noremap = true, silent = true },
-  accept_word = { "<C-x>", accept_word, desc = "Accept word", noremap = true, silent = true },
+  accept_suggestion = { "<C-x>", accept_suggestion, desc = "Accept suggestion", noremap = true, silent = true },
+  accept_word = { "<C-z>", accept_word, desc = "Accept word", noremap = true, silent = true },
   clear_suggestion = { "<C-]>", clear_suggestion, desc = "Clear suggestion", noremap = true, silent = true },
 }
 
