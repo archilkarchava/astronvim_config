@@ -3,8 +3,9 @@
 ---@type LazySpec
 return {
   {
-    "nvim-neotest/neotest",
+    "archilkarchava/neotest",
     optional = true,
+    version = false,
     opts = {
       discovery = {
         enabled = true,
@@ -13,7 +14,7 @@ return {
     },
   },
   {
-    "nvim-neotest/neotest",
+    "neotest",
     optional = true,
     dependencies = {
       {
@@ -31,7 +32,7 @@ return {
     },
   },
   {
-    "nvim-neotest/neotest",
+    "neotest",
     optional = true,
     dependencies = {
       { "marilari88/neotest-vitest" },
