@@ -93,6 +93,10 @@ return {
             desc = "Close buffer from tabline",
           },
           ["<C-c>"] = { "ciw", desc = "Change inner word" },
+          ["<leader>lc"] = {
+            "<cmd>LspRestart<cr>",
+            desc = "Restart (garbage Collect) LSP clients",
+          },
 
           -- tables with just a `desc` key will be registered with which-key if it's installed
           -- this is useful for naming menus
