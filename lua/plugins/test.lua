@@ -25,7 +25,7 @@ return {
             local root_path = lib.files.match_root_pattern "package.json"(file)
             return root_path or vim.fn.getcwd()
           end,
-          jest_test_discovery = false,
+          jest_test_discovery = true,
         },
       },
     },
