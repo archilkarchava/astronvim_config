@@ -568,6 +568,14 @@ return {
     version = "*",
     opts = {},
   },
+  {
+    "kawre/leetcode.nvim",
+    lazy = true,
+    optional = true,
+    opts = {
+      lang = "typescript",
+    },
+  },
 
   -- -- == Examples of Adding Plugins ==
   --

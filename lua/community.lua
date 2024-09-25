@@ -18,6 +18,7 @@ return {
   { import = "astrocommunity.debugging.nvim-chainsaw" },
   { import = "astrocommunity.debugging.nvim-dap-virtual-text" },
   { import = "astrocommunity.diagnostics.trouble-nvim" },
+  { import = "astrocommunity.game.leetcode-nvim" },
   { import = "astrocommunity.git.diffview-nvim" },
   { import = "astrocommunity.git.neogit" },
   { import = "astrocommunity.file-explorer.oil-nvim" },
