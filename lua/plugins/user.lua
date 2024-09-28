@@ -231,13 +231,6 @@ return {
 
             maps[mode]["<D-x><D-s>"] = {
               function()
-                -- clone every cursor and disable the originals
-                mc.duplicateCursors()
-              end,
-              desc = "Duplicate cursors",
-            }
-            maps[mode]["<D-x><D-S>"] = {
-              function()
                 if mc.cursorsEnabled() then
                   -- Stop other cursors from moving.
                   -- This allows you to reposition the main cursor.
@@ -247,6 +240,14 @@ return {
                 end
               end,
               desc = "Reposition cursors",
+            }
+
+            maps[mode]["<D-x><D-S>"] = {
+              function()
+                -- clone every cursor and disable the originals
+                mc.duplicateCursors()
+              end,
+              desc = "Duplicate cursors",
             }
           end
 
