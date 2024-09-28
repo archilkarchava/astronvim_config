@@ -275,6 +275,51 @@ return {
     },
   },
   {
+    "wellle/targets.vim",
+    enabled = false,
+    event = "VeryLazy",
+    dependencies = {
+      {
+        "AstroNvim/astrocore",
+        ---@type AstroCoreOpts
+        opts = {
+          autocmds = {
+            targets = {
+              {
+                event = "User",
+                pattern = "targets#mappings#user",
+                callback = function()
+                  vim.fn["targets#mappings#extend"] {
+                    b = {
+                      pair = {
+                        {
+                          o = "(",
+                          c = ")",
+                        },
+                      },
+                    },
+                    r = {
+                      pair = {
+                        {
+                          o = "[",
+                          c = "]",
+                        },
+                      },
+                    },
+                  }
+                end,
+              },
+            },
+          },
+        },
+      },
+    },
+    init = function()
+      vim.g.targets_aiAI = "aIAi"
+      vim.g.targets_seekRanges = "cc cr cb cB lc ac Ac lr lb ar ab lB Ar aB Ab AB rr ll rb al rB Al bb aa bB Aa BB AA"
+    end,
+  },
+  {
     "echasnovski/mini.ai",
     optional = true,
     event = "VeryLazy",
