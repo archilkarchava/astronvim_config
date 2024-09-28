@@ -474,6 +474,7 @@ return {
   },
   {
     "lewis6991/gitsigns.nvim",
+    version = false,
     optional = true,
     opts = {
       current_line_blame = true,
