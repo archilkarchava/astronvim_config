@@ -251,7 +251,7 @@ return {
           end
 
           -- Add and remove cursors with control + left click.
-          maps.n["<C-M-LeftMouse>"] = { mc.handleMouse, desc = "Add cursor" }
+          maps.n["<M-LeftMouse>"] = { mc.handleMouse, desc = "Add cursor" }
 
           maps.n["<esc>"] = function()
             if not mc.cursorsEnabled() then
