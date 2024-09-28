@@ -94,7 +94,11 @@ return {
           local maps = assert(opts.mappings)
           for _, mode in ipairs { "n", "x", "o" } do
             maps[mode]["s"] = { "<Plug>(leap)", desc = "Leap" }
-            maps[mode]["gs"] = { "<Plug>(leap-from-window)", desc = "Leap from window" }
+            maps[mode]["gz"] = { "<Plug>(leap-from-window)", desc = "Leap from window" }
+          end
+
+          for _, mode in ipairs { "n", "o" } do
+            maps[mode]["gs"] = { function() require("leap.remote").action() end, desc = "Leap remote" }
           end
         end,
       },
