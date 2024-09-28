@@ -223,8 +223,8 @@ return {
             maps[mode]["<D-X>"] = { function() mc.skipCursor "*" end, desc = "Skip cursor and jump to next word" }
 
             -- Rotate the main cursor.
-            maps[mode]["<left>"] = { mc.nextCursor, desc = "Rotate cursor (next)" }
-            maps[mode]["<right>"] = { mc.prevCursor, desc = "Rotate cursor (previous)" }
+            maps[mode]["<left>"] = { mc.prevCursor, desc = "Rotate cursor (previous)" }
+            maps[mode]["<right>"] = { mc.nextCursor, desc = "Rotate cursor (next)" }
 
             -- Delete the main cursor.
             maps[mode]["<D-l>l"] = { mc.deleteCursor, desc = "Delete cursor" }
