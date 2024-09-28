@@ -227,9 +227,9 @@ return {
             maps[mode]["<right>"] = { mc.nextCursor, desc = "Rotate cursor (next)" }
 
             -- Delete the main cursor.
-            maps[mode]["<D-l>l"] = { mc.deleteCursor, desc = "Delete cursor" }
+            maps[mode]["<D-l><D-l>"] = { mc.deleteCursor, desc = "Delete cursor" }
 
-            maps[mode]["<D-l>x"] = {
+            maps[mode]["<D-l><D-x>"] = {
               function()
                 if mc.cursorsEnabled() then
                   -- Stop other cursors from moving.
