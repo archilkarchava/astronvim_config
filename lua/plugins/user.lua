@@ -236,7 +236,7 @@ return {
               end,
               desc = "Duplicate cursors",
             }
-            maps[mode]["<D-x><D-c>"] = {
+            maps[mode]["<D-x><D-S>"] = {
               function()
                 if mc.cursorsEnabled() then
                   -- Stop other cursors from moving.
