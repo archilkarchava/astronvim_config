@@ -760,6 +760,13 @@ return {
       lang = "typescript",
     },
   },
+  {
+    "package-info.nvim",
+    enabled = false,
+    opts = {
+      autostart = false,
+    },
+  },
 
   -- -- == Examples of Adding Plugins ==
   --
