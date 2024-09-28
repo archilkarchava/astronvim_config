@@ -157,6 +157,124 @@ return {
     },
   },
   {
+    "jake-stewart/multicursor.nvim",
+    branch = "1.0",
+    event = "VeryLazy",
+    opts = {},
+    config = function(_, opts)
+      local mc = require "multicursor-nvim"
+      mc.setup(opts)
+
+      -- Customize how cursors look.
+      vim.api.nvim_set_hl(0, "MultiCursorCursor", { link = "Cursor" })
+      vim.api.nvim_set_hl(0, "MultiCursorVisual", { link = "Visual" })
+      vim.api.nvim_set_hl(0, "MultiCursorDisabledCursor", { link = "Visual" })
+      vim.api.nvim_set_hl(0, "MultiCursorDisabledVisual", { link = "Visual" })
+    end,
+    specs = {
+      {
+        "echasnovski/mini.bracketed",
+        optional = true,
+        opts = {
+          -- Undo mapping interferes with multicursor.nvim, so we disable it
+          undo = { suffix = "", options = {} },
+        },
+      },
+      {
+        "which-key.nvim",
+        optional = true,
+        ---@param opts wk.Opts
+        opts = function(_, opts)
+          local existing_filter = opts.filter or function() return true end
+          ---@param mapping wk.Mapping
+          opts.filter = function(mapping)
+            if not existing_filter(mapping) then return false end
+            -- For some reason, in multicursor mode vi and va mappings don't work properly with which-key if they are not default mappings
+            local modes = { x = true, v = true }
+            local lhs_values = { i = true, a = true }
+
+            return not (modes[mapping.mode] and lhs_values[mapping.lhs])
+          end
+        end,
+      },
+    },
+    dependencies = {
+      {
+        "AstroNvim/astrocore",
+        ---@param opts AstroCoreOpts
+        opts = function(_, opts)
+          if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
+          local mc = require "multicursor-nvim"
+          local maps = assert(opts.mappings)
+
+          for _, mode in ipairs { "n", "v" } do
+            -- Add cursors above/below the main cursor.
+            local add_cursor_above = { function() mc.addCursor "k" end, desc = "Add cursor above" }
+            local add_cursor_below = { function() mc.addCursor "j" end, desc = "Add cursor below" }
+            maps[mode]["<up>"] = add_cursor_above
+            maps[mode]["<down>"] = add_cursor_below
+            maps[mode]["<D-M-k>"] = add_cursor_above
+            maps[mode]["<D-M-j>"] = add_cursor_below
+
+            -- Add a cursor and jump to the next word under cursor.
+            maps[mode]["<D-x>"] = { function() mc.addCursor "*" end, desc = "Add cursor and jump to next word" }
+
+            -- Jump to the next word under cursor but do not add a cursor.
+            maps[mode]["<D-X>"] = { function() mc.skipCursor "*" end, desc = "Skip cursor and jump to next word" }
+
+            -- Rotate the main cursor.
+            maps[mode]["<left>"] = { mc.nextCursor, desc = "Rotate cursor (next)" }
+            maps[mode]["<right>"] = { mc.prevCursor, desc = "Rotate cursor (previous)" }
+
+            -- Delete the main cursor.
+            maps[mode]["<D-l>l"] = { mc.deleteCursor, desc = "Delete cursor" }
+
+            maps[mode]["<D-l>x"] = {
+              function()
+                if mc.cursorsEnabled() then
+                  -- Stop other cursors from moving.
+                  -- This allows you to reposition the main cursor.
+                  mc.disableCursors()
+                else
+                  mc.addCursor()
+                end
+              end,
+              desc = "Reposition cursors",
+            }
+          end
+
+          -- Add and remove cursors with control + left click.
+          maps.n["<C-M-LeftMouse>"] = { mc.handleMouse, desc = "Add cursor" }
+
+          maps.n["<esc>"] = function()
+            if not mc.cursorsEnabled() then
+              mc.enableCursors()
+            elseif mc.hasCursors() then
+              mc.clearCursors()
+            end
+          end
+
+          -- Align cursor columns.
+          maps.n["<D-l>a"] = { mc.alignCursors, desc = "Align cursors" }
+
+          -- Split visual selections by regex.
+          maps.v["<D-l>s"] = { mc.splitCursors, desc = "Split selections" }
+
+          -- Append/insert for each line of visual selections.
+          maps.v["I"] = { mc.insertVisual, desc = "Insert line" }
+          maps.v["A"] = { mc.appendVisual, desc = "Append line" }
+
+          -- match new cursors within visual selections by regex.
+          maps.v["M"] = { mc.matchCursors, desc = "Match cursors" }
+
+          -- Rotate visual selection contents.
+          maps.v["<leader>t"] = { function() mc.transposeCursors(1) end, desc = "Transpose selections (forward)" }
+          maps.v["<leader>T"] = { function() mc.transposeCursors(-1) end, desc = "Transpose selections (backward)" }
+        end,
+      },
+    },
+  },
+  {
     "echasnovski/mini.ai",
     optional = true,
     event = "VeryLazy",
