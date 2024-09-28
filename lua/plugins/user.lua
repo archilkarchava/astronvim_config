@@ -14,6 +14,14 @@ return {
     },
   },
   {
+    "which-key.nvim",
+    ---@type wk.Opts
+    opts = {
+      ---@type false | "classic" | "modern" | "helix"
+      preset = "modern",
+    },
+  },
+  {
     "hrsh7th/nvim-cmp",
     optional = true,
     opts = function(_, opts)
