@@ -217,19 +217,19 @@ return {
             maps[mode]["<D-M-j>"] = add_cursor_below
 
             -- Add a cursor and jump to the next word under cursor.
-            maps[mode]["<D-x>"] = { function() mc.addCursor "*" end, desc = "Add cursor and jump to next word" }
+            maps[mode]["<D-s>"] = { function() mc.addCursor "*" end, desc = "Add cursor and jump to next word" }
 
             -- Jump to the next word under cursor but do not add a cursor.
-            maps[mode]["<D-X>"] = { function() mc.skipCursor "*" end, desc = "Skip cursor and jump to next word" }
+            maps[mode]["<D-S>"] = { function() mc.skipCursor "*" end, desc = "Skip cursor and jump to next word" }
 
             -- Rotate the main cursor.
             maps[mode]["<left>"] = { mc.prevCursor, desc = "Rotate cursor (previous)" }
             maps[mode]["<right>"] = { mc.nextCursor, desc = "Rotate cursor (next)" }
 
             -- Delete the main cursor.
-            maps[mode]["<D-l><D-l>"] = { mc.deleteCursor, desc = "Delete cursor" }
+            maps[mode]["<D-x><D-x>"] = { mc.deleteCursor, desc = "Delete cursor" }
 
-            maps[mode]["<D-l><D-x>"] = {
+            maps[mode]["<D-x><D-s>"] = {
               function()
                 if mc.cursorsEnabled() then
                   -- Stop other cursors from moving.
@@ -255,10 +255,10 @@ return {
           end
 
           -- Align cursor columns.
-          maps.n["<D-l>a"] = { mc.alignCursors, desc = "Align cursors" }
+          maps.n["<D-x>a"] = { mc.alignCursors, desc = "Align cursors" }
 
           -- Split visual selections by regex.
-          maps.v["<D-l>s"] = { mc.splitCursors, desc = "Split selections" }
+          maps.v["<D-x>s"] = { mc.splitCursors, desc = "Split selections" }
 
           -- Append/insert for each line of visual selections.
           maps.v["I"] = { mc.insertVisual, desc = "Insert line" }
