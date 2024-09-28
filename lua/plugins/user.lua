@@ -262,7 +262,7 @@ return {
           end
 
           -- Align cursor columns.
-          maps.n["<D-x>a"] = { mc.alignCursors, desc = "Align cursors" }
+          maps.n["<D-x><D-a>"] = { mc.alignCursors, desc = "Align cursors" }
 
           -- Split visual selections by regex.
           maps.v["<D-x>s"] = { mc.splitCursors, desc = "Split selections" }
