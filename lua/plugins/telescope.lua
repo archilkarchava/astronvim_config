@@ -56,12 +56,12 @@ return {
         defaults = {
           mappings = {
             n = {
-              ["<Down>"] = actions.cycle_history_next,
-              ["<Up>"] = actions.cycle_history_prev,
+              ["<C-n>"] = actions.cycle_history_next,
+              ["<C-p>"] = actions.cycle_history_prev,
             },
             i = {
-              ["<Down>"] = actions.cycle_history_next,
-              ["<Up>"] = actions.cycle_history_prev,
+              ["<C-n>"] = actions.cycle_history_next,
+              ["<C-p>"] = actions.cycle_history_prev,
             },
           },
         },
