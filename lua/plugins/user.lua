@@ -73,10 +73,8 @@ return {
               { function() require("various-textobjs").chainMember "inner" end, desc = "Inside chain member" }
             maps[mode]["am"] =
               { function() require("various-textobjs").chainMember "outer" end, desc = "Around chain member" }
-            maps[mode]["i<leader>w"] =
-              { function() require("various-textobjs").subword "inner" end, desc = "Inside subword" }
-            maps[mode]["a<leader>w"] =
-              { function() require("various-textobjs").subword "outer" end, desc = "Around subword" }
+            maps[mode]["iS"] = { function() require("various-textobjs").subword "inner" end, desc = "Inside subword" }
+            maps[mode]["aS"] = { function() require("various-textobjs").subword "outer" end, desc = "Around subword" }
           end
         end,
       },
