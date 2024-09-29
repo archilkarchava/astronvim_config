@@ -51,18 +51,6 @@ return {
         virtual_text = true,
         underline = true,
       },
-      on_keys = {
-        -- auto_hlsearch autocmd provided by AstroNvim does not work well with multicursor.nvim
-        auto_hlsearch = {
-          function(char)
-            if vim.fn.mode() == "n" then
-              local new_hlsearch = vim.tbl_contains({ "<CR>", "n", "N", "*", "#", "?", "/" }, vim.fn.keytrans(char))
-              ---@diagnostic disable-next-line: undefined-field
-              if vim.opt.hlsearch:get() ~= new_hlsearch then vim.cmd "nohlsearch" end
-            end
-          end,
-        },
-      },
       -- vim options can be configured here
       options = {
         opt = { -- vim.opt.<key>
