@@ -213,10 +213,6 @@ return {
             local skip_cursor_above = { function() mc.lineSkipCursor(-1) end, desc = "Skip cursor above" }
             local add_cursor_below = { function() mc.lineAddCursor(1) end, desc = "Add cursor below" }
             local skip_cursor_below = { function() mc.lineSkipCursor(1) end, desc = "Skip cursor below" }
-            maps[mode]["<up>"] = add_cursor_above
-            maps[mode]["<down>"] = add_cursor_below
-            maps[mode]["<leader><up>"] = skip_cursor_above
-            maps[mode]["<leader><down>"] = skip_cursor_below
             maps[mode]["<D-M-k>"] = add_cursor_above
             maps[mode]["<D-M-j>"] = add_cursor_below
             maps[mode]["<leader><D-M-k>"] = skip_cursor_above
