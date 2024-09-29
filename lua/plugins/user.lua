@@ -232,8 +232,26 @@ return {
               { function() mc.matchSkipCursor(-1) end, desc = "Skip cursor and jump to previous word" }
 
             -- Rotate the main cursor.
-            maps[mode]["<left>"] = { mc.prevCursor, desc = "Rotate cursor (previous)" }
-            maps[mode]["<right>"] = { mc.nextCursor, desc = "Rotate cursor (next)" }
+            maps[mode]["<left>"] = {
+              function()
+                if mc.hasCursors() then
+                  mc.prevCursor()
+                else
+                  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<left>", true, false, true), "n", false)
+                end
+              end,
+              desc = "Rotate main cursor (previous)",
+            }
+            maps[mode]["<right>"] = {
+              function()
+                if mc.hasCursors() then
+                  mc.nextCursor()
+                else
+                  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<right>", true, false, true), "n", false)
+                end
+              end,
+              desc = "Rotate main cursor (next)",
+            }
 
             -- Delete the main cursor.
             maps[mode]["<D-x><D-x>"] = { mc.deleteCursor, desc = "Delete cursor" }
@@ -252,10 +270,8 @@ return {
             }
 
             maps[mode]["<D-x><D-Z>"] = {
-              function()
-                -- clone every cursor and disable the originals
-                mc.duplicateCursors()
-              end,
+              -- clone every cursor and disable the originals
+              mc.duplicateCursors,
               desc = "Duplicate cursors",
             }
           end
