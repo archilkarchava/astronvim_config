@@ -209,18 +209,31 @@ return {
 
           for _, mode in ipairs { "n", "v" } do
             -- Add cursors above/below the main cursor.
-            local add_cursor_above = { function() mc.addCursor "k" end, desc = "Add cursor above" }
-            local add_cursor_below = { function() mc.addCursor "j" end, desc = "Add cursor below" }
+            local add_cursor_above = { function() mc.lineAddCursor(-1) end, desc = "Add cursor above" }
+            local skip_cursor_above = { function() mc.lineSkipCursor(-1) end, desc = "Skip cursor above" }
+            local add_cursor_below = { function() mc.lineAddCursor(1) end, desc = "Add cursor below" }
+            local skip_cursor_below = { function() mc.lineSkipCursor(1) end, desc = "Skip cursor below" }
             maps[mode]["<up>"] = add_cursor_above
             maps[mode]["<down>"] = add_cursor_below
+            maps[mode]["<leader><up>"] = skip_cursor_above
+            maps[mode]["<leader><down>"] = skip_cursor_below
             maps[mode]["<D-M-k>"] = add_cursor_above
             maps[mode]["<D-M-j>"] = add_cursor_below
+            maps[mode]["<leader><D-M-k>"] = skip_cursor_above
+            maps[mode]["<leader><D-M-j>"] = skip_cursor_below
 
             -- Add a cursor and jump to the next word under cursor.
-            maps[mode]["<D-s>"] = { function() mc.addCursor "*" end, desc = "Add cursor and jump to next word" }
+            maps[mode]["<D-s>"] = { function() mc.matchAddCursor(1) end, desc = "Add cursor and jump to next word" }
+            -- Add a cursor and jump to the previous word under cursor.
+            maps[mode]["<D-S>"] =
+              { function() mc.matchAddCursor(-1) end, desc = "Add cursor and jump to previous word" }
 
             -- Jump to the next word under cursor but do not add a cursor.
-            maps[mode]["<D-S>"] = { function() mc.skipCursor "*" end, desc = "Skip cursor and jump to next word" }
+            maps[mode]["<D-x><D-s>"] =
+              { function() mc.matchSkipCursor(1) end, desc = "Skip cursor and jump to next word" }
+            -- Jump to the previous word under cursor but do not add a cursor.
+            maps[mode]["<D-x><D-S>"] =
+              { function() mc.matchSkipCursor(-1) end, desc = "Skip cursor and jump to previous word" }
 
             -- Rotate the main cursor.
             maps[mode]["<left>"] = { mc.prevCursor, desc = "Rotate cursor (previous)" }
@@ -229,7 +242,7 @@ return {
             -- Delete the main cursor.
             maps[mode]["<D-x><D-x>"] = { mc.deleteCursor, desc = "Delete cursor" }
 
-            maps[mode]["<D-x><D-s>"] = {
+            maps[mode]["<D-x><D-z>"] = {
               function()
                 if mc.cursorsEnabled() then
                   -- Stop other cursors from moving.
@@ -242,7 +255,7 @@ return {
               desc = "Reposition cursors",
             }
 
-            maps[mode]["<D-x><D-S>"] = {
+            maps[mode]["<D-x><D-Z>"] = {
               function()
                 -- clone every cursor and disable the originals
                 mc.duplicateCursors()
