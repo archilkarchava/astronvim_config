@@ -642,7 +642,7 @@ return {
       },
     },
     dependencies = {
-      { "AstroNvim/astroui", opts = { icons = { Chainsaw = "󰹈" } } },
+      { "AstroNvim/astroui", opts = { icons = { Log = "󰹈" } } },
       {
         "AstroNvim/astrocore",
         ---@param opts AstroCoreOpts
