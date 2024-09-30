@@ -278,8 +278,10 @@ return {
           local maps = assert(opts.mappings)
           local prefix = "<Leader>a"
 
-          if maps.n[prefix] == nil then
-            maps.n[prefix] = { desc = require("astroui").get_icon("Avante", 1, true) .. "Avante" }
+          for _, mode in ipairs { "n", "x" } do
+            if maps[mode][prefix] == nil then
+              maps[mode][prefix] = { desc = require("astroui").get_icon("Avante", 1, true) .. "Avante" }
+            end
           end
         end,
       },
