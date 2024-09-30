@@ -17,7 +17,7 @@ return {
     "which-key.nvim",
     opts = {
       ---@type false | "classic" | "modern" | "helix"
-      preset = "modern",
+      preset = "helix",
     },
   },
   {
