@@ -1,22 +1,31 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
+-- if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
 
--- Customize None-ls sources
+-- Customize None-ls
 
 ---@type LazySpec
 return {
-  "nvimtools/none-ls.nvim",
-  opts = function(_, config)
-    -- config variable is the default configuration table for the setup function call
-    -- local null_ls = require "null-ls"
+  {
+    "mason-null-ls.nvim",
+    optional = true,
+    opts = function(_, opts)
+      if not opts.handlers then opts.handlers = {} end
 
-    -- Check supported formatters and linters
-    -- https://github.com/nvimtools/none-ls.nvim/tree/main/lua/null-ls/builtins/formatting
-    -- https://github.com/nvimtools/none-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
-    config.sources = {
-      -- Set a formatter
-      -- null_ls.builtins.formatting.stylua,
-      -- null_ls.builtins.formatting.prettier,
-    }
-    return config -- return final config table
-  end,
+      opts.handlers.prettierd = function(source_name, methods)
+        local null_ls = require "null-ls"
+        for _, method in ipairs(methods) do
+          null_ls.register(null_ls.builtins[method][source_name].with {
+            filetypes = {
+              "javascript",
+              "javascriptreact",
+              "typescript",
+              "typescriptreact",
+              "json",
+              "jsonc",
+              "yaml",
+            },
+          })
+        end
+      end
+    end,
+  },
 }
