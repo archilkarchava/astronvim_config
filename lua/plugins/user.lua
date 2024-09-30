@@ -15,7 +15,6 @@ return {
   },
   {
     "which-key.nvim",
-    ---@type wk.Opts
     opts = {
       ---@type false | "classic" | "modern" | "helix"
       preset = "modern",
@@ -183,10 +182,8 @@ return {
       {
         "which-key.nvim",
         optional = true,
-        ---@param opts wk.Opts
         opts = function(_, opts)
           local existing_filter = opts.filter or function() return true end
-          ---@param mapping wk.Mapping
           opts.filter = function(mapping)
             if not existing_filter(mapping) then return false end
             -- For some reason, in multicursor mode vi and va mappings don't work properly with which-key if they are not default mappings
