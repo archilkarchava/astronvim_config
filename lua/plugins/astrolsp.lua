@@ -81,6 +81,9 @@ return {
         vtsls = {
           settings = {
             typescript = {
+              format = {
+                enable = false,
+              },
               updateImportsOnFileMove = { enabled = "always" },
               tsserver = {
                 useSeparateSyntaxServer = false,
@@ -89,6 +92,9 @@ return {
               },
             },
             javascript = {
+              format = {
+                enable = false,
+              },
               suggest = {
                 names = false,
               },
