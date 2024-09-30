@@ -204,37 +204,53 @@ return {
           local mc = require "multicursor-nvim"
           local maps = assert(opts.mappings)
 
+          ---@param f fun()
+          local function with_count(f)
+            return function()
+              for _ = 1, vim.v.count1 do
+                f()
+              end
+            end
+          end
+
           for _, mode in ipairs { "n", "v" } do
             -- Add cursors above/below the main cursor.
-            local add_cursor_above = { function() mc.lineAddCursor(-1) end, desc = "Add cursor above" }
-            local skip_cursor_above = { function() mc.lineSkipCursor(-1) end, desc = "Skip cursor above" }
-            local add_cursor_below = { function() mc.lineAddCursor(1) end, desc = "Add cursor below" }
-            local skip_cursor_below = { function() mc.lineSkipCursor(1) end, desc = "Skip cursor below" }
+            local add_cursor_above = { with_count(function() mc.lineAddCursor(-1) end), desc = "Add cursor above" }
+            local skip_cursor_above = { with_count(function() mc.lineSkipCursor(-1) end), desc = "Skip cursor above" }
+            local add_cursor_below = { with_count(function() mc.lineAddCursor(1) end), desc = "Add cursor below" }
+            local skip_cursor_below = { with_count(function() mc.lineSkipCursor(1) end), desc = "Skip cursor below" }
             maps[mode]["<D-M-k>"] = add_cursor_above
             maps[mode]["<D-M-j>"] = add_cursor_below
             maps[mode]["<leader><D-M-k>"] = skip_cursor_above
             maps[mode]["<leader><D-M-j>"] = skip_cursor_below
 
             -- Add a cursor and jump to the next word under cursor.
-            maps[mode]["<D-s>"] = { function() mc.matchAddCursor(1) end, desc = "Add cursor and jump to next word" }
+            maps[mode]["<D-s>"] = {
+              with_count(function() mc.matchAddCursor(1) end),
+              desc = "Add cursor and jump to next word",
+            }
             -- Add a cursor and jump to the previous word under cursor.
             maps[mode]["<D-S>"] =
-              { function() mc.matchAddCursor(-1) end, desc = "Add cursor and jump to previous word" }
+              { with_count(function() mc.matchAddCursor(-1) end), desc = "Add cursor and jump to previous word" }
 
             -- Jump to the next word under cursor but do not add a cursor.
             maps[mode]["<D-x><D-s>"] =
-              { function() mc.matchSkipCursor(1) end, desc = "Skip cursor and jump to next word" }
+              { with_count(function() mc.matchSkipCursor(1) end), desc = "Skip cursor and jump to next word" }
             -- Jump to the previous word under cursor but do not add a cursor.
             maps[mode]["<D-x><D-S>"] =
-              { function() mc.matchSkipCursor(-1) end, desc = "Skip cursor and jump to previous word" }
+              { with_count(function() mc.matchSkipCursor(-1) end), desc = "Skip cursor and jump to previous word" }
 
             -- Rotate the main cursor.
             maps[mode]["<left>"] = {
               function()
                 if mc.hasCursors() then
-                  mc.prevCursor()
+                  with_count(mc.prevCursor)()
                 else
-                  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<left>", true, false, true), "n", false)
+                  vim.api.nvim_feedkeys(
+                    vim.api.nvim_replace_termcodes(vim.v.count1 .. "<left>", true, false, true),
+                    "n",
+                    false
+                  )
                 end
               end,
               desc = "Rotate main cursor (previous)",
@@ -242,9 +258,13 @@ return {
             maps[mode]["<right>"] = {
               function()
                 if mc.hasCursors() then
-                  mc.nextCursor()
+                  with_count(mc.nextCursor)()
                 else
-                  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<right>", true, false, true), "n", false)
+                  vim.api.nvim_feedkeys(
+                    vim.api.nvim_replace_termcodes(vim.v.count1 .. "<right>", true, false, true),
+                    "n",
+                    false
+                  )
                 end
               end,
               desc = "Rotate main cursor (next)",
