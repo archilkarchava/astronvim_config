@@ -273,24 +273,10 @@ return {
             -- Delete the main cursor.
             maps[mode]["<D-x><D-x>"] = { mc.deleteCursor, desc = "Delete cursor" }
 
-            maps[mode]["<D-x><D-z>"] = {
-              function()
-                if mc.cursorsEnabled() then
-                  -- Stop other cursors from moving.
-                  -- This allows you to reposition the main cursor.
-                  mc.disableCursors()
-                else
-                  mc.addCursor()
-                end
-              end,
-              desc = "Reposition cursors",
-            }
+            maps[mode]["<D-x><D-z>"] = { mc.toggleCursor, desc = "Toggle cursor" }
 
-            maps[mode]["<D-x><D-Z>"] = {
-              -- clone every cursor and disable the originals
-              mc.duplicateCursors,
-              desc = "Duplicate cursors",
-            }
+            -- clone every cursor and disable the originals
+            maps[mode]["<D-x><D-Z>"] = { mc.duplicateCursors, desc = "Duplicate cursors" }
           end
 
           -- Add and remove cursors with control + left click.
