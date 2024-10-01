@@ -34,6 +34,10 @@ return {
       maps[mode]["<C-d>"] = { "<C-d>zz" }
       maps[mode]["<C-u>"] = { "<C-u>zz" }
     end
+    for _, mode in ipairs { "v", "s", "x", "o", "i", "l", "c", "t" } do
+      maps[mode]["<C-c>"] = { "<C-c>", noremap = true }
+    end
+    maps.n["<C-c>"] = { "ciw", desc = "Change inner word", noremap = true }
 
     ---@type AstroCoreOpts
     local modified_opts = {
@@ -104,7 +108,6 @@ return {
             end,
             desc = "Close buffer from tabline",
           },
-          ["<C-c>"] = { "ciw", desc = "Change inner word" },
           ["<leader>lc"] = {
             "<cmd>LspRestart<cr>",
             desc = "Restart (garbage Collect) LSP clients",
