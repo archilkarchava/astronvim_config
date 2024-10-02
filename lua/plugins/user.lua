@@ -794,6 +794,40 @@ return {
       autostart = false,
     },
   },
+  {
+    "nvim-treesitter-context",
+    optional = true,
+    dependencies = {
+      {
+        "AstroNvim/astrocore",
+        ---@type AstroCoreOpts
+        opts = {
+          autocmds = {
+            treesitter_context_error_workaround = {
+              {
+                event = "FileType",
+                pattern = { "help", "vim" },
+                callback = function()
+                  ---@diagnostic disable-next-line: param-type-mismatch
+                  pcall(vim.cmd, "TSContextDisable")
+                end,
+              },
+              {
+                event = "BufEnter",
+                callback = function()
+                  local ft = vim.bo.filetype
+                  if ft ~= "help" and ft ~= "vim" then
+                    ---@diagnostic disable-next-line: param-type-mismatch
+                    pcall(vim.cmd, "TSContextEnable")
+                  end
+                end,
+              },
+            },
+          },
+        },
+      },
+    },
+  },
 
   -- -- == Examples of Adding Plugins ==
   --
