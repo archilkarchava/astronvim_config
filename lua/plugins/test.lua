@@ -3,7 +3,7 @@
 ---@type LazySpec
 return {
   {
-    "archilkarchava/neotest",
+    "neotest",
     optional = true,
     version = false,
     opts = {
@@ -18,7 +18,7 @@ return {
     optional = true,
     dependencies = {
       {
-        "nvim-neotest/neotest-jest",
+        "neotest-jest",
         optional = true,
         opts = {
           cwd = function(file)
