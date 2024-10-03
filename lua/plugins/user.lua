@@ -64,8 +64,8 @@ return {
             maps[mode]["R"] =
               { function() require("various-textobjs").restOfIndentation() end, desc = "Rest of indentation" }
             maps[mode]["|"] = { function() require("various-textobjs").column() end, desc = "Column" }
-            maps[mode]["ik"] = { function() require("various-textobjs").key "inner" end, desc = "Inside key" }
-            maps[mode]["ak"] = { function() require("various-textobjs").key "outer" end, desc = "Around key" }
+            maps[mode]["iK"] = { function() require("various-textobjs").key "inner" end, desc = "Inside key" }
+            maps[mode]["aK"] = { function() require("various-textobjs").key "outer" end, desc = "Around key" }
             maps[mode]["iv"] = { function() require("various-textobjs").value "inner" end, desc = "Inside value" }
             maps[mode]["av"] = { function() require("various-textobjs").value "outer" end, desc = "Around value" }
             maps[mode]["im"] =
