@@ -240,6 +240,8 @@ return {
             maps[mode]["<D-x><D-S>"] =
               { with_count(function() mc.matchSkipCursor(-1) end), desc = "Skip cursor and jump to previous word" }
 
+            maps[mode]["<D-L>"] = { mc.matchAllAddCursors, desc = "Add cursors to all matches" }
+
             -- Rotate the main cursor.
             maps[mode]["<left>"] = {
               function()
