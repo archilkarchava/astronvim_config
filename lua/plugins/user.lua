@@ -800,31 +800,37 @@ return {
     dependencies = {
       {
         "AstroNvim/astrocore",
-        ---@type AstroCoreOpts
-        opts = {
-          autocmds = {
-            treesitter_context_error_workaround = {
-              {
-                event = "FileType",
-                pattern = { "help", "vim" },
-                callback = function()
-                  ---@diagnostic disable-next-line: param-type-mismatch
-                  pcall(vim.cmd, "TSContextDisable")
-                end,
-              },
-              {
-                event = "BufEnter",
-                callback = function()
-                  local ft = vim.bo.filetype
-                  if ft ~= "help" and ft ~= "vim" then
+        ---@param opts AstroCoreOpts
+        opts = function(_, opts)
+          local affected_fts = { "help", "vim", "TelescopePrompt" }
+          local utils = require "astrocore"
+          ---@type AstroCoreOpts
+          local modified_opts = {
+            autocmds = {
+              treesitter_context_error_workaround = {
+                {
+                  event = "FileType",
+                  pattern = affected_fts,
+                  callback = function()
                     ---@diagnostic disable-next-line: param-type-mismatch
-                    pcall(vim.cmd, "TSContextEnable")
-                  end
-                end,
+                    pcall(vim.cmd, "TSContextDisable")
+                  end,
+                },
+                {
+                  event = "BufEnter",
+                  callback = function()
+                    local ft = vim.bo.filetype
+                    if not vim.tbl_contains(affected_fts, ft) then
+                      ---@diagnostic disable-next-line: param-type-mismatch
+                      pcall(vim.cmd, "TSContextEnable")
+                    end
+                  end,
+                },
               },
             },
-          },
-        },
+          }
+          return utils.extend_tbl(opts, modified_opts)
+        end,
       },
     },
   },
