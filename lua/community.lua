@@ -48,7 +48,7 @@ return {
   -- { import = "astrocommunity.completion.avante-nvim" },
   { import = "astrocommunity.completion.copilot-lua" },
   { import = "astrocommunity.test.neotest" },
-  { import = "astrocommunity.test.nvim-coverage" },
+  -- { import = "astrocommunity.test.nvim-coverage" },
   { import = "astrocommunity.motion.harpoon" },
   -- { import = "astrocommunity.motion.flash-nvim" },
   -- { import = "astrocommunity.motion.leap-nvim" },
