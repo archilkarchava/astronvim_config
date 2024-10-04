@@ -77,7 +77,7 @@ return {
           wrap = false, -- sets vim.opt.wrap
           scrolloff = 6,
           sidescrolloff = 6,
-          exrc = true,
+          exrc = not vim.g.vscode,
         },
         g = { -- vim.g.<key>
           -- configure global vim variables (vim.g)
