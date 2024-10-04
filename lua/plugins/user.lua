@@ -41,6 +41,7 @@ return {
   },
   {
     "chrisgrieser/nvim-various-textobjs",
+    cond = true,
     event = "VeryLazy",
     dependencies = {
       {
@@ -81,6 +82,7 @@ return {
   },
   {
     "ggandor/leap.nvim",
+    cond = true,
     event = "VeryLazy",
     dependencies = {
       "tpope/vim-repeat",
@@ -111,6 +113,7 @@ return {
   },
   {
     "ggandor/flit.nvim",
+    cond = true,
     event = "VeryLazy",
     dependencies = {
       { "ggandor/leap.nvim" },
@@ -118,6 +121,7 @@ return {
   },
   {
     "folke/flash.nvim",
+    cond = true,
     optional = true,
     dependencies = {
       {
@@ -155,6 +159,7 @@ return {
   },
   {
     "jake-stewart/multicursor.nvim",
+    cond = true,
     branch = "1.0",
     event = "VeryLazy",
     opts = {},
@@ -314,6 +319,7 @@ return {
   },
   {
     "wellle/targets.vim",
+    cond = true,
     event = "VeryLazy",
     dependencies = {
       {
@@ -358,6 +364,7 @@ return {
   },
   {
     "echasnovski/mini.ai",
+    cond = true,
     optional = true,
     event = "VeryLazy",
     opts = function()
@@ -389,6 +396,7 @@ return {
   },
   {
     "echasnovski/mini.bracketed",
+    cond = true,
     optional = true,
     opts = {
       treesitter = { suffix = "", options = {} },
@@ -451,6 +459,7 @@ return {
   },
   {
     "gbprod/substitute.nvim",
+    cond = true,
     event = "VeryLazy",
     dependencies = {
       {
@@ -636,6 +645,7 @@ return {
   },
   {
     "chrisgrieser/nvim-chainsaw",
+    cond = true,
     event = "VeryLazy",
     optional = true,
     opts = {
