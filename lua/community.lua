@@ -8,6 +8,7 @@ return {
   "AstroNvim/astrocommunity",
   { import = "astrocommunity.recipes.vscode" },
   { import = "astrocommunity.recipes.neovide" },
+  { import = "astrocommunity.recipes.auto-session-restore" },
   { import = "astrocommunity.pack.lua" },
   -- import/override with your plugins folder
 
