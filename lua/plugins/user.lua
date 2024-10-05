@@ -207,6 +207,16 @@ return {
         opts = function(_, opts)
           if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
           local mc = require "multicursor-nvim"
+
+          opts.autocmds.multicursor_buf_siwtch = {
+            {
+              event = "BufLeave",
+              callback = function()
+                if mc.hasCursors() then mc.clearCursors() end
+              end,
+            },
+          }
+
           local maps = assert(opts.mappings)
 
           ---@param f fun()
