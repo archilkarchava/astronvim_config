@@ -228,6 +228,8 @@ return {
             end
           end
 
+          local main_map = vim.g.vscode and "<D-d>" or "<D-s>"
+          local chord_prefix = vim.g.vscode and "<D-k>" or "<D-x>"
           for _, mode in ipairs { "n", "v" } do
             -- Add cursors above/below the main cursor.
             local add_cursor_above = { with_count(function() mc.lineAddCursor(-1) end), desc = "Add cursor above" }
@@ -240,19 +242,19 @@ return {
             maps[mode]["<leader><D-M-j>"] = skip_cursor_below
 
             -- Add a cursor and jump to the next word under cursor.
-            maps[mode]["<D-s>"] = {
+            maps[mode][main_map] = {
               with_count(function() mc.matchAddCursor(1) end),
               desc = "Add cursor and jump to next word",
             }
             -- Add a cursor and jump to the previous word under cursor.
-            maps[mode]["<D-S>"] =
+            maps[mode][string.upper(main_map)] =
               { with_count(function() mc.matchAddCursor(-1) end), desc = "Add cursor and jump to previous word" }
 
             -- Jump to the next word under cursor but do not add a cursor.
-            maps[mode]["<D-x><D-s>"] =
+            maps[mode][chord_prefix .. main_map] =
               { with_count(function() mc.matchSkipCursor(1) end), desc = "Skip cursor and jump to next word" }
             -- Jump to the previous word under cursor but do not add a cursor.
-            maps[mode]["<D-x><D-S>"] =
+            maps[mode][chord_prefix .. string.upper(main_map)] =
               { with_count(function() mc.matchSkipCursor(-1) end), desc = "Skip cursor and jump to previous word" }
 
             maps[mode]["<D-L>"] = { mc.matchAllAddCursors, desc = "Add cursors to all matches" }
@@ -288,12 +290,12 @@ return {
             }
 
             -- Delete the main cursor.
-            maps[mode]["<D-x><D-x>"] = { mc.deleteCursor, desc = "Delete cursor" }
+            maps[mode][chord_prefix .. "<D-x>"] = { mc.deleteCursor, desc = "Delete cursor" }
 
-            maps[mode]["<D-x><D-z>"] = { mc.toggleCursor, desc = "Toggle cursor" }
+            maps[mode][chord_prefix .. "<D-z>"] = { mc.toggleCursor, desc = "Toggle cursor" }
 
             -- clone every cursor and disable the originals
-            maps[mode]["<D-x><D-Z>"] = { mc.duplicateCursors, desc = "Duplicate cursors" }
+            maps[mode][chord_prefix .. "<D-Z>"] = { mc.duplicateCursors, desc = "Duplicate cursors" }
           end
 
           -- Add and remove cursors with control + left click.
@@ -308,10 +310,10 @@ return {
           end
 
           -- Align cursor columns.
-          maps.n["<D-x><D-a>"] = { mc.alignCursors, desc = "Align cursors" }
+          maps.n[chord_prefix .. "<D-a>"] = { mc.alignCursors, desc = "Align cursors" }
 
           -- Split visual selections by regex.
-          maps.v["<D-x>s"] = { mc.splitCursors, desc = "Split selections" }
+          maps.v[chord_prefix] = { mc.splitCursors, desc = "Split selections" }
 
           -- Append/insert for each line of visual selections.
           maps.v["I"] = { mc.insertVisual, desc = "Insert line" }
