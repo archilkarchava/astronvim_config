@@ -886,6 +886,42 @@ return {
       },
     },
   },
+  {
+    "booperlv/nvim-gomove",
+    cond = true,
+    dependencies = {
+      {
+        "AstroNvim/astrocore",
+        ---@type AstroCoreOpts
+        opts = {
+          mappings = {
+            n = {
+              ["<M-S-Up>"] = { "<Plug>GoNSDUp", desc = "Hello" },
+              ["<M-K>"] = { "<Plug>GoNSDUp", desc = "Hello" },
+              ["<M-S-Down>"] = { "<Plug>GoNSDDown", desc = "Hello" },
+              ["<M-J>"] = { "<Plug>GoNSDDown", desc = "Hello" },
+            },
+            x = {
+              ["<M-S-Up>"] = { "<Plug>GoVSDUp", desc = "Hello" },
+              ["<M-K>"] = { "<Plug>GoVSDUp", desc = "Hello" },
+              ["<M-S-Down>"] = { "<Plug>GoVSDDown", desc = "Hello" },
+              ["<M-J>"] = { "<Plug>GoVSDDown", desc = "Hello" },
+            },
+          },
+        },
+      },
+    },
+    opts = {
+      -- whether or not to map default key bindings, (true/false)
+      map_defaults = false,
+      -- whether or not to reindent lines moved vertically (true/false)
+      reindent = true,
+      -- whether or not to undojoin same direction moves (true/false)
+      undojoin = true,
+      -- whether to not to move past end column when moving blocks horizontally, (true/false)
+      move_past_end_col = false,
+    },
+  },
 
   -- -- == Examples of Adding Plugins ==
   --
