@@ -76,6 +76,7 @@ return {
           signcolumn = "yes", -- sets vim.opt.signcolumn to yes
           wrap = false, -- sets vim.opt.wrap
           scrolloff = 6,
+          cmdheight = vim.g.vscode and 1 or 0,
           sidescrolloff = 6,
           exrc = not vim.g.vscode,
         },
