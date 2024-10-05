@@ -199,6 +199,34 @@ return {
           end
         end,
       },
+      {
+        "nvim-autopairs",
+        optional = true,
+        dependencies = {
+          {
+            "AstroNvim/astrocore",
+            ---@type AstroCoreOpts
+            opts = {
+              autocmds = {
+                autopairs = {
+                  {
+                    event = "InsertEnter",
+                    callback = function()
+                      local mc = require "multicursor-nvim"
+                      local npairs = require "nvim-autopairs"
+                      if mc.hasCursors() then
+                        npairs.disable()
+                      else
+                        npairs.enable()
+                      end
+                    end,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
     },
     dependencies = {
       {
