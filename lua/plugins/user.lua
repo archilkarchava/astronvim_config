@@ -325,6 +325,10 @@ return {
 
             -- clone every cursor and disable the originals
             maps[mode][chord_prefix .. "<D-Z>"] = { mc.duplicateCursors, desc = "Duplicate cursors" }
+
+            -- Jumplist support
+            maps[mode]["<c-i>"] = { mc.jumpForward, desc = "Jump forward" }
+            maps[mode]["<c-o>"] = { mc.jumpBackward, desc = "Jump backward" }
           end
 
           -- Add and remove cursors with control + left click.
