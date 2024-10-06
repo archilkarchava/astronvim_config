@@ -922,6 +922,10 @@ return {
       move_past_end_col = false,
     },
   },
+  {
+    "better-escape.nvim",
+    enabled = false,
+  },
 
   -- -- == Examples of Adding Plugins ==
   --
