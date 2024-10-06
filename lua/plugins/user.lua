@@ -193,7 +193,7 @@ return {
             if string.lower(mapping.lhs) == "<c-c>" then return false end
             if not existing_filter(mapping) then return false end
             -- For some reason, in multicursor mode vi and va mappings don't work properly with which-key if they are not default mappings
-            local modes = { x = true, v = true }
+            local modes = { x = true, v = true, o = true }
             local lhs_values = { i = true, a = true }
 
             return not (modes[mapping.mode] and lhs_values[mapping.lhs])
