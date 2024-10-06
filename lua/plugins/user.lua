@@ -190,6 +190,7 @@ return {
         opts = function(_, opts)
           local existing_filter = opts.filter or function() return true end
           opts.filter = function(mapping)
+            if string.lower(mapping.lhs) == "<c-c>" then return false end
             if not existing_filter(mapping) then return false end
             -- For some reason, in multicursor mode vi and va mappings don't work properly with which-key if they are not default mappings
             local modes = { x = true, v = true }
