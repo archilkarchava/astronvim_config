@@ -409,6 +409,8 @@ return {
         opts = function(_, opts)
           local select_keymaps = vim.tbl_get(opts, "textobjects", "select", "keymaps")
           if not select_keymaps then return end
+          select_keymaps["iA"] = select_keymaps["ia"]
+          select_keymaps["aA"] = select_keymaps["aa"]
           select_keymaps["ia"] = nil
           select_keymaps["aa"] = nil
         end,
