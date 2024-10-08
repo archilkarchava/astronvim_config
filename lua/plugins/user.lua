@@ -707,16 +707,6 @@ return {
     cond = true,
     event = "VeryLazy",
     optional = true,
-    opts = {
-      logStatements = {
-        variableLog = {
-          javascript = {
-            "/* prettier-ignore */ // %s",
-            'console.log("%s %s:", %s);',
-          },
-        },
-      },
-    },
     dependencies = {
       { "AstroNvim/astroui", opts = { icons = { Log = "󰹈" } } },
       {
