@@ -8,7 +8,7 @@ return {
     version = false,
     opts = {
       discovery = {
-        enabled = true,
+        enabled = false,
         filter_dir = function(name) return name ~= "node_modules" end,
       },
     },
