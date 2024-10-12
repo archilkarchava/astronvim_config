@@ -10,7 +10,7 @@ local is_macos = vim.uv.os_uname().sysname == "Darwin"
 ---@type LazySpec
 return {
   "AstroNvim/astrocore",
-  ---@papam opts AstroCoreOpts
+  ---@param opts AstroCoreOpts
   opts = function(_, opts)
     local astrocore = require "astrocore"
     local maps = assert(opts.mappings)
