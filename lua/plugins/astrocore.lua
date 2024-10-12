@@ -7,6 +7,23 @@
 
 local is_macos = vim.uv.os_uname().sysname == "Darwin"
 
+---@param mappings AstroCoreMappings A table containing the key mappings for different modes
+---@param new_lhs string The new keymap to be assigned
+---@param orig_lhs string The original keymap to be remapped
+---@param modes table<number, string>? A list of modes in which the remapping should occur
+---@param opts AstroCoreMapping? Additional options for the remapping, such as description
+local function remap_key_if_exists(mappings, new_lhs, orig_lhs, modes, opts)
+  modes = modes or { "", "n", "v", "x", "s", "o", "!", "i", "l", "c", "t" }
+  opts = opts or {}
+  for _, mode in ipairs(modes) do
+    if mappings[mode][orig_lhs] ~= nil then
+      local desc = opts.desc or type(mappings[mode][orig_lhs]) == "table" and mappings[mode][orig_lhs].desc or nil
+      local keymap_opts = vim.tbl_extend("force", opts or {}, { orig_lhs, remap = true, desc = desc })
+      mappings[mode][new_lhs] = keymap_opts
+    end
+  end
+end
+
 ---@type LazySpec
 return {
   "AstroNvim/astrocore",
@@ -38,6 +55,11 @@ return {
       maps[mode]["<C-c>"] = { "<C-c>", noremap = true }
     end
     maps.n["<C-c>"] = { "ciw", desc = "Change inner word", noremap = true }
+
+    remap_key_if_exists(maps, "<C-PageUp>", "<C-Up>")
+    remap_key_if_exists(maps, "<C-PageDown>", "<C-Down>")
+    remap_key_if_exists(maps, "<C-Home>", "<C-Left>")
+    remap_key_if_exists(maps, "<C-End>", "<C-Right>")
 
     ---@type AstroCoreOpts
     local modified_opts = {
