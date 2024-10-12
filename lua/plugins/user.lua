@@ -162,7 +162,9 @@ return {
     cond = true,
     branch = "1.0",
     event = "VeryLazy",
-    opts = {},
+    opts = {
+      signs = false,
+    },
     config = function(_, opts)
       local mc = require "multicursor-nvim"
       mc.setup(opts)
