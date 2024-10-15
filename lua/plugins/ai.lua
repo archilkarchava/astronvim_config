@@ -134,7 +134,7 @@ return {
     end,
   },
   {
-    "archilkarchava/supermaven-nvim",
+    "supermaven-inc/supermaven-nvim",
     -- event = "User AstroFile",
     event = "VeryLazy",
     opts = function(_, opts)
