@@ -47,6 +47,7 @@ return {
   { import = "astrocommunity.search.grug-far-nvim" },
   -- { import = "astrocommunity.completion.avante-nvim" },
   { import = "astrocommunity.completion.copilot-lua" },
+  { import = "astrocommunity.completion.magazine-nvim" },
   { import = "astrocommunity.test.neotest" },
   -- { import = "astrocommunity.test.nvim-coverage" },
   { import = "astrocommunity.motion.harpoon" },
