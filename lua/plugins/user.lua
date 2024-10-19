@@ -894,6 +894,11 @@ return {
     },
   },
   {
+    "smart-splits.nvim",
+    optional = true,
+    build = "./kitty/install-kittens.bash",
+  },
+  {
     "better-escape.nvim",
     enabled = false,
   },
