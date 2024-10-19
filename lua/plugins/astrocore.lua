@@ -60,21 +60,28 @@ return {
       for _, mode in ipairs { "n", "i" } do
         maps[mode]["<C-'>"] = {
           function()
-            local find_term_window = vim.system({ "kitty", "@", "ls", "--match", "var:NVIM_TOGGLE_TERM" }):wait()
-            local is_term_window_exists = find_term_window.code == 0
+            local is_term_window_exists = false
+            if vim.g.kitty_toggle_term_window_id ~= nil then
+              local find_term_window_result =
+                vim.system({ "kitty", "@", "ls", "--match", "id:" .. vim.g.kitty_toggle_term_window_id }):wait()
+              is_term_window_exists = find_term_window_result.code == 0
+            end
             if is_term_window_exists then
-              vim.system { "kitty", "@", "focus-window", "--match", "var:NVIM_TOGGLE_TERM" }
+              vim.system { "kitty", "@", "focus-window", "--match", "id:" .. vim.g.kitty_toggle_term_window_id }
             else
-              vim.system {
-                "kitty",
-                "@",
-                "launch",
-                "--var",
-                "NVIM_TOGGLE_TERM=1",
-                "--location=hsplit",
-                "--cwd=current",
-                "--bias=30",
-              }
+              local create_term_window_result = vim
+                .system({
+                  "kitty",
+                  "@",
+                  "launch",
+                  "--location=hsplit",
+                  "--cwd=current",
+                  "--bias=30",
+                }, { text = true })
+                :wait()
+              local window_id = tostring(create_term_window_result.stdout)
+              if create_term_window_result.code ~= 0 or not window_id then return end
+              vim.g.kitty_toggle_term_window_id = window_id
             end
             vim.system { "kitty", "@", "goto-layout", "splits" }
           end,
