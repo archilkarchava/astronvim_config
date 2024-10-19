@@ -55,6 +55,33 @@ return {
       maps[mode]["<C-c>"] = { "<C-c>", noremap = true }
     end
     maps.n["<C-c>"] = { "ciw", desc = "Change inner word", noremap = true }
+    local is_kitty = vim.env.KITTY_LISTEN_ON ~= nil
+    if is_kitty then
+      for _, mode in ipairs { "n", "i" } do
+        maps[mode]["<C-'>"] = {
+          function()
+            local find_term_window = vim.system({ "kitty", "@", "ls", "--match", "var:NVIM_TOGGLE_TERM" }):wait()
+            local is_term_window_exists = find_term_window.code == 0
+            if is_term_window_exists then
+              vim.system { "kitty", "@", "focus-window", "--match", "var:NVIM_TOGGLE_TERM" }
+            else
+              vim.system {
+                "kitty",
+                "@",
+                "launch",
+                "--var",
+                "NVIM_TOGGLE_TERM=1",
+                "--location=hsplit",
+                "--cwd=current",
+                "--bias=30",
+              }
+            end
+            vim.system { "kitty", "@", "goto-layout", "splits" }
+          end,
+          desc = "Toggle terminal",
+        }
+      end
+    end
 
     remap_key_if_exists(maps, "<C-PageUp>", "<C-Up>")
     remap_key_if_exists(maps, "<C-PageDown>", "<C-Down>")
