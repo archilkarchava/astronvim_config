@@ -55,7 +55,7 @@ return {
       maps[mode]["<C-c>"] = { "<C-c>", noremap = true }
     end
     maps.n["<C-c>"] = { "ciw", desc = "Change inner word", noremap = true }
-    local is_kitty = vim.env.KITTY_LISTEN_ON ~= nil
+    local is_kitty = vim.env.KITTY_PID ~= nil
     if is_kitty then
       for _, mode in ipairs { "n", "i" } do
         maps[mode]["<C-'>"] = {
