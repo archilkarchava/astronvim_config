@@ -50,22 +50,11 @@ return {
     "nvim-telescope/telescope.nvim",
     optional = true,
     opts = function(_, opts)
-      local utils = require "astrocore"
       local actions = require "telescope.actions"
-      return utils.extend_tbl(opts, {
-        defaults = {
-          mappings = {
-            n = {
-              ["<PageDown>"] = actions.cycle_history_next,
-              ["<PageUp>"] = actions.cycle_history_prev,
-            },
-            i = {
-              ["<PageDown>"] = actions.cycle_history_next,
-              ["<PageUp>"] = actions.cycle_history_prev,
-            },
-          },
-        },
-      })
+      for _, mode in ipairs { "n", "i" } do
+        opts.defaults.mappings[mode]["<PageDown>"] = actions.cycle_history_next
+        opts.defaults.mappings[mode]["<PageUp>"] = actions.cycle_history_prev
+      end
     end,
   },
 }
