@@ -51,9 +51,11 @@ return {
     optional = true,
     opts = function(_, opts)
       local actions = require "telescope.actions"
+      local layout_actions = require "telescope.actions.layout"
       for _, mode in ipairs { "n", "i" } do
         opts.defaults.mappings[mode]["<PageDown>"] = actions.cycle_history_next
         opts.defaults.mappings[mode]["<PageUp>"] = actions.cycle_history_prev
+        opts.defaults.mappings[mode]["<C-y>"] = layout_actions.toggle_preview
       end
     end,
   },
