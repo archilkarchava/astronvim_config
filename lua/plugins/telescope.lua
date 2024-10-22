@@ -1,6 +1,32 @@
 ---@type LazySpec
 return {
   {
+    "AstroNvim/astrocore",
+    ---@param opts AstroCoreOpts
+    opts = function(_, opts)
+      if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
+      local maps = assert(opts.mappings)
+      local git_command = { "git", "log", "--pretty=format:%h %s [%ar] [%cn]\n", "--date=short" }
+      local options = {
+        git_command = git_command,
+        use_file_path = true,
+        layout_strategy = "vertical",
+        layout_config = {
+          height = 0.95,
+          preview_cutoff = 0,
+        },
+      }
+      maps.n["<Leader>gc"] = {
+        function() require("telescope.builtin").git_commits(options) end,
+        desc = "Git commits (repository)",
+      }
+      maps.n["<Leader>gC"] = {
+        function() require("telescope.builtin").git_bcommits(options) end,
+        desc = "Git commits (current file)",
+      }
+    end,
+  },
+  {
     "AstroNvim/astrolsp",
     ---@param opts AstroLSPOpts
     opts = function(_, opts)
