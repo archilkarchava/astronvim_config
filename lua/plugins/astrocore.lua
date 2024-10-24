@@ -145,6 +145,7 @@ return {
           cmdheight = vim.g.vscode and 1 or 0,
           sidescrolloff = 6,
           exrc = not vim.g.vscode,
+          timeoutlen = 1000,
         },
         g = { -- vim.g.<key>
           -- configure global vim variables (vim.g)
