@@ -530,14 +530,8 @@ return {
           mappings = {
             n = {
               ["gr"] = { function() require("substitute").operator() end, desc = "Substitute" },
-              ["gra"] = {
-                function()
-                  require("substitute").operator {
-                    motion = "a",
-                  }
-                end,
-                desc = "Substitute",
-              },
+              ["gra"] = nil,
+              ["gri"] = nil,
               ["grr"] = { function() require("substitute").line() end, desc = "Substitute line" },
             },
             x = {
@@ -553,6 +547,10 @@ return {
         timer = 175,
       },
     },
+    init = function()
+      vim.keymap.del("n", "gra")
+      vim.keymap.del("n", "gri")
+    end,
   },
   {
     "mbbill/undotree",
