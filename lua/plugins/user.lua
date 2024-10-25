@@ -530,8 +530,22 @@ return {
           mappings = {
             n = {
               ["gr"] = { function() require("substitute").operator() end, desc = "Substitute" },
-              ["gra"] = nil,
-              ["gri"] = nil,
+              ["gri"] = {
+                function()
+                  require("substitute").operator {
+                    motion = "i",
+                  }
+                end,
+                desc = "Substitute inside",
+              },
+              ["gra"] = {
+                function()
+                  require("substitute").operator {
+                    motion = "a",
+                  }
+                end,
+                desc = "Substitute around",
+              },
               ["grr"] = { function() require("substitute").line() end, desc = "Substitute line" },
             },
             x = {
@@ -548,8 +562,8 @@ return {
       },
     },
     init = function()
-      vim.keymap.del("n", "gra")
-      vim.keymap.del("n", "gri")
+      pcall(vim.keymap.del, "n", "gra")
+      pcall(vim.keymap.del, "n", "gri")
     end,
   },
   {
