@@ -911,6 +911,14 @@ return {
     build = "./kitty/install-kittens.bash",
   },
   {
+    "neogit",
+    optional = true,
+    opts = function(_, opts)
+      local util = require "util"
+      opts.graph_style = util.is_kitty() and "kitty" or "unicode"
+    end,
+  },
+  {
     "better-escape.nvim",
     enabled = false,
   },

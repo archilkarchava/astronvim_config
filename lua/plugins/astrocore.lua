@@ -30,6 +30,7 @@ return {
   ---@param opts AstroCoreOpts
   opts = function(_, opts)
     local astrocore = require "astrocore"
+    local util = require "util"
     local maps = assert(opts.mappings)
     --- Check if the OS is macOS
     if is_macos then
@@ -55,7 +56,7 @@ return {
       maps[mode]["<C-c>"] = { "<C-c>", noremap = true }
     end
     maps.n["<C-c>"] = { "ciw", desc = "Change inner word", noremap = true }
-    local is_kitty = vim.env.KITTY_PID ~= nil
+    local is_kitty = util.is_kitty()
     if is_kitty then
       for _, mode in ipairs { "n", "i" } do
         maps[mode]["<C-'>"] = {
