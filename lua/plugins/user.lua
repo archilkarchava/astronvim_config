@@ -25,7 +25,8 @@ return {
     optional = true,
     opts = function(_, opts)
       local cmp = require "cmp"
-      local is_macos = vim.uv.os_uname().sysname == "Darwin"
+      local platform = require "util.platform"
+      local is_macos = platform.is_macos()
       local toggle_cmp = cmp.mapping {
         i = function()
           if cmp.visible() then
@@ -914,7 +915,7 @@ return {
     "neogit",
     optional = true,
     opts = function(_, opts)
-      local util = require "util"
+      local util = require "util.terminal"
       opts.graph_style = util.is_kitty() and "kitty" or "unicode"
     end,
   },

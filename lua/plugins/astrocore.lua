@@ -5,8 +5,6 @@
 -- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
 --       as this provides autocomplete and documentation while editing
 
-local is_macos = vim.uv.os_uname().sysname == "Darwin"
-
 ---@param mappings AstroCoreMappings A table containing the key mappings for different modes
 ---@param new_lhs string The new keymap to be assigned
 ---@param orig_lhs string The original keymap to be remapped
@@ -30,9 +28,10 @@ return {
   ---@param opts AstroCoreOpts
   opts = function(_, opts)
     local astrocore = require "astrocore"
-    local util = require "util"
+    local terminal = require "util.terminal"
+    local platform = require "util.platform"
     local maps = assert(opts.mappings)
-    --- Check if the OS is macOS
+    local is_macos = platform.is_macos()
     if is_macos then
       for _, mode in ipairs { "n", "x", "o", "i" } do
         maps[mode]["<D-z>"] = {
@@ -56,7 +55,7 @@ return {
       maps[mode]["<C-c>"] = { "<C-c>", noremap = true }
     end
     maps.n["<C-c>"] = { "ciw", desc = "Change inner word", noremap = true }
-    local is_kitty = util.is_kitty()
+    local is_kitty = terminal.is_kitty()
     if is_kitty then
       for _, mode in ipairs { "n", "i" } do
         maps[mode]["<C-'>"] = {
