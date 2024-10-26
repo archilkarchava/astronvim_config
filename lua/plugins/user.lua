@@ -920,6 +920,28 @@ return {
     end,
   },
   {
+    "gitsigns.nvim",
+    optional = true,
+    opts = function(_, opts)
+      ---@type fun(bufnr: number)
+      local on_attach = opts.on_attach or function() end
+      return {
+        on_attach = function(bufnr)
+          on_attach(bufnr)
+          local astrocore = require "astrocore"
+          local maps = astrocore.empty_map_table()
+          local lhs = "<M-D-z>"
+          maps.n[lhs] = { function() require("gitsigns").reset_hunk() end, desc = "Reset Git hunk" }
+          maps.v[lhs] = {
+            function() require("gitsigns").reset_hunk { vim.fn.line ".", vim.fn.line "v" } end,
+            desc = "Reset Git hunk",
+          }
+          astrocore.set_mappings(maps, { buffer = bufnr })
+        end,
+      }
+    end,
+  },
+  {
     "better-escape.nvim",
     enabled = false,
   },
