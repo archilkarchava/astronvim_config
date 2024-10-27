@@ -942,6 +942,10 @@ return {
     end,
   },
   {
+    "nvim-ufo",
+    version = false,
+  },
+  {
     "better-escape.nvim",
     enabled = false,
   },
