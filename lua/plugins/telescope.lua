@@ -24,6 +24,16 @@ return {
         function() require("telescope.builtin").git_bcommits(options) end,
         desc = "Git commits (current file)",
       }
+      if vim.fn.executable "rg" == 1 then
+        maps.n["<Leader>fW"] = {
+          function()
+            require("telescope.builtin").live_grep {
+              additional_args = { "--hidden", "--no-ignore" },
+            }
+          end,
+          desc = "Find words in all files",
+        }
+      end
     end,
   },
   {
