@@ -85,6 +85,7 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     optional = true,
+    branch = "master",
     opts = function(_, opts)
       local actions = require "telescope.actions"
       local layout_actions = require "telescope.actions.layout"
