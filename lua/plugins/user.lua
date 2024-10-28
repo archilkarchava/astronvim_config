@@ -586,20 +586,37 @@ return {
     },
   },
   {
-    "lewis6991/gitsigns.nvim",
+    "gitsigns.nvim",
     version = false,
     optional = true,
-    opts = {
-      current_line_blame = true,
-      current_line_blame_opts = {
-        virt_text = true,
-        virt_text_pos = "eol", -- 'eol' | 'overlay' | 'right_align'
-        delay = 200,
-        ignore_whitespace = false,
-        virt_text_priority = 100,
-        use_focus = true,
-      },
-    },
+    opts = function(_, opts)
+      local astrocore = require "astrocore"
+      ---@type fun(bufnr: number)
+      local original_on_attach = opts.on_attach or function() end
+      local modified_opts = {
+        current_line_blame = true,
+        current_line_blame_opts = {
+          virt_text = true,
+          virt_text_pos = "eol", -- 'eol' | 'overlay' | 'right_align'
+          delay = 200,
+          ignore_whitespace = false,
+          virt_text_priority = 100,
+          use_focus = true,
+        },
+        on_attach = function(bufnr)
+          original_on_attach(bufnr)
+          local maps = astrocore.empty_map_table()
+          local lhs = "<M-D-z>"
+          maps.n[lhs] = { function() require("gitsigns").reset_hunk() end, desc = "Reset Git hunk" }
+          maps.v[lhs] = {
+            function() require("gitsigns").reset_hunk { vim.fn.line ".", vim.fn.line "v" } end,
+            desc = "Reset Git hunk",
+          }
+          astrocore.set_mappings(maps, { buffer = bufnr })
+        end,
+      }
+      return astrocore.extend_tbl(opts, modified_opts)
+    end,
     dependencies = {
       {
         "AstroNvim/astrocore",
@@ -917,28 +934,6 @@ return {
     opts = function(_, opts)
       local util = require "util.terminal"
       opts.graph_style = util.is_kitty() and "kitty" or "unicode"
-    end,
-  },
-  {
-    "gitsigns.nvim",
-    optional = true,
-    opts = function(_, opts)
-      ---@type fun(bufnr: number)
-      local on_attach = opts.on_attach or function() end
-      return {
-        on_attach = function(bufnr)
-          on_attach(bufnr)
-          local astrocore = require "astrocore"
-          local maps = astrocore.empty_map_table()
-          local lhs = "<M-D-z>"
-          maps.n[lhs] = { function() require("gitsigns").reset_hunk() end, desc = "Reset Git hunk" }
-          maps.v[lhs] = {
-            function() require("gitsigns").reset_hunk { vim.fn.line ".", vim.fn.line "v" } end,
-            desc = "Reset Git hunk",
-          }
-          astrocore.set_mappings(maps, { buffer = bufnr })
-        end,
-      }
     end,
   },
   {
