@@ -121,6 +121,15 @@ return {
         virtual_text = true,
         underline = true,
       },
+      autocmds = {
+        __env = {
+          {
+            pattern = ".env.*",
+            event = { "BufRead", "BufNewFile" },
+            callback = function(args) vim.diagnostic.enable(false, { bufnr = args.buf }) end,
+          },
+        },
+      },
       on_keys = {
         -- auto_hlsearch autocmd provided by AstroNvim does not work well with multicursor.nvim
         auto_hlsearch = {
