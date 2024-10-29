@@ -198,7 +198,7 @@ return {
         },
       },
       filetypes = {
-        filename = { -- (((
+        filename = {
           [".codespellrc"] = "confini",
           [".dace.conf"] = "yaml",
           [".envrc"] = "sh",
@@ -216,7 +216,10 @@ return {
           ["tasks.json"] = "jsonc",
           ["spack.lock"] = "json",
           ["zuliprc"] = "confini",
-        }, -- )))
+        },
+        pattern = {
+          [".env.*"] = "sh",
+        },
       },
     }
     return astrocore.extend_tbl(opts, modified_opts)
