@@ -949,6 +949,101 @@ return {
     },
   },
   {
+    "rgroli/other.nvim",
+    cmd = {
+      "Other",
+      "OtherTabNew",
+      "OtherSplit",
+      "OtherVSplit",
+      "OtherClear",
+    },
+    main = "other-nvim",
+    dependencies = {
+      {
+        "AstroNvim/astrocore",
+        optional = true,
+        ---@param opts AstroCoreOpts
+        opts = function(_, opts)
+          if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
+          for _, mode in ipairs { "n", "x", "i" } do
+            opts.mappings[mode]["<M-o>"] = { "<cmd>Other<cr>", desc = "Go to other (related) file" }
+          end
+        end,
+      },
+    },
+    opts = {
+      showMissingFiles = false,
+      mappings = {
+        "golang",
+        "python",
+        "rust",
+        ---- C/C++
+        "c",
+        {
+          pattern = "(.*).cpp$",
+          context = "header",
+          target = "%1.h",
+        },
+        {
+          pattern = "(.*).h$",
+          context = "implementation",
+          target = "%1.cpp",
+        },
+        ---- TypeScript/JavaScript
+        "angular",
+        "react",
+        {
+          pattern = "(.*).d.ts$",
+          context = "declaration-test",
+          target = "%1.test-d.ts",
+        },
+        {
+          pattern = "(.*).test%-d.ts$",
+          target = {
+            {
+              context = "declaration",
+              target = "%1.d.ts",
+            },
+            {
+              context = "implementation",
+              target = "%1.ts",
+            },
+          },
+        },
+        {
+          pattern = "(.*)/([a-zA-Z0-9%-]*).([tj]sx?)$", -- don't include `"."spec`
+          target = "%1/__tests__/%2.spec.%3",
+          context = "test",
+        },
+        {
+          pattern = "(.*)/([a-zA-Z0-9%-]*).([tj]sx?)$", -- don't include `"."spec`
+          target = "%1/__test__/%2.spec.%3",
+          context = "test",
+        },
+        {
+          pattern = "(.*)/__tests?__/(.*).spec.([tj]sx?)$",
+          target = "%1/%2.%3",
+          context = "implementation",
+        },
+        {
+          pattern = "(.*)/([a-zA-Z0-9%-]*).([tj]sx?)$", -- don't include `"."test`
+          target = "%1/__tests__/%2.test.%3",
+          context = "test",
+        },
+        {
+          pattern = "(.*)/([a-zA-Z0-9%-]*).([tj]sx?)$", -- don't include `"."test`
+          target = "%1/__test__/%2.test.%3",
+          context = "test",
+        },
+        {
+          pattern = "(.*)/__tests?__/(.*).test.([tj]sx?)$",
+          target = "%1/%2.%3",
+          context = "implementation",
+        },
+      },
+    },
+  },
+  {
     "nvim-ufo",
     version = false,
   },
