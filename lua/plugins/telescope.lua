@@ -6,7 +6,7 @@ return {
     opts = function(_, opts)
       if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
       local maps = assert(opts.mappings)
-      local git_command = { "git", "log", "--pretty=format:%h %s [%ar] [%an]\n", "--date=short" }
+      local git_command = { "git", "log", "--pretty=format:%h %<(100,trunc)%s [%ar] [%an]\n", "--date=short" }
       local options = {
         git_command = git_command,
         use_file_path = true,
