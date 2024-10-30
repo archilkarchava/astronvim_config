@@ -899,16 +899,16 @@ return {
         opts = {
           mappings = {
             n = {
-              ["<M-S-Up>"] = { "<Plug>GoNSDUp", desc = "Hello" },
-              ["<M-K>"] = { "<Plug>GoNSDUp", desc = "Hello" },
-              ["<M-S-Down>"] = { "<Plug>GoNSDDown", desc = "Hello" },
-              ["<M-J>"] = { "<Plug>GoNSDDown", desc = "Hello" },
+              ["<M-S-Up>"] = { "<Plug>GoNSDUp", desc = "Copy line above" },
+              ["<M-K>"] = { "<Plug>GoNSDUp", desc = "Copy line above" },
+              ["<M-S-Down>"] = { "<Plug>GoNSDDown", desc = "Copy line below" },
+              ["<M-J>"] = { "<Plug>GoNSDDown", desc = "Copy line below" },
             },
             x = {
-              ["<M-S-Up>"] = { "<Plug>GoVSDUp", desc = "Hello" },
-              ["<M-K>"] = { "<Plug>GoVSDUp", desc = "Hello" },
-              ["<M-S-Down>"] = { "<Plug>GoVSDDown", desc = "Hello" },
-              ["<M-J>"] = { "<Plug>GoVSDDown", desc = "Hello" },
+              ["<M-S-Up>"] = { "<Plug>GoVSDUp", desc = "Copy selection above" },
+              ["<M-K>"] = { "<Plug>GoVSDUp", desc = "Copy selection above" },
+              ["<M-S-Down>"] = { "<Plug>GoVSDDown", desc = "Copy selection below" },
+              ["<M-J>"] = { "<Plug>GoVSDDown", desc = "Copy selection below" },
             },
           },
         },
