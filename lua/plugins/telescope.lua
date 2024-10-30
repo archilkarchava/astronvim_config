@@ -22,7 +22,10 @@ return {
         desc = "Git commits (repository)",
       }
       maps.n["<Leader>gC"] = {
-        function() require("telescope.builtin").git_bcommits(options) end,
+        function()
+          local bcommits_opts = vim.tbl_extend("force", options, { current_file = vim.fn.expand "%:p" })
+          require("telescope.builtin").git_bcommits(bcommits_opts)
+        end,
         desc = "Git commits (current file)",
       }
       if vim.fn.executable "rg" == 1 then
