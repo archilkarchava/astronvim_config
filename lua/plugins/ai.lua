@@ -8,6 +8,8 @@ local suggestion_providers = {
   none = "none",
 }
 
+local is_windows = require("util.platform").is_windows()
+
 ---@type SuggestionsProvider
 local default_suggestions_provider = suggestion_providers.supermaven
 
@@ -247,7 +249,7 @@ return {
   {
     "yetone/avante.nvim",
     event = "VeryLazy",
-    build = ":AvanteBuild",
+    build = is_windows and "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" or "make",
     opts = {
       ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
       provider = "copilot", -- Recommend using Claude
