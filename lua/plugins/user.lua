@@ -950,6 +950,7 @@ return {
   },
   {
     "rgroli/other.nvim",
+    cond = true,
     cmd = {
       "Other",
       "OtherTabNew",
