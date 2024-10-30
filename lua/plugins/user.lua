@@ -330,8 +330,10 @@ return {
             maps[mode][chord_prefix .. "<D-Z>"] = { mc.duplicateCursors, desc = "Duplicate cursors" }
 
             -- Jumplist support
-            maps[mode]["<c-i>"] = { mc.jumpForward, desc = "Jump forward" }
-            maps[mode]["<c-o>"] = { mc.jumpBackward, desc = "Jump backward" }
+            if not vim.g.vscode then
+              maps[mode]["<c-i>"] = { mc.jumpForward, desc = "Jump forward" }
+              maps[mode]["<c-o>"] = { mc.jumpBackward, desc = "Jump backward" }
+            end
           end
 
           -- Add and remove cursors with control + left click.
