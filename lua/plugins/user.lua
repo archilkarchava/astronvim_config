@@ -968,6 +968,8 @@ return {
           if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
           for _, mode in ipairs { "n", "x", "i" } do
             opts.mappings[mode]["<M-o>"] = { "<cmd>Other<cr>", desc = "Go to other (related) file" }
+            opts.mappings[mode]["<M-O>"] =
+              { "<cmd>OtherVSplit<cr>", desc = "Go to other (related) file (vertical split)" }
           end
         end,
       },
