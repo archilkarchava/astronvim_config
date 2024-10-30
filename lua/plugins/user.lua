@@ -939,6 +939,16 @@ return {
     end,
   },
   {
+    "nvim-bqf",
+    optional = true,
+    opts = {
+      func_map = {
+        openc = "<CR>",
+        open = "o",
+      },
+    },
+  },
+  {
     "nvim-ufo",
     version = false,
   },
