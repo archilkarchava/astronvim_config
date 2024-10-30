@@ -12,7 +12,8 @@ return {
         use_file_path = true,
         layout_strategy = "vertical",
         layout_config = {
-          height = 0.95,
+          height = 0.99,
+          width = 0.99,
           preview_cutoff = 0,
         },
       }
@@ -74,7 +75,8 @@ return {
               shorten = 2,
             },
             layout_config = {
-              height = 0.95,
+              height = 0.99,
+              width = 0.99,
               preview_cutoff = 0,
             },
           }
