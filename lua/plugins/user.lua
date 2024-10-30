@@ -240,7 +240,7 @@ return {
           if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
           local mc = require "multicursor-nvim"
 
-          opts.autocmds.multicursor_buf_siwtch = {
+          opts.autocmds.multicursor_buf_switch = {
             {
               event = "BufLeave",
               callback = function()
