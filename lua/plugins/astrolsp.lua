@@ -203,6 +203,11 @@ return {
       -- mappings to be set up on attaching of a language server
       mappings = {
         n = {
+          K = {
+            ---@diagnostic disable-next-line: redundant-parameter
+            function() vim.lsp.buf.hover { silent = true } end,
+            desc = "LSP hover",
+          },
           -- a `cond` key can provided as the string of a server capability to be required to attach, or a function with `client` and `bufnr` parameters from the `on_attach` that returns a boolean
           gD = {
             function() vim.lsp.buf.declaration() end,
