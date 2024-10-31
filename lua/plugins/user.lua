@@ -609,7 +609,9 @@ return {
           original_on_attach(bufnr)
           local maps = astrocore.empty_map_table()
           local lhs = "<M-D-z>"
-          maps.n[lhs] = { function() require("gitsigns").reset_hunk() end, desc = "Reset Git hunk" }
+          for _, mode in ipairs { "n", "i" } do
+            maps[mode][lhs] = { function() require("gitsigns").reset_hunk() end, desc = "Reset Git hunk" }
+          end
           maps.v[lhs] = {
             function() require("gitsigns").reset_hunk { vim.fn.line ".", vim.fn.line "v" } end,
             desc = "Reset Git hunk",
