@@ -1014,12 +1014,12 @@ return {
           },
         },
         {
-          pattern = "(.*)/([a-zA-Z0-9%-]*).([tj]sx?)$", -- don't include `"."spec`
+          pattern = "(.*)/([a-zA-Z0-9%-]*).([tj]sx?)$",
           target = "%1/__tests__/%2.spec.%3",
           context = "test",
         },
         {
-          pattern = "(.*)/([a-zA-Z0-9%-]*).([tj]sx?)$", -- don't include `"."spec`
+          pattern = "(.*)/([a-zA-Z0-9%-]*).([tj]sx?)$",
           target = "%1/__test__/%2.spec.%3",
           context = "test",
         },
@@ -1029,18 +1029,68 @@ return {
           context = "implementation",
         },
         {
-          pattern = "(.*)/([a-zA-Z0-9%-]*).([tj]sx?)$", -- don't include `"."test`
+          pattern = "(.*)/([a-zA-Z0-9%-]*).([tj]sx?)$",
           target = "%1/__tests__/%2.test.%3",
           context = "test",
         },
         {
-          pattern = "(.*)/([a-zA-Z0-9%-]*).([tj]sx?)$", -- don't include `"."test`
+          pattern = "(.*)/([a-zA-Z0-9%-]*).([tj]sx?)$",
           target = "%1/__test__/%2.test.%3",
           context = "test",
         },
         {
           pattern = "(.*)/__tests?__/(.*).test.([tj]sx?)$",
           target = "%1/%2.%3",
+          context = "implementation",
+        },
+        {
+          pattern = "(.*)/([a-zA-Z0-9%-]*).([tj]sx?)$",
+          target = "%1/__tests__/%2.integration.test.%3",
+          context = "test",
+        },
+        {
+          pattern = "(.*)/([a-zA-Z0-9%-]*).([tj]sx?)$",
+          target = "%1/__test__/%2.integration.test.%3",
+          context = "test",
+        },
+        {
+          pattern = "(.*)/__tests?__/(.*).integration.test.([tj]sx?)$",
+          target = "%1/%2.%3",
+          context = "implementation",
+        },
+        {
+          pattern = "(.*)/([a-zA-Z0-9%-]*).([tj]sx?)$",
+          target = "%1/__tests__/%2.integration.test.%3",
+          context = "test",
+        },
+        {
+          pattern = "(.*)/([a-zA-Z0-9%-]*).([tj]sx?)$",
+          target = "%1/__test__/%2.integration.test.%3",
+          context = "test",
+        },
+        {
+          pattern = "(.*)/__tests?__/(.*).integration.test.([tj]sx?)$",
+          target = "%1/%2.%3",
+          context = "implementation",
+        },
+        {
+          pattern = "(.*).([tj]sx?)$",
+          target = "%1.integration.test.%2",
+          context = "test",
+        },
+        {
+          pattern = "(.*).integration.test.([tj]sx?)$",
+          target = "%1.%2",
+          context = "implementation",
+        },
+        {
+          pattern = "(.*).([tj]sx?)$",
+          target = "%1.integration.spec.%2",
+          context = "test",
+        },
+        {
+          pattern = "(.*).integration.spec.([tj]sx?)$",
+          target = "%1.%2",
           context = "implementation",
         },
       },
