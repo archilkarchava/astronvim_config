@@ -40,6 +40,7 @@ return {
   { import = "astrocommunity.pack.yaml" },
   { import = "astrocommunity.pack.json" },
   { import = "astrocommunity.pack.docker" },
+  { import = "astrocommunity.pack.markdown" },
   { import = "astrocommunity.docker.lazydocker" },
   { import = "astrocommunity.markdown-and-latex.render-markdown-nvim" },
   { import = "astrocommunity.markdown-and-latex.markview-nvim" },
