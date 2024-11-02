@@ -949,6 +949,12 @@ return {
         open = "o",
       },
     },
+    dependencies = {
+      {
+        "junegunn/fzf",
+        run = ":call fzf#install()",
+      },
+    },
   },
   {
     "rgroli/other.nvim",

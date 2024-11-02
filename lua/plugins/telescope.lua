@@ -41,6 +41,8 @@ return {
     "AstroNvim/astrolsp",
     ---@param opts AstroLSPOpts
     opts = function(_, opts)
+      local utils = require "astrocore"
+      if utils.is_available "nvim-bqf" then return end
       if opts.mappings.n.gd then
         opts.mappings.n.gd[1] = function() require("telescope.builtin").lsp_definitions { reuse_win = true } end
       end
