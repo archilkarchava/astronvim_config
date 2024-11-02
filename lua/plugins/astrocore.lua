@@ -130,6 +130,11 @@ return {
           },
         },
       },
+      sessions = {
+        ignore = {
+          dirs = { "/tmp/shell-edit" },
+        },
+      },
       on_keys = {
         -- auto_hlsearch autocmd provided by AstroNvim does not work well with multicursor.nvim
         auto_hlsearch = {
