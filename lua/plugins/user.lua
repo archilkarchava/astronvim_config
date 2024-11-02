@@ -939,6 +939,19 @@ return {
       local util = require "util.terminal"
       opts.graph_style = util.is_kitty() and "kitty" or "unicode"
     end,
+    dependencies = {
+      {
+        "AstroNvim/astrocore",
+        ---@type AstroCoreOpts
+        opts = {
+          mappings = {
+            n = {
+              ["<leader>gH"] = { "<cmd>NeogitLogCurrent<cr>", desc = "Git commits (current file neogit)" },
+            },
+          },
+        },
+      },
+    },
   },
   {
     "nvim-bqf",
