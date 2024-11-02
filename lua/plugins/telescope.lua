@@ -7,7 +7,7 @@ return {
       if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
       local maps = assert(opts.mappings)
       local git_command = { "git", "log", "--pretty=format:%<|(10)%h %<(100,trunc)%s [%ar] [%an]\n", "--date=short" }
-      local options = {
+      local common_git_commits_options = {
         git_command = git_command,
         use_file_path = true,
         layout_strategy = "vertical",
@@ -18,14 +18,11 @@ return {
         },
       }
       maps.n["<Leader>gc"] = {
-        function() require("telescope.builtin").git_commits(options) end,
+        function() require("telescope.builtin").git_commits(vim.tbl_extend("force", {}, common_git_commits_options)) end,
         desc = "Git commits (repository)",
       }
       maps.n["<Leader>gC"] = {
-        function()
-          local bcommits_opts = vim.tbl_extend("force", options, { current_file = vim.fn.expand "%:p" })
-          require("telescope.builtin").git_bcommits(bcommits_opts)
-        end,
+        function() require("telescope.builtin").git_bcommits(vim.tbl_extend("force", {}, common_git_commits_options)) end,
         desc = "Git commits (current file)",
       }
       if vim.fn.executable "rg" == 1 then
