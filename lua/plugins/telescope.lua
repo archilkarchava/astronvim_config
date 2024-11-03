@@ -98,6 +98,7 @@ return {
       for _, mode in ipairs { "n", "i" } do
         opts.defaults.mappings[mode]["<PageDown>"] = actions.cycle_history_next
         opts.defaults.mappings[mode]["<PageUp>"] = actions.cycle_history_prev
+        opts.defaults.mappings[mode]["<C-o>"] = actions.toggle_all
         opts.defaults.mappings[mode]["<C-y>"] = layout_actions.toggle_preview
       end
     end,
