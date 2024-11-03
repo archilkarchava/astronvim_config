@@ -7,7 +7,7 @@ function M.grep_last_search(opts)
 
   -- \<getreg\>\C
   -- -> Subs out the search things
-  local word = vim.fn.getreg("/"):gsub("\\<", ""):gsub("\\>", ""):gsub("\\C", ""):gsub("\\[vV]", "")
+  local word = vim.fn.getreg("/"):gsub("\\<", ""):gsub("\\>", ""):gsub("\\C", ""):gsub("^\\[vV]", "", 1)
 
   opts.path_display = opts.path_display or { "shorten_path" }
   opts.word_match = "-w"
