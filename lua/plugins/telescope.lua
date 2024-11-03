@@ -34,6 +34,10 @@ return {
           end,
           desc = "Find words in all files",
         }
+        maps.n["<Leader>fs"] = {
+          function() require("util.telescope").grep_last_search() end,
+          desc = "Find last search pattern",
+        }
         maps.v["<Leader>fc"] =
           { function() require("telescope.builtin").grep_string() end, desc = "Find selected word" }
       end
