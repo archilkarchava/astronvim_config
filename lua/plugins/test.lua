@@ -12,6 +12,22 @@ return {
         filter_dir = function(name) return name ~= "node_modules" end,
       },
     },
+    dependencies = {
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
+          local maps = opts.mappings
+
+          local prefix = "<Leader>T"
+
+          maps.n[prefix .. "l"] = {
+            function() require("neotest").run.run_last() end,
+            desc = "Run last test",
+          }
+        end,
+      },
+    },
   },
   {
     "neotest",
