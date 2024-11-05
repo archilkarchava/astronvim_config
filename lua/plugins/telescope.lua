@@ -140,11 +140,12 @@ return {
             opts = function(_, opts)
               if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
               local maps = assert(opts.mappings)
+              local prefix = "<Leader>f"
               local is_windows = require("util.platform").is_windows()
               local zo_data_dir = vim.fn.stdpath "data" .. "/zoxide"
               local zo_data_dir_var_name = "_ZO_DATA_DIR"
-              maps.n["<Leader>fZ"] = { "<Cmd>Telescope zoxide list<CR>", desc = "Find directories" }
-              maps.n["<Leader>fz"] = {
+              maps.n[prefix .. "Z"] = { "<Cmd>Telescope zoxide list<CR>", desc = "Find directories" }
+              maps.n[prefix .. "z"] = {
                 function()
                   local cmd_shell = "cmd.exe"
                   local shell = is_windows and cmd_shell or (vim.o.shell or "sh")
