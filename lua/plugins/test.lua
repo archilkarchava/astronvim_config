@@ -15,9 +15,10 @@ return {
     dependencies = {
       {
         "AstroNvim/astrocore",
+        ---@param opts AstroCoreOpts
         opts = function(_, opts)
           if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
-          local maps = opts.mappings
+          local maps = assert(opts.mappings)
 
           local prefix = "<Leader>T"
 
