@@ -107,4 +107,80 @@ return {
       end
     end,
   },
+  {
+    "jvgrootveld/telescope-zoxide",
+    lazy = true,
+    specs = {
+      {
+        "nvim-telescope/telescope.nvim",
+        config = function(_, opts)
+          require("telescope").setup(opts)
+          require("telescope").load_extension "zoxide"
+        end,
+        dependencies = {
+          "jvgrootveld/telescope-zoxide",
+          {
+            "AstroNvim/astrocore",
+            ---@param opts AstroCoreOpts
+            opts = function(_, opts)
+              if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
+              local maps = assert(opts.mappings)
+              local is_windows = require("util.platform").is_windows()
+              local zo_data_dir = vim.fn.stdpath "data" .. "/zoxide"
+              local zo_data_dir_var_name = "_ZO_DATA_DIR"
+              maps.n["<Leader>fZ"] = { "<Cmd>Telescope zoxide list<CR>", desc = "Find directories" }
+              maps.n["<Leader>fz"] = {
+                function()
+                  local cmd_shell = "cmd.exe"
+                  local shell = is_windows and cmd_shell or (vim.o.shell or "sh")
+                  local shell_arg = "-c"
+                  local is_cmd_shell = shell == cmd_shell
+                  if is_cmd_shell then shell_arg = "/C /V" end
+                  local list_command = "zoxide query -ls"
+                  local zoxide_cmd = is_cmd_shell
+                      and "set " .. zo_data_dir_var_name .. "=" .. zo_data_dir .. "&& " .. list_command
+                    or zo_data_dir_var_name .. "=" .. zo_data_dir .. " " .. list_command
+                  local prompt_title = "[ Projects List ]"
+                  require("telescope").extensions.zoxide.list {
+                    cmd = {
+                      shell,
+                      shell_arg,
+                      zoxide_cmd,
+                    },
+                    prompt_title = prompt_title,
+                  }
+                end,
+                desc = "Find projects",
+              }
+              ---@param dir string
+              local function zoxide_add(dir)
+                return vim.system({ "zoxide", "add", dir }, { env = { [zo_data_dir_var_name] = zo_data_dir } })
+              end
+              if not opts.autocmds then opts.autocmds = {} end
+              local autocmds = assert(opts.autocmds)
+              autocmds.zoxide = {
+                {
+                  event = "DirChanged",
+                  pattern = "*",
+                  callback = function()
+                    if vim.v.event.changed_window then return end
+                    zoxide_add(vim.v.event.cwd)
+                  end,
+                  desc = "Update the list of projects in the zoxide database",
+                },
+                {
+                  event = "VimEnter",
+                  callback = function()
+                    if vim.fn.argc() > 0 then return end
+                    zoxide_add(vim.fn.getcwd())
+                  end,
+                  desc = "Update the list of projects in the zoxide database",
+                },
+              }
+            end,
+          },
+        },
+      },
+    },
+  },
 }
