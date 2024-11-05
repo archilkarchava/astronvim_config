@@ -1090,21 +1090,6 @@ return {
           context = "implementation",
         },
         {
-          pattern = "(.*)/([a-zA-Z0-9%-]*).([tj]sx?)$",
-          target = "%1/__tests__/%2.integration.test.%3",
-          context = "test",
-        },
-        {
-          pattern = "(.*)/([a-zA-Z0-9%-]*).([tj]sx?)$",
-          target = "%1/__test__/%2.integration.test.%3",
-          context = "test",
-        },
-        {
-          pattern = "(.*)/__tests?__/(.*).integration.test.([tj]sx?)$",
-          target = "%1/%2.%3",
-          context = "implementation",
-        },
-        {
           pattern = "(.*).([tj]sx?)$",
           target = "%1.integration.test.%2",
           context = "test",
