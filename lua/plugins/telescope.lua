@@ -164,6 +164,13 @@ return {
                 map({ "i", "n" }, "<M-d>", remove_path)
                 return true
               end
+              --- Generate the zoxide list command based on options
+              ---@param include_cwd boolean? Whether to include the current working directory in the list
+              local function get_list_command(include_cwd)
+                local base_cmd = "zoxide query --list --score"
+                if include_cwd then return base_cmd end
+                return base_cmd .. " | grep -v " .. vim.fn.getcwd()
+              end
               maps.n[prefix .. "Z"] = {
                 function()
                   telescope.extensions.zoxide.list {
@@ -179,7 +186,7 @@ return {
                   local shell_arg = "-c"
                   local is_cmd_shell = shell == cmd_shell
                   if is_cmd_shell then shell_arg = "/C /V" end
-                  local list_command = "zoxide query -ls"
+                  local list_command = get_list_command()
                   local zoxide_cmd = is_cmd_shell
                       and "set " .. zoxide.DATA_DIR_VAR_NAME .. "=" .. zoxide.DATA_DIR .. "&& " .. list_command
                     or zoxide.DATA_DIR_VAR_NAME .. "=" .. zoxide.DATA_DIR .. " " .. list_command
