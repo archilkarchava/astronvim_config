@@ -113,6 +113,21 @@ return {
     specs = {
       {
         "nvim-telescope/telescope.nvim",
+        opts = function(_, opts)
+          local astrocore = require "astrocore"
+          local neogit_mapping = astrocore.is_available "neogit"
+              and { action = function(selection) vim.cmd.Neogit("cwd=" .. selection.path) end }
+            or nil
+          return astrocore.extend_tbl(opts, {
+            extensions = {
+              zoxide = {
+                mappings = {
+                  ["<C-g>"] = neogit_mapping,
+                },
+              },
+            },
+          })
+        end,
         config = function(_, opts)
           require("telescope").setup(opts)
           require("telescope").load_extension "zoxide"
