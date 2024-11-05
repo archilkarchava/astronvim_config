@@ -118,10 +118,19 @@ return {
           local neogit_mapping = astrocore.is_available "neogit"
               and { action = function(selection) vim.cmd.Neogit("cwd=" .. selection.path) end }
             or nil
+          local zoxide = require "util.zoxide"
           return astrocore.extend_tbl(opts, {
             extensions = {
               zoxide = {
                 mappings = {
+                  default = {
+                    after_action = function()
+                      local ok, resession = pcall(require, "resession")
+                      if not ok then return end
+                      resession.load(vim.fn.getcwd(), { dir = "dirsession" })
+                      vim.cmd.LspRestart()
+                    end,
+                  },
                   ["<C-g>"] = neogit_mapping,
                 },
               },
@@ -142,8 +151,7 @@ return {
               local maps = assert(opts.mappings)
               local prefix = "<Leader>f"
               local is_windows = require("util.platform").is_windows()
-              local zo_data_dir = vim.fn.stdpath "data" .. "/zoxide"
-              local zo_data_dir_var_name = "_ZO_DATA_DIR"
+              local zoxide = require "util.zoxide"
               maps.n[prefix .. "Z"] = { "<Cmd>Telescope zoxide list<CR>", desc = "Find directories" }
               maps.n[prefix .. "z"] = {
                 function()
@@ -154,8 +162,8 @@ return {
                   if is_cmd_shell then shell_arg = "/C /V" end
                   local list_command = "zoxide query -ls"
                   local zoxide_cmd = is_cmd_shell
-                      and "set " .. zo_data_dir_var_name .. "=" .. zo_data_dir .. "&& " .. list_command
-                    or zo_data_dir_var_name .. "=" .. zo_data_dir .. " " .. list_command
+                      and "set " .. zoxide.DATA_DIR_VAR_NAME .. "=" .. zoxide.DATA_DIR .. "&& " .. list_command
+                    or zoxide.DATA_DIR_VAR_NAME .. "=" .. zoxide.DATA_DIR .. " " .. list_command
                   local prompt_title = "[ Projects List ]"
                   require("telescope").extensions.zoxide.list {
                     cmd = {
@@ -168,10 +176,6 @@ return {
                 end,
                 desc = "Find projects",
               }
-              ---@param dir string
-              local function zoxide_add(dir)
-                return vim.system({ "zoxide", "add", dir }, { env = { [zo_data_dir_var_name] = zo_data_dir } })
-              end
               if not opts.autocmds then opts.autocmds = {} end
               local autocmds = assert(opts.autocmds)
               autocmds.zoxide = {
@@ -180,7 +184,7 @@ return {
                   pattern = "*",
                   callback = function()
                     if vim.v.event.changed_window then return end
-                    zoxide_add(vim.v.event.cwd)
+                    zoxide.add(vim.v.event.cwd)
                   end,
                   desc = "Update the list of projects in the zoxide database",
                 },
@@ -188,7 +192,7 @@ return {
                   event = "VimEnter",
                   callback = function()
                     if vim.fn.argc() > 0 then return end
-                    zoxide_add(vim.fn.getcwd())
+                    zoxide.add(vim.fn.getcwd())
                   end,
                   desc = "Update the list of projects in the zoxide database",
                 },
