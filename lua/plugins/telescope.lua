@@ -118,7 +118,6 @@ return {
           local neogit_mapping = astrocore.is_available "neogit"
               and { action = function(selection) vim.cmd.Neogit("cwd=" .. selection.path) end }
             or nil
-          local zoxide = require "util.zoxide"
           return astrocore.extend_tbl(opts, {
             extensions = {
               zoxide = {
@@ -152,7 +151,27 @@ return {
               local prefix = "<Leader>f"
               local is_windows = require("util.platform").is_windows()
               local zoxide = require "util.zoxide"
-              maps.n[prefix .. "Z"] = { "<Cmd>Telescope zoxide list<CR>", desc = "Find directories" }
+              local telescope = require "telescope"
+              local action_state = require "telescope.actions.state"
+              local function remove_path(prompt_bufnr)
+                local current_picker = action_state.get_current_picker(prompt_bufnr)
+                current_picker:delete_selection(function(selection)
+                  local remove_cmd_res = zoxide.remove(selection.path):wait()
+                  return remove_cmd_res.code == 0
+                end)
+              end
+              local function attach_mappings(_, map)
+                map({ "i", "n" }, "<M-d>", remove_path)
+                return true
+              end
+              maps.n[prefix .. "Z"] = {
+                function()
+                  telescope.extensions.zoxide.list {
+                    attach_mappings = attach_mappings,
+                  }
+                end,
+                desc = "Find directories",
+              }
               maps.n[prefix .. "z"] = {
                 function()
                   local cmd_shell = "cmd.exe"
@@ -165,13 +184,14 @@ return {
                       and "set " .. zoxide.DATA_DIR_VAR_NAME .. "=" .. zoxide.DATA_DIR .. "&& " .. list_command
                     or zoxide.DATA_DIR_VAR_NAME .. "=" .. zoxide.DATA_DIR .. " " .. list_command
                   local prompt_title = "[ Projects List ]"
-                  require("telescope").extensions.zoxide.list {
+                  telescope.extensions.zoxide.list {
                     cmd = {
                       shell,
                       shell_arg,
                       zoxide_cmd,
                     },
                     prompt_title = prompt_title,
+                    attach_mappings = attach_mappings,
                   }
                 end,
                 desc = "Find projects",
