@@ -970,6 +970,16 @@ return {
     },
   },
   {
+    "nvim-surround",
+    optional = true,
+    opts = {
+      keymaps = {
+        insert = false,
+        insert_line = false,
+      },
+    },
+  },
+  {
     "rgroli/other.nvim",
     cond = true,
     cmd = {
