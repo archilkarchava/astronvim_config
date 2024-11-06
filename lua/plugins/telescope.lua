@@ -192,7 +192,7 @@ return {
               local function get_list_command(include_cwd)
                 local base_cmd = "zoxide query --list --score"
                 if include_cwd then return base_cmd end
-                return base_cmd .. " | grep -v " .. vim.fn.getcwd()
+                return base_cmd .. " | grep -v " .. vim.fn.getcwd() .. "$"
               end
               maps.n[prefix .. "Z"] = {
                 function()
