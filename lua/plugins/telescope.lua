@@ -124,7 +124,8 @@ return {
               zoxide = {
                 mappings = {
                   default = {
-                    after_action = function()
+                    after_action = function(selection)
+                      directory_changed_after_action(selection)
                       local ok, resession = pcall(require, "resession")
                       if not ok then return end
                       resession.load(vim.fn.getcwd(), { dir = "dirsession" })
