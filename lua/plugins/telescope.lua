@@ -116,7 +116,12 @@ return {
         opts = function(_, opts)
           local astrocore = require "astrocore"
           local neogit_mapping = astrocore.is_available "neogit"
-              and { action = function(selection) vim.cmd.Neogit("cwd=" .. selection.path) end }
+              and {
+                action = function(selection) vim.cmd.Neogit("cwd=" .. selection.path) end,
+                after_action = function(selection)
+                  if vim.bo.filetype == "NeogitStatus" then vim.notify("Neogit opened for " .. selection.path) end
+                end,
+              }
             or nil
           local function directory_changed_after_action(selection) vim.notify("Directory changed to " .. selection.path) end
           return astrocore.extend_tbl(opts, {
