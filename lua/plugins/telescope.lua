@@ -123,14 +123,27 @@ return {
                 end,
               }
             or nil
-          local function directory_changed_after_action(selection) vim.notify("Directory changed to " .. selection.path) end
+          local function cd_action(selection)
+            if vim.fn.getcwd() == selection.path then
+              vim.notify("Already in " .. selection.path)
+              return false
+            end
+            local dir_changed, err = pcall(vim.cmd.cd, selection.path)
+            if not dir_changed then
+              vim.notify("Error while changing directory: " .. err, vim.log.levels.ERROR)
+              return false
+            end
+            vim.notify("Directory changed to " .. selection.path)
+            return true
+          end
           return astrocore.extend_tbl(opts, {
             extensions = {
               zoxide = {
                 mappings = {
-                  default = {
-                    after_action = function(selection)
-                      directory_changed_after_action(selection)
+                  ["<Enter>"] = {
+                    action = function(selection)
+                      local dir_changed = cd_action(selection)
+                      if not dir_changed then return end
                       local ok, resession = pcall(require, "resession")
                       if not ok then return end
                       resession.load(vim.fn.getcwd(), { dir = "dirsession" })
@@ -138,8 +151,7 @@ return {
                     end,
                   },
                   ["<C-Enter>"] = {
-                    action = function(selection) vim.cmd.cd(selection.path) end,
-                    after_action = directory_changed_after_action,
+                    action = cd_action,
                   },
                   ["<C-g>"] = neogit_mapping,
                 },
