@@ -1,6 +1,6 @@
 local M = {}
 
-M.DATA_DIR = vim.fn.stdpath "data" .. "/zoxide"
+M.DATA_DIR = vim.env._ZO_DATA_PROJECTS_DIR or vim.fn.stdpath "data" .. "/zoxide"
 M.DATA_DIR_VAR_NAME = "_ZO_DATA_DIR"
 
 local zoxide_command_env = { [M.DATA_DIR_VAR_NAME] = M.DATA_DIR }
