@@ -118,6 +118,7 @@ return {
           local neogit_mapping = astrocore.is_available "neogit"
               and { action = function(selection) vim.cmd.Neogit("cwd=" .. selection.path) end }
             or nil
+          local function directory_changed_after_action(selection) vim.notify("Directory changed to " .. selection.path) end
           return astrocore.extend_tbl(opts, {
             extensions = {
               zoxide = {
@@ -129,6 +130,10 @@ return {
                       resession.load(vim.fn.getcwd(), { dir = "dirsession" })
                       vim.cmd.LspRestart()
                     end,
+                  },
+                  ["<C-Enter>"] = {
+                    action = function(selection) vim.cmd.cd(selection.path) end,
+                    after_action = directory_changed_after_action,
                   },
                   ["<C-g>"] = neogit_mapping,
                 },
