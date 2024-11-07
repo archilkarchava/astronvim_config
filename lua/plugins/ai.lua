@@ -344,4 +344,11 @@ return {
       },
     },
   },
+  {
+    "CopilotChat.nvim",
+    optional = true,
+    opts = {
+      model = "o1-preview-2024-09-12",
+    },
+  },
 }
