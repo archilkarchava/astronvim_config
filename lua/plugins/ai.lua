@@ -251,8 +251,10 @@ return {
     event = "VeryLazy",
     build = is_windows and "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" or "make",
     opts = {
-      ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
+      ---@type Provider
       provider = "copilot", -- Recommend using Claude
+      ---@type AvanteProvider
+      ---@diagnostic disable-next-line: missing-fields
       copilot = {
         model = "claude-3.5-sonnet",
       },
@@ -316,7 +318,7 @@ return {
                   -- Workaround to make Avante always start in insert mode
                   if cur_mode == "i" then go_to_mode "n" end
                 end
-                require("avante").toggle()
+                require("avante.api").toggle()
 
                 if vim.b[prev_mode_buf_var_name] == nil or not is_avante_buffer then return end
                 go_to_mode(vim.b[prev_mode_buf_var_name])
