@@ -952,7 +952,7 @@ return {
           if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
           local maps = assert(opts.mappings)
           maps.n["<leader>gH"] = { "<cmd>NeogitLogCurrent<cr>", desc = "Git commits (current file neogit)" }
-          for _, mode in ipairs { "n", "v", "s", "x", "o", "i", "l", "c", "t" } do
+          for _, mode in ipairs { "n", "v", "s", "x", "i" } do
             maps[mode]["<D-0>"] = {
               function()
                 if vim.bo.filetype == "NeogitStatus" then
