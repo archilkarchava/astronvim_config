@@ -1149,6 +1149,26 @@ return {
           target = "%1.%2",
           context = "implementation",
         },
+        {
+          pattern = "(.*)/__tests?__/(.*).test.([tj]sx?)$",
+          target = "%1/hooks/%2.%3",
+          context = "implementation",
+        },
+        {
+          pattern = "(.*)/__tests?__/(.*).test.([tj]sx?)$",
+          target = "%1/helpers/%2.%3",
+          context = "implementation",
+        },
+        {
+          pattern = "(.*)/__tests?__/(.*).spec.([tj]sx?)$",
+          target = "%1/hooks/%2.%3",
+          context = "implementation",
+        },
+        {
+          pattern = "(.*)/__tests?__/(.*).spec.([tj]sx?)$",
+          target = "%1/helpers/%2.%3",
+          context = "implementation",
+        },
       },
     },
   },
