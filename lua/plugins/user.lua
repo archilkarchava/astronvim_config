@@ -368,6 +368,11 @@ return {
     },
   },
   {
+    "nvim-surround",
+    optional = true,
+    cond = true,
+  },
+  {
     "wellle/targets.vim",
     cond = true,
     event = "VeryLazy",
