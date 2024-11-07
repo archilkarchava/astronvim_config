@@ -133,9 +133,10 @@ return {
               vim.notify("Error while changing directory: " .. err, vim.log.levels.ERROR)
               return false
             end
-            vim.notify("Directory changed to " .. selection.path)
             return true
           end
+          local function notify_dir_changed(selection) vim.notify("Directory changed to " .. selection.path) end
+
           return astrocore.extend_tbl(opts, {
             extensions = {
               zoxide = {
@@ -148,10 +149,15 @@ return {
                       if not ok then return end
                       resession.load(vim.fn.getcwd(), { dir = "dirsession" })
                       vim.cmd.LspRestart()
+                      notify_dir_changed(selection)
                     end,
                   },
                   ["<C-Enter>"] = {
-                    action = cd_action,
+                    action = function(selection)
+                      local dir_changed = cd_action(selection)
+                      if not dir_changed then return end
+                      notify_dir_changed(selection)
+                    end,
                   },
                   ["<C-g>"] = neogit_mapping,
                 },
