@@ -38,6 +38,7 @@ return {
           function() require("util.telescope").grep_last_search() end,
           desc = "Find last search pattern",
         }
+        if maps.n["<Leader>f"] then maps.v["<Leader>f"] = { desc = maps.n["<Leader>f"].desc } end
         maps.v["<Leader>fc"] =
           { function() require("telescope.builtin").grep_string() end, desc = "Find selected word" }
       end
