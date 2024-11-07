@@ -253,6 +253,9 @@ return {
     opts = {
       ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
       provider = "copilot", -- Recommend using Claude
+      copilot = {
+        model = "claude-3.5-sonnet",
+      },
       auto_suggestions_provider = "copilot",
       hints = {
         enabled = false,
