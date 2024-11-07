@@ -282,6 +282,7 @@ return {
       {
         "AstroNvim/astrocore",
         opts = function(_, opts)
+          if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
           local maps = assert(opts.mappings)
           local prefix = "<Leader>a"
 
@@ -289,6 +290,40 @@ return {
             if maps[mode][prefix] == nil then
               maps[mode][prefix] = { desc = require("astroui").get_icon("Avante", 1, true) .. "Avante" }
             end
+          end
+
+          local function go_to_mode(mode)
+            if vim.fn.mode() == mode then return end
+            if mode == "n" then
+              vim.cmd.stopinsert()
+              vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<right>", true, false, true), "n", false)
+            elseif mode == "i" then
+              vim.cmd.startinsert()
+            elseif mode:match "[vV\x16]" then
+              if vim.fn.mode() ~= "n" then go_to_mode "n" end
+              vim.cmd "normal! gv"
+            end
+          end
+
+          for _, mode in ipairs { "n", "v", "s", "x", "i" } do
+            maps[mode]["<D-C-i>"] = {
+              function()
+                local prev_mode_buf_var_name = "avante_prev_mode"
+                local is_avante_buffer = vim.bo.filetype:find "^Avante" ~= nil
+                local cur_mode = vim.fn.mode()
+                if not is_avante_buffer then
+                  vim.api.nvim_buf_set_var(0, prev_mode_buf_var_name, cur_mode)
+                  -- Workaround to make Avante always start in insert mode
+                  if cur_mode == "i" then go_to_mode "n" end
+                end
+                require("avante").toggle()
+
+                if vim.b[prev_mode_buf_var_name] == nil or not is_avante_buffer then return end
+                go_to_mode(vim.b[prev_mode_buf_var_name])
+                if is_avante_buffer then vim.api.nvim_buf_del_var(0, prev_mode_buf_var_name) end
+              end,
+              desc = "avante: toggle",
+            }
           end
         end,
       },
