@@ -350,5 +350,18 @@ return {
     opts = {
       model = "o1-preview-2024-09-12",
     },
+    dependencies = {
+      {
+        "AstroNvim/astrocore",
+        ---@param opts AstroCoreOpts
+        opts = function(_, opts)
+          if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
+          local maps = assert(opts.mappings)
+          local prefix = "<Leader>P"
+
+          maps.n[prefix .. "P"] = { "<cmd>CopilotChatToggle<cr>", desc = "Toggle chat" }
+        end,
+      },
+    },
   },
 }
