@@ -464,6 +464,11 @@ return {
     end,
   },
   {
+    "mini.move",
+    optional = true,
+    cond = true,
+  },
+  {
     "echasnovski/mini.bracketed",
     cond = true,
     optional = true,
