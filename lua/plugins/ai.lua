@@ -385,7 +385,8 @@ return {
     "CopilotChat.nvim",
     optional = true,
     opts = {
-      model = "o1-preview-2024-09-12",
+      -- model = "o1-preview-2024-09-12",
+      model = "gpt-4o-2024-08-06",
     },
     dependencies = {
       {
