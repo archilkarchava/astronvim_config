@@ -948,7 +948,16 @@ return {
           local maps = assert(opts.mappings)
           maps.n["<leader>gH"] = { "<cmd>NeogitLogCurrent<cr>", desc = "Git commits (current file neogit)" }
           for _, mode in ipairs { "n", "v", "s", "x", "o", "i", "l", "c", "t" } do
-            maps[mode]["<D-0>"] = { "<cmd>Neogit<cr>", desc = "Open Neogit Tab Page" }
+            maps[mode]["<D-0>"] = {
+              function()
+                if vim.bo.filetype == "NeogitStatus" then
+                  require("neogit.lib.util").safe_win_close(0, true)
+                else
+                  vim.cmd.Neogit()
+                end
+              end,
+              desc = "Open Neogit Tab Page",
+            }
           end
         end,
       },
