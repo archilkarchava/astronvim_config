@@ -942,14 +942,15 @@ return {
     dependencies = {
       {
         "AstroNvim/astrocore",
-        ---@type AstroCoreOpts
-        opts = {
-          mappings = {
-            n = {
-              ["<leader>gH"] = { "<cmd>NeogitLogCurrent<cr>", desc = "Git commits (current file neogit)" },
-            },
-          },
-        },
+        ---@param opts AstroCoreOpts
+        opts = function(_, opts)
+          if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
+          local maps = assert(opts.mappings)
+          maps.n["<leader>gH"] = { "<cmd>NeogitLogCurrent<cr>", desc = "Git commits (current file neogit)" }
+          for _, mode in ipairs { "n", "v", "s", "x", "o", "i", "l", "c", "t" } do
+            maps[mode]["<D-0>"] = { "<cmd>Neogit<cr>", desc = "Open Neogit Tab Page" }
+          end
+        end,
       },
     },
   },
