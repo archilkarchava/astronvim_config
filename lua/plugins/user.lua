@@ -655,7 +655,7 @@ return {
     },
   },
   {
-    "stevearc/oil.nvim",
+    "oil.nvim",
     optional = true,
     dependencies = {
       {
@@ -664,7 +664,7 @@ return {
         opts = {
           mappings = {
             n = {
-              ["<M-e>"] = { function() require("oil").toggle_float() end, desc = "Open folder in Oil" },
+              ["<M-e>"] = { function() require("oil").toggle_float() end, desc = "Toggle Oil (File explorer)" },
             },
           },
         },
