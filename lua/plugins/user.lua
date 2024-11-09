@@ -660,14 +660,16 @@ return {
     dependencies = {
       {
         "AstroNvim/astrocore",
-        ---@type AstroCoreOpts
-        opts = {
-          mappings = {
-            n = {
-              ["<M-e>"] = { function() require("oil").toggle_float() end, desc = "Toggle Oil (File explorer)" },
-            },
-          },
-        },
+        ---@param opts AstroCoreOpts
+        opts = function(_, opts)
+          if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
+          local maps = assert(opts.mappings)
+          local toggle_oil_rhs = { function() require("oil").toggle_float() end, desc = "Toggle Oil (File explorer)" }
+          maps.n["<M-e>"] = toggle_oil_rhs
+          for _, mode in ipairs { "n", "x", "o", "i" } do
+            maps[mode]["<D-e>"] = toggle_oil_rhs
+          end
+        end,
       },
     },
     opts = {
