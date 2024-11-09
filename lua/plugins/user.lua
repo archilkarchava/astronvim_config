@@ -674,10 +674,10 @@ return {
     },
     opts = {
       keymaps = {
-        ["<C-s>"] = false,
         ["<C-h>"] = false,
-        ["<C-v>"] = { "actions.select", opts = { vertical = true }, desc = "Open the entry in a vertical split" },
-        ["<C-x>"] = { "actions.select", opts = { horizontal = true }, desc = "Open the entry in a horizontal split" },
+        ["<C-s>"] = false,
+        ["<C-\\>"] = { "actions.select", opts = { horizontal = true }, desc = "Open the entry in a horizontal split" },
+        ["<C-S-\\>"] = { "actions.select", opts = { vertical = true }, desc = "Open the entry in a vertical split" },
       },
     },
   },
