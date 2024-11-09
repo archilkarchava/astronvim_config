@@ -222,6 +222,13 @@ return {
             end,
           },
         },
+        i = {
+          ["<C-s>"] = {
+            function() vim.lsp.buf.signature_help() end,
+            desc = "Signature help",
+            cond = "textDocument/signatureHelp",
+          },
+        },
       },
       commands = {
         GofumptEnable = {
