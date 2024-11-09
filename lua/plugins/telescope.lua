@@ -105,6 +105,8 @@ return {
         opts.defaults.mappings[mode]["<PageUp>"] = actions.cycle_history_prev
         opts.defaults.mappings[mode]["<C-o>"] = actions.toggle_all
         opts.defaults.mappings[mode]["<C-y>"] = layout_actions.toggle_preview
+        opts.defaults.mappings[mode]["<C-\\>"] = actions.select_horizontal
+        opts.defaults.mappings[mode]["<C-S-\\>"] = actions.select_vertical
       end
     end,
   },
