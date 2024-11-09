@@ -270,8 +270,8 @@ return {
             local skip_cursor_below = { with_count(function() mc.lineSkipCursor(1) end), desc = "Skip cursor below" }
             maps[mode]["<D-M-k>"] = add_cursor_above
             maps[mode]["<D-M-j>"] = add_cursor_below
-            maps[mode]["<leader><D-M-k>"] = skip_cursor_above
-            maps[mode]["<leader><D-M-j>"] = skip_cursor_below
+            maps[mode][chord_prefix .. "<D-M-k>"] = skip_cursor_above
+            maps[mode][chord_prefix .. "<D-M-j>"] = skip_cursor_below
 
             -- Add a cursor and jump to the next word under cursor.
             maps[mode][main_map] = {
@@ -279,14 +279,14 @@ return {
               desc = "Add cursor and jump to next word",
             }
             -- Add a cursor and jump to the previous word under cursor.
-            maps[mode][string.upper(main_map)] =
+            maps[mode][main_map:upper()] =
               { with_count(function() mc.matchAddCursor(-1) end), desc = "Add cursor and jump to previous word" }
 
             -- Jump to the next word under cursor but do not add a cursor.
             maps[mode][chord_prefix .. main_map] =
               { with_count(function() mc.matchSkipCursor(1) end), desc = "Skip cursor and jump to next word" }
             -- Jump to the previous word under cursor but do not add a cursor.
-            maps[mode][chord_prefix .. string.upper(main_map)] =
+            maps[mode][chord_prefix .. main_map:upper()] =
               { with_count(function() mc.matchSkipCursor(-1) end), desc = "Skip cursor and jump to previous word" }
 
             maps[mode]["<D-L>"] = { mc.matchAllAddCursors, desc = "Add cursors to all matches" }
@@ -328,12 +328,12 @@ return {
 
             -- clone every cursor and disable the originals
             maps[mode][chord_prefix .. "<D-Z>"] = { mc.duplicateCursors, desc = "Duplicate cursors" }
+          end
 
-            -- Jumplist support
-            if not vim.g.vscode then
-              maps[mode]["<c-i>"] = { mc.jumpForward, desc = "Jump forward" }
-              maps[mode]["<c-o>"] = { mc.jumpBackward, desc = "Jump backward" }
-            end
+          -- Jumplist support
+          if not vim.g.vscode then
+            maps.n["<c-i>"] = { mc.jumpForward, desc = "Jump forward" }
+            maps.n["<c-o>"] = { mc.jumpBackward, desc = "Jump backward" }
           end
 
           -- Add and remove cursors with control + left click.
