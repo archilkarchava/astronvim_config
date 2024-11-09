@@ -271,6 +271,9 @@ return {
           cursor = "cC",
         },
       },
+      windows = {
+        width = 45,
+      },
     },
     dependencies = {
       {
