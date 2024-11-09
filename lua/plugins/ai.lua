@@ -296,15 +296,16 @@ return {
 
           local function go_to_mode(mode)
             if vim.fn.mode() == mode then return end
+            local cursor_pos = vim.fn.getcurpos()
             if mode == "n" then
               vim.cmd.stopinsert()
-              vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<right>", true, false, true), "n", false)
             elseif mode == "i" then
               vim.cmd.startinsert()
             elseif mode:match "[vV\x16]" then
               if vim.fn.mode() ~= "n" then go_to_mode "n" end
               vim.cmd "normal! gv"
             end
+            vim.schedule(function() vim.fn.setpos(".", cursor_pos) end)
           end
 
           for _, mode in ipairs { "n", "v", "s", "x", "i" } do
