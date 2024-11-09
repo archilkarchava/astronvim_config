@@ -956,6 +956,7 @@ return {
     opts = function(_, opts)
       local util = require "util.terminal"
       opts.graph_style = util.is_kitty() and "kitty" or "unicode"
+      opts.process_spinner = false
     end,
     dependencies = {
       {
