@@ -956,6 +956,10 @@ return {
         opts = function(_, opts)
           if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
           local maps = assert(opts.mappings)
+          maps.n["<leader>pg"] = {
+            function() vim.cmd.Neogit("cwd=" .. vim.fn.stdpath "config") end,
+            desc = "Open Neogit (AstroNvim config)",
+          }
           maps.n["<leader>gH"] = { "<cmd>NeogitLogCurrent<cr>", desc = "Git commits (current file neogit)" }
           for _, mode in ipairs { "n", "v", "s", "x", "i" } do
             maps[mode]["<D-0>"] = {
