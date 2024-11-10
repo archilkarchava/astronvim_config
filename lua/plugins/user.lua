@@ -1197,6 +1197,30 @@ return {
     },
   },
   {
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    specs = {
+      {
+        "mini.files",
+        optional = true,
+        init = function()
+          vim.api.nvim_create_autocmd("User", {
+            pattern = "MiniFilesActionRename",
+            callback = function(event) Snacks.rename.on_rename_file(event.data.from, event.data.to) end,
+          })
+        end,
+      },
+    },
+    opts = {
+      bigfile = { enabled = false },
+      notifier = { enabled = false },
+      quickfile = { enabled = true },
+      statuscolumn = { enabled = false },
+      words = { enabled = false },
+    },
+  },
+  {
     "mini.files",
     optional = true,
     dependencies = {
