@@ -407,8 +407,10 @@ return {
 
           vim.api.nvim_create_user_command("CopilotChatClearDiagnostics", copilotChatClearDiagnostics, {})
 
-          maps.n[prefix .. "P"] = { "<cmd>CopilotChatToggle<cr>", desc = "Toggle chat" }
-          maps.n[prefix .. "C"] = { "<cmd>CopilotChatClearDiagnostics<cr>", desc = "Clear chat diagnostics" }
+          local toggle_chat_mapping = { "<cmd>CopilotChatToggle<cr>", desc = "Toggle Chat" }
+          maps.n[prefix .. "P"] = toggle_chat_mapping
+          maps.v[prefix .. "P"] = { "<esc>" .. toggle_chat_mapping[1], desc = toggle_chat_mapping.desc }
+          maps.n[prefix .. "C"] = { "<cmd>CopilotChatClearDiagnostics<cr>", desc = "Clear Chat Diagnostics" }
         end,
       },
     },
