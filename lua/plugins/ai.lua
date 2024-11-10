@@ -400,7 +400,15 @@ return {
           local maps = assert(opts.mappings)
           local prefix = "<Leader>P"
 
+          local function copilotChatClearDiagnostics()
+            local ns = vim.api.nvim_create_namespace "copilot_review"
+            vim.diagnostic.reset(ns)
+          end
+
+          vim.api.nvim_create_user_command("CopilotChatClearDiagnostics", copilotChatClearDiagnostics, {})
+
           maps.n[prefix .. "P"] = { "<cmd>CopilotChatToggle<cr>", desc = "Toggle chat" }
+          maps.n[prefix .. "C"] = { "<cmd>CopilotChatClearDiagnostics<cr>", desc = "Clear chat diagnostics" }
         end,
       },
     },
