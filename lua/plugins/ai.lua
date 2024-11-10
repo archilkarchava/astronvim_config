@@ -228,14 +228,12 @@ return {
             end,
             desc = "Disable all",
           }
-          opts.autocmds.stop_supermaven = {
+          opts.autocmds.supermaven = {
             {
               event = "LspAttach",
               desc = "Stop Supermaven when Copilot is attached",
               callback = supermaven_cond_toggle,
             },
-          }
-          opts.autocmds.start_supermaven = {
             {
               event = "LspDetach",
               desc = "Start Supermaven when Copilot is detached",
