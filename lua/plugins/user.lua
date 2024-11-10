@@ -665,9 +665,8 @@ return {
           if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
           local maps = assert(opts.mappings)
           local toggle_oil_rhs = { function() require("oil").toggle_float() end, desc = "Toggle Oil (File explorer)" }
-          maps.n["<M-e>"] = toggle_oil_rhs
           for _, mode in ipairs { "n", "x", "o", "i" } do
-            maps[mode]["<D-e>"] = toggle_oil_rhs
+            maps[mode]["<M-e>"] = toggle_oil_rhs
           end
         end,
       },
@@ -1194,6 +1193,50 @@ return {
           target = "%1/helpers/%2.%3",
           context = "implementation",
         },
+      },
+    },
+  },
+  {
+    "mini.files",
+    optional = true,
+    dependencies = {
+      {
+        "AstroNvim/astrocore",
+        ---@param opts AstroCoreOpts
+        opts = function(_, opts)
+          if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
+          local maps = assert(opts.mappings)
+          local mini_files = require "mini.files"
+          local toggle_mini_files_rhs = {
+            function()
+              if not mini_files.close() then mini_files.open() end
+            end,
+            desc = "Explorer",
+          }
+          local toggle_mini_files_current_rhs = {
+            function()
+              if mini_files.close() then return end
+              if vim.fn.filereadable(vim.fn.bufname "%") > 0 then
+                mini_files.open(vim.api.nvim_buf_get_name(0))
+              else
+                mini_files.open()
+              end
+            end,
+            desc = "Explorer (current file)",
+          }
+          for _, mode in ipairs { "n", "x", "o", "i" } do
+            maps[mode]["<D-e>"] = toggle_mini_files_rhs
+          end
+          for _, mode in ipairs { "n", "x", "o", "i" } do
+            maps[mode]["<D-k><D-e>"] = toggle_mini_files_current_rhs
+            maps[mode]["<D-k>e"] = toggle_mini_files_current_rhs
+          end
+        end,
+      },
+    },
+    opts = {
+      windows = {
+        preview = true,
       },
     },
   },
