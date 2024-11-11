@@ -1246,39 +1246,100 @@ return {
         opts = function(_, opts)
           if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
           local maps = assert(opts.mappings)
-          local mini_files = require "mini.files"
+          local minifiles = require "mini.files"
           local toggle_mini_files_rhs = {
             function()
-              if not mini_files.close() then mini_files.open() end
+              if not minifiles.close() then minifiles.open() end
             end,
             desc = "Explorer",
           }
           local toggle_mini_files_current_rhs = {
             function()
-              if mini_files.close() then return end
+              if minifiles.close() then return end
               if vim.fn.filereadable(vim.fn.bufname "%") > 0 then
-                mini_files.open(vim.api.nvim_buf_get_name(0))
+                minifiles.open(vim.api.nvim_buf_get_name(0))
               else
-                mini_files.open()
+                minifiles.open()
               end
             end,
             desc = "Explorer (current file)",
           }
           for _, mode in ipairs { "n", "x", "o", "i" } do
-            maps[mode]["<D-e>"] = toggle_mini_files_rhs
+            maps[mode]["<D-E>"] = toggle_mini_files_rhs
           end
           for _, mode in ipairs { "n", "x", "o", "i" } do
-            maps[mode]["<D-k><D-e>"] = toggle_mini_files_current_rhs
-            maps[mode]["<D-k>e"] = toggle_mini_files_current_rhs
+            maps[mode]["<D-e>"] = toggle_mini_files_current_rhs
           end
         end,
       },
     },
-    opts = {
-      windows = {
-        preview = true,
-      },
-    },
+    opts = function(_, opts)
+      if opts.windows == nil then opts.windows = {} end
+      opts.windows.preview = true
+
+      local minifiles = require "mini.files"
+
+      local show_dotfiles = true
+
+      local filter_show = function() return true end
+
+      local filter_hide = function(fs_entry) return not vim.startswith(fs_entry.name, ".") end
+
+      local toggle_dotfiles = function()
+        show_dotfiles = not show_dotfiles
+        local new_filter = show_dotfiles and filter_show or filter_hide
+        minifiles.refresh { content = { filter = new_filter } }
+      end
+      --
+      -- Make new window and set it as target
+      local open_split = function(direction)
+        return function()
+          local new_target_window
+          vim.api.nvim_win_call(minifiles.get_explorer_state().target_window, function()
+            vim.cmd(direction .. " split")
+            new_target_window = vim.api.nvim_get_current_win()
+          end)
+          minifiles.set_target_window(new_target_window)
+          local fs_entry = minifiles.get_fs_entry()
+          local is_at_file = fs_entry ~= nil and fs_entry.fs_type == "file"
+          if is_at_file then minifiles.go_in { close_on_file = true } end
+        end
+      end
+
+      local go_in_plus = function()
+        for _ = 1, vim.v.count1 do
+          minifiles.go_in { close_on_file = true }
+        end
+      end
+
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "MiniFilesBufferCreate",
+        callback = function(args)
+          local buf_id = args.data.buf_id
+          vim.keymap.set("n", "g.", toggle_dotfiles, { buffer = buf_id })
+
+          local function set_split_keymaps(modifier)
+            vim.keymap.set(
+              { "n", "v", "i" },
+              "<" .. modifier .. "-\\>",
+              open_split "belowright horizontal",
+              { buffer = buf_id, desc = "Horizontal Split" }
+            )
+            vim.keymap.set(
+              { "n", "v", "i" },
+              "<" .. modifier .. "-S-\\>",
+              open_split "belowright vertical",
+              { buffer = buf_id, desc = "Vertical Split" }
+            )
+          end
+
+          set_split_keymaps "D"
+          set_split_keymaps "C"
+          vim.keymap.set("n", "<CR>", go_in_plus, { buffer = buf_id, desc = "Go in entry plus" })
+          vim.keymap.set({ "n", "v", "i" }, "<C-s>", minifiles.synchronize, { buffer = buf_id, desc = "Synchronize" })
+        end,
+      })
+    end,
   },
   {
     "better-escape.nvim",
