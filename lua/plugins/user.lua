@@ -971,7 +971,7 @@ return {
         opts = function(_, opts)
           if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
           local maps = assert(opts.mappings)
-          maps.n["<leader>pg"] = {
+          maps.n["<leader>pG"] = {
             function() vim.cmd.Neogit("cwd=" .. vim.fn.stdpath "config") end,
             desc = "Open Neogit (AstroNvim config)",
           }

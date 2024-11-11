@@ -98,6 +98,13 @@ return {
         end,
         desc = "Git commits (current file lazygit)",
       }
+      maps.n["<leader>pg"] = {
+        function()
+          local config_path = vim.fn.stdpath "config"
+          astrocore.toggle_term_cmd { cmd = "lazygit --path " .. config_path, direction = "float" }
+        end,
+        desc = "Open lazygit (AstroNvim config)",
+      }
     end
 
     if vim.fn.executable "btop" == 1 then
