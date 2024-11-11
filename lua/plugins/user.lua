@@ -671,14 +671,19 @@ return {
         end,
       },
     },
-    opts = {
-      keymaps = {
-        ["<C-h>"] = false,
-        ["<C-s>"] = false,
-        ["<C-\\>"] = { "actions.select", opts = { horizontal = true }, desc = "Open the entry in a horizontal split" },
-        ["<C-S-\\>"] = { "actions.select", opts = { vertical = true }, desc = "Open the entry in a vertical split" },
-      },
-    },
+    opts = function(_, opts)
+      if not opts.keymaps then opts.keymaps = {} end
+      local open_horizontal_split_rhs =
+        { "actions.select", opts = { horizontal = true }, desc = "Open the entry in a horizontal split" }
+      local open_vertical_split_rhs =
+        { "actions.select", opts = { vertical = true }, desc = "Open the entry in a vertical split" }
+      opts.keymaps["<C-h>"] = false
+      opts.keymaps["<C-s>"] = false
+      opts.keymaps["<C-\\>"] = open_horizontal_split_rhs
+      opts.keymaps["<C-S-\\>"] = open_vertical_split_rhs
+      opts.keymaps["<D-\\>"] = open_horizontal_split_rhs
+      opts.keymaps["<D-S-\\>"] = open_vertical_split_rhs
+    end,
   },
   {
     "sindrets/diffview.nvim",
