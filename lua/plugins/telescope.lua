@@ -42,6 +42,18 @@ return {
         maps.v["<Leader>fc"] =
           { function() require("telescope.builtin").grep_string() end, desc = "Find selected word" }
       end
+
+      for _, mode in ipairs { "n", "v", "i" } do
+        maps[mode]["<M-S-Tab>"] = {
+          function()
+            require("telescope.builtin").buffers {
+              sort_lastused = true,
+              ignore_current_buffer = true,
+            }
+          end,
+          desc = "Find buffers (last used)",
+        }
+      end
     end,
   },
   {
