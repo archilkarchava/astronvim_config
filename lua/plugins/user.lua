@@ -1198,6 +1198,56 @@ return {
           target = "%1/helpers/%2.%3",
           context = "implementation",
         },
+        {
+          pattern = "(.*)/(.*)/index.([tj]sx?)$",
+          target = "%1/__tests__/%2.test.%3",
+          context = "test",
+        },
+        {
+          pattern = "(.*)/(.*)/index.([tj]sx?)$",
+          target = "%1/__test__/%2.test.%3",
+          context = "test",
+        },
+        {
+          pattern = "(.*)/(.*)/index.([tj]sx?)$",
+          target = "%1/__tests__/%2.spec.%3",
+          context = "test",
+        },
+        {
+          pattern = "(.*)/(.*)/index.([tj]sx?)$",
+          target = "%1/__test__/%2.spec.%3",
+          context = "test",
+        },
+        {
+          pattern = "(.*)/__tests?__/(.*).test.([tj]sx?)$",
+          target = "%1/%2/index.%3",
+          context = "implementation",
+        },
+        {
+          pattern = "(.*)/__tests?__/(.*).spec.([tj]sx?)$",
+          target = "%1/%2/index.%3",
+          context = "implementation",
+        },
+        {
+          pattern = "(.*)/(.*)/index.([tj]sx?)$",
+          target = "%1/%2.test.%3",
+          context = "test",
+        },
+        {
+          pattern = "(.*)/(.*)/index.([tj]sx?)$",
+          target = "%1/%2.spec.%3",
+          context = "test",
+        },
+        {
+          pattern = "(.*)/(.*).test.([tj]sx?)$",
+          target = "%1/%2/index.%3",
+          context = "implementation",
+        },
+        {
+          pattern = "(.*)/(.*).spec.([tj]sx?)$",
+          target = "%1/%2/index.%3",
+          context = "implementation",
+        },
       },
     },
   },
