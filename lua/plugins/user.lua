@@ -644,6 +644,21 @@ return {
         },
       },
     },
+    specs = {
+      {
+        "nvim-ufo",
+        optional = true,
+        opts = function(_, opts)
+          ---@type fun(bufnr: number, filetype: string, buftype: string): string | table<number, string>
+          local original_provider_selector = opts.provider_selector or function() end
+          opts.provider_selector = function(bufnr, filetype, buftype)
+            -- Workaround to fix gitsigns inline hunk preview
+            if buftype == "nofile" and filetype ~= nil and filetype ~= "" then return "" end
+            return original_provider_selector(bufnr, filetype, buftype)
+          end
+        end,
+      },
+    },
   },
   {
     "pwntester/octo.nvim",
