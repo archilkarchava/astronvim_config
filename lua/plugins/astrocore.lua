@@ -136,7 +136,7 @@ return {
       autocmds = {
         __env = {
           {
-            pattern = ".env.*",
+            pattern = { ".env", ".env.*" },
             event = { "BufRead", "BufNewFile" },
             callback = function(args) vim.diagnostic.enable(false, { bufnr = args.buf }) end,
           },
