@@ -1428,7 +1428,7 @@ return {
             kind = "",
             find = "written",
           },
-          opts = { skip = true },
+          view = "mini",
         },
         {
           filter = {
