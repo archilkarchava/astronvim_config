@@ -1410,6 +1410,7 @@ return {
     "noice.nvim",
     event = "VeryLazy",
     optional = true,
+    opts_extend = { "routes" },
     opts = {
       lsp = {
         hover = {
@@ -1442,24 +1443,6 @@ return {
         },
       },
     },
-  },
-  {
-    "noice.nvim",
-    optional = true,
-    opts = function(_, opts)
-      local utils = require "astrocore"
-      if not utils.is_available "copilot.lua" then return end
-      opts.routes = opts.routes or {}
-      vim.list_extend(opts.routes, {
-        {
-          filter = {
-            event = "msg_show",
-            find = "%[Copilot%] Offline",
-          },
-          opts = { skip = true },
-        },
-      })
-    end,
   },
   {
     "better-escape.nvim",

@@ -134,6 +134,24 @@ return {
       require("copilot").setup(opts)
       if default_suggestions_provider ~= suggestion_providers.copilot then copilot_helpers.disable() end
     end,
+    specs = {
+      {
+        "noice.nvim",
+        optional = true,
+        opts = function(_, opts)
+          opts.routes = opts.routes or {}
+          vim.list_extend(opts.routes, {
+            {
+              filter = {
+                event = "msg_show",
+                find = "%[Copilot%] Offline",
+              },
+              opts = { skip = true },
+            },
+          })
+        end,
+      },
+    },
   },
   {
     "supermaven-inc/supermaven-nvim",
