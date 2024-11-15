@@ -1443,6 +1443,18 @@ return {
           },
           view = "mini",
         },
+        {
+          filter = {
+            event = "lsp",
+            kind = "progress",
+            cond = function(message)
+              local client = vim.tbl_get(message.opts, "progress", "client")
+              return (client == "lua_ls" and message:content():find "Diagnosing")
+                or (client == "null-ls" and message:content():find "diagnostics")
+            end,
+          },
+          opts = { skip = true },
+        },
       },
     },
   },
