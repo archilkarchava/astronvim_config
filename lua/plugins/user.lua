@@ -1447,6 +1447,14 @@ return {
     },
   },
   {
+    "resession.nvim",
+    optional = true,
+    opts = function()
+      local resession = require "resession"
+      resession.add_hook("post_load", function() require("astrocore.buffer").sort "bufnr" end)
+    end,
+  },
+  {
     "better-escape.nvim",
     enabled = false,
   },
