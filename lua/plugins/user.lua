@@ -1407,6 +1407,61 @@ return {
     end,
   },
   {
+    "noice.nvim",
+    event = "VeryLazy",
+    optional = true,
+    opts = {
+      lsp = {
+        hover = {
+          enabled = true,
+          silent = true,
+        },
+        signature = {
+          enabled = true,
+        },
+      },
+      routes = {
+        {
+          filter = {
+            event = "msg_show",
+            kind = "",
+            find = "written",
+          },
+          opts = { skip = true },
+        },
+        {
+          filter = {
+            event = "msg_show",
+            any = {
+              { find = "%d+L, %d+B" },
+              { find = "; after #%d+" },
+              { find = "; before #%d+" },
+            },
+          },
+          view = "mini",
+        },
+      },
+    },
+  },
+  {
+    "noice.nvim",
+    optional = true,
+    opts = function(_, opts)
+      local utils = require "astrocore"
+      if not utils.is_available "copilot.lua" then return end
+      opts.routes = opts.routes or {}
+      vim.list_extend(opts.routes, {
+        {
+          filter = {
+            event = "msg_show",
+            find = "%[Copilot%] Offline",
+          },
+          opts = { skip = true },
+        },
+      })
+    end,
+  },
+  {
     "better-escape.nvim",
     enabled = false,
   },
