@@ -1474,6 +1474,16 @@ return {
     end,
   },
   {
+    "nvim-colorizer.lua",
+    optional = true,
+    opts = {
+      filetypes = {
+        "*",
+        "!noice",
+      },
+    },
+  },
+  {
     "better-escape.nvim",
     enabled = false,
   },
