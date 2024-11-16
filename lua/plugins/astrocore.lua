@@ -153,6 +153,30 @@ return {
       desc = "Toggle automatic buffer line sorting",
     }
 
+    -- navigate buffer tabs
+    local navigate_to_next_buffer_rhs =
+      { function() require("astrocore.buffer").nav(vim.v.count1) end, desc = "Next buffer" }
+    local navigate_to_prev_buffer_rhs =
+      { function() require("astrocore.buffer").nav(-vim.v.count1) end, desc = "Previous buffer" }
+
+    -- move buffer tabs
+    local move_buffer_tab_left_rhs = {
+      function() require("astrocore.buffer").move(-vim.v.count1) end,
+      desc = "Move buffer tab left",
+    }
+    local move_buffer_tab_right_rhs = {
+      function() require("astrocore.buffer").move(vim.v.count1) end,
+      desc = "Move buffer tab right",
+    }
+    maps.n.H = navigate_to_prev_buffer_rhs
+    maps.n.L = navigate_to_next_buffer_rhs
+    for _, mode in ipairs { "n", "v", "s", "x", "i" } do
+      maps[mode]["<M-S-[>"] = navigate_to_prev_buffer_rhs
+      maps[mode]["<M-S-]>"] = navigate_to_next_buffer_rhs
+      maps[mode]["<C-S-PageUp>"] = move_buffer_tab_left_rhs
+      maps[mode]["<C-S-PageDown>"] = move_buffer_tab_right_rhs
+    end
+
     ---@type AstroCoreOpts
     local modified_opts = {
       -- Configure core features of AstroNvim
