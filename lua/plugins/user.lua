@@ -1446,6 +1446,14 @@ return {
         {
           filter = {
             event = "msg_show",
+            kind = "lua_error",
+            find = "share/nvim/runtime/lua/vim/lsp/semantic_tokens.lua",
+          },
+          view = "mini",
+        },
+        {
+          filter = {
+            event = "msg_show",
             kind = "search_count",
           },
           opts = { skip = true },
