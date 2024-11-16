@@ -124,7 +124,7 @@ return {
     remap_key_if_exists(maps, "<C-PageDown>", "<C-Down>")
     remap_key_if_exists(maps, "<C-Home>", "<C-Left>")
     remap_key_if_exists(maps, "<C-End>", "<C-Right>")
-    local is_bufline_auto_sort_enabled = true
+    local is_bufline_auto_sort_enabled = false
 
     ---@param enabled boolean
     local function switch_bufline_auto_sort_state(enabled)
