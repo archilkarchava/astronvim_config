@@ -22,6 +22,14 @@ local function remap_key_if_exists(mappings, new_lhs, orig_lhs, modes, opts)
   end
 end
 
+---@param bool boolean
+local function bool2str(bool) return bool and "on" or "off" end
+
+---@param enabled boolean
+local function notify_bufline_auto_sort_state(enabled)
+  return require("astrocore").notify(("buffer line sorting %s"):format(bool2str(enabled)))
+end
+
 ---@type LazySpec
 return {
   "AstroNvim/astrocore",
@@ -116,6 +124,34 @@ return {
     remap_key_if_exists(maps, "<C-PageDown>", "<C-Down>")
     remap_key_if_exists(maps, "<C-Home>", "<C-Left>")
     remap_key_if_exists(maps, "<C-End>", "<C-Right>")
+    local is_bufline_auto_sort_enabled = true
+
+    ---@param enabled boolean
+    local function switch_bufline_auto_sort_state(enabled)
+      is_bufline_auto_sort_enabled = enabled
+      notify_bufline_auto_sort_state(is_bufline_auto_sort_enabled)
+    end
+
+    vim.api.nvim_create_user_command(
+      "EnableBuflineAutoSort",
+      function() switch_bufline_auto_sort_state(true) end,
+      { desc = "Enable automatic buffer line sorting" }
+    )
+    vim.api.nvim_create_user_command(
+      "DisableBuflineAutoSort",
+      function() switch_bufline_auto_sort_state(false) end,
+      { desc = "Disable automatic buffer line sorting" }
+    )
+    vim.api.nvim_create_user_command(
+      "ToggleBuflineAutoSort",
+      function() switch_bufline_auto_sort_state(not is_bufline_auto_sort_enabled) end,
+      { desc = "Toggle automatic buffer line sorting" }
+    )
+
+    maps.n["<Leader>uB"] = {
+      "<cmd>ToggleBuflineAutoSort<cr>",
+      desc = "Toggle automatic buffer line sorting",
+    }
 
     ---@type AstroCoreOpts
     local modified_opts = {
@@ -139,6 +175,16 @@ return {
             pattern = { ".env", ".env.*" },
             event = { "BufRead", "BufNewFile" },
             callback = function(args) vim.diagnostic.enable(false, { bufnr = args.buf }) end,
+          },
+        },
+        bufline_auto_sort = {
+          {
+            event = "BufAdd",
+            desc = "Automatically sort buffer lines by buffer number",
+            callback = function()
+              if not is_bufline_auto_sort_enabled then return end
+              vim.schedule(function() require("astrocore.buffer").sort "bufnr" end)
+            end,
           },
         },
       },
