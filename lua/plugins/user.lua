@@ -1279,28 +1279,56 @@ return {
           if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
           local maps = assert(opts.mappings)
           local minifiles = require "mini.files"
+          local prev_buf_id_tab_var_name = "minifiles_prev_buf_id"
           local toggle_mini_files_rhs = {
             function()
               if not minifiles.close() then minifiles.open() end
             end,
             desc = "Explorer",
           }
-          local toggle_mini_files_current_rhs = {
+          local focus_file_buffer = function(buf_id)
+            if buf_id == nil then return end
+            local buf_name = vim.api.nvim_buf_get_name(buf_id)
+            if vim.fn.filereadable(buf_name) > 0 then
+              minifiles.set_branch { vim.fn.fnamemodify(buf_name, ":h"), buf_name }
+            end
+          end
+          local open_current_file_in_explorer = function()
+            local cur_buf_id = vim.api.nvim_get_current_buf()
+            minifiles.open()
+            focus_file_buffer(cur_buf_id)
+          end
+          local focus_current_mini_files_rhs = {
             function()
-              if minifiles.close() then return end
-              if vim.fn.filereadable(vim.fn.bufname "%") > 0 then
-                minifiles.open(vim.api.nvim_buf_get_name(0))
-              else
-                minifiles.open()
+              local explorer_state = minifiles.get_explorer_state()
+              if explorer_state == nil then
+                open_current_file_in_explorer()
+                return
               end
+              focus_file_buffer(vim.t[prev_buf_id_tab_var_name])
             end,
-            desc = "Explorer (current file)",
+            desc = "Explorer (focus current file)",
           }
           for _, mode in ipairs { "n", "x", "o", "i" } do
-            maps[mode]["<D-E>"] = toggle_mini_files_rhs
+            maps[mode]["<D-e>"] = toggle_mini_files_rhs
           end
+
+          if not opts.autocmds then opts.autocmds = {} end
+          opts.autocmds.minifiles = {
+            {
+              event = "User",
+              pattern = "MiniFilesBufferCreate",
+              callback = function(args)
+                if minifiles.get_explorer_state() == nil then
+                  vim.api.nvim_tabpage_set_var(0, prev_buf_id_tab_var_name, args.buf)
+                end
+              end,
+            },
+          }
+
           for _, mode in ipairs { "n", "x", "o", "i" } do
-            maps[mode]["<D-e>"] = toggle_mini_files_current_rhs
+            maps[mode]["<D-k>e"] = focus_current_mini_files_rhs
+            maps[mode]["<D-k><D-e>"] = focus_current_mini_files_rhs
           end
         end,
       },
