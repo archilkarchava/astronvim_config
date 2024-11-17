@@ -287,4 +287,37 @@ return {
       },
     },
   },
+  {
+    "zeioth/garbage-day.nvim",
+    optional = true,
+    opts = {
+      excluded_lsp_clients = {
+        "null-ls",
+        "jdtls",
+        "marksman",
+        "lua_ls",
+        "copilot",
+      },
+    },
+    dependencies = {
+      {
+        "AstroNvim/astrocore",
+        ---@type AstroCoreOpts
+        opts = {
+          mappings = {
+            n = {
+              ["<leader>lc"] = {
+                function()
+                  require("garbage-day.utils").stop_lsp()
+                  require("garbage-day.utils").start_lsp()
+                end,
+                desc = "Garbage collect LSP clients",
+                remap = true,
+              },
+            },
+          },
+        },
+      },
+    },
+  },
 }
