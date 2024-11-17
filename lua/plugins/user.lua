@@ -1286,12 +1286,19 @@ return {
             end,
             desc = "Explorer",
           }
+          ---@param buf_name string
+          local function get_parent_dir(buf_name) return vim.fn.fnamemodify(buf_name, ":h") end
+
           local focus_file_buffer = function(buf_id)
             if buf_id == nil then return end
             local buf_name = vim.api.nvim_buf_get_name(buf_id)
-            if vim.fn.filereadable(buf_name) > 0 then
-              minifiles.set_branch { vim.fn.fnamemodify(buf_name, ":h"), buf_name }
-            end
+            if vim.fn.filereadable(buf_name) == 0 then return end
+            local dirname = get_parent_dir(buf_name)
+            local branch = { dirname, buf_name }
+            local cwd = vim.fn.getcwd()
+            local parent_dirname = get_parent_dir(dirname)
+            if vim.startswith(parent_dirname, cwd) then table.insert(branch, 1, parent_dirname) end
+            minifiles.set_branch(branch)
           end
           local open_current_file_in_explorer = function()
             local cur_buf_id = vim.api.nvim_get_current_buf()
