@@ -48,6 +48,11 @@ local supermaven_helpers = {
     if not ok then return end
     if not api.is_running() then api.start() end
   end,
+  restart = function()
+    local ok, api = pcall(require, "supermaven-nvim.api")
+    if not ok then return end
+    api.restart()
+  end,
   toggle = function()
     local ok, api = pcall(require, "supermaven-nvim.api")
     if not ok then return end
@@ -71,6 +76,12 @@ local copilot_helpers = {
   enable = function()
     local ok, copilot_command = pcall(require, "copilot.command")
     if not ok then return end
+    copilot_command.enable()
+  end,
+  restart = function()
+    local ok, copilot_command = pcall(require, "copilot.command")
+    if not ok then return end
+    copilot_command.disable()
     copilot_command.enable()
   end,
   toggle = function()
@@ -223,7 +234,7 @@ return {
           maps.n[prefix .. "s"] = {
             function()
               copilot_helpers.disable()
-              supermaven_helpers.enable()
+              supermaven_helpers.restart()
               vim.g.current_suggestions_provider = suggestion_providers.supermaven
             end,
             desc = require("astroui").get_icon("Supermaven", 1, true) .. "Supermaven",
@@ -232,7 +243,7 @@ return {
             maps.n[prefix .. "c"] = {
               function()
                 supermaven_helpers.disable()
-                copilot_helpers.enable()
+                copilot_helpers.restart()
                 vim.g.current_suggestions_provider = suggestion_providers.copilot
               end,
               desc = require("astroui").get_icon("Copilot", 1, true) .. "Copilot",
