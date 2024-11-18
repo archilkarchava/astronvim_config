@@ -5,6 +5,13 @@
 -- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
 --       as this provides autocomplete and documentation while editing
 
+local function is_client(client_name)
+  return function(client) return client.name == client_name end
+end
+
+local is_gopls_client = is_client "gopls"
+local is_vtsls_client = is_client "vtsls"
+
 ---@param value boolean | nil
 local function set_gofumpt(value)
   local cur_buf_clients = vim.lsp.get_clients { name = "gopls", bufnr = 0 }
@@ -232,17 +239,17 @@ return {
       commands = {
         GofumptEnable = {
           function() set_gofumpt(true) end,
-          cond = function(client) return client.name == "gopls" end,
+          cond = is_gopls_client,
           desc = "Enable gofumpt",
         },
         GofumptDisable = {
           function() set_gofumpt(false) end,
-          cond = function(client) return client.name == "gopls" end,
+          cond = is_gopls_client,
           desc = "Disable gofumpt",
         },
         GofumptToggle = {
           function() set_gofumpt() end,
-          cond = function(client) return client.name == "gopls" end,
+          cond = is_gopls_client,
           desc = "Toggle gofumpt",
         },
         GofumptStatus = {
@@ -258,7 +265,7 @@ return {
                 or "gofumpt is disabled for the current client"
             )
           end,
-          cond = function(client) return client.name == "gopls" end,
+          cond = is_gopls_client,
           desc = "Show gofumpt status",
         },
       },
@@ -281,12 +288,12 @@ return {
           RestartTypeScriptServer = {
             function() require("vtsls").commands.restart_tsserver() end,
             desc = "TypeScript: Restart TSServer",
-            cond = function(client) return client.name == "vtsls" end,
+            cond = is_vtsls_client,
           },
           SelectTypeScriptVersion = {
             function() require("vtsls").commands.select_ts_version() end,
             desc = "TypeScript: Select TypeScript version",
-            cond = function(client) return client.name == "vtsls" end,
+            cond = is_vtsls_client,
           },
         },
       },
