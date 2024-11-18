@@ -275,6 +275,7 @@ return {
   },
   {
     "yetone/avante.nvim",
+    version = "*",
     event = "VeryLazy",
     build = is_windows and "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" or "make",
     opts = {
