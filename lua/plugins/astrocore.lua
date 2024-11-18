@@ -38,7 +38,9 @@ return {
     local astrocore = require "astrocore"
     local terminal = require "util.terminal"
     local platform = require "util.platform"
+    if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
     local maps = assert(opts.mappings)
+    opts.commands = opts.commands or {}
     local is_macos = platform.is_macos()
     if is_macos then
       for _, mode in ipairs { "n", "x", "o", "i" } do
@@ -132,21 +134,36 @@ return {
       notify_bufline_auto_sort_state(is_bufline_auto_sort_enabled)
     end
 
-    vim.api.nvim_create_user_command(
-      "EnableBuflineAutoSort",
+    opts.commands.EnableBuflineAutoSort = {
       function() switch_bufline_auto_sort_state(true) end,
-      { desc = "Enable automatic buffer line sorting" }
-    )
-    vim.api.nvim_create_user_command(
-      "DisableBuflineAutoSort",
+      desc = "Enable automatic buffer line sorting",
+    }
+    opts.commands.DisableBuflineAutoSort = {
       function() switch_bufline_auto_sort_state(false) end,
-      { desc = "Disable automatic buffer line sorting" }
-    )
-    vim.api.nvim_create_user_command(
-      "ToggleBuflineAutoSort",
+      desc = "Disable automatic buffer line sorting",
+    }
+    opts.commands.ToggleBuflineAutoSort = {
       function() switch_bufline_auto_sort_state(not is_bufline_auto_sort_enabled) end,
-      { desc = "Toggle automatic buffer line sorting" }
-    )
+      desc = "Toggle automatic buffer line sorting",
+    }
+
+    opts.commands.CopyPath = {
+      function()
+        local path = vim.fn.expand "%:p"
+        vim.fn.setreg("+", path)
+        vim.notify('Copied "' .. path .. '" to the clipboard.')
+      end,
+      desc = "Copy absolute path of current buffer to clipboard",
+    }
+
+    opts.commands.CopyRelPath = {
+      function()
+        local path = vim.fn.expand "%:~:."
+        vim.fn.setreg("+", path)
+        vim.notify('Copied "' .. path .. '" to the clipboard.')
+      end,
+      desc = "Copy relative path of current buffer to clipboard",
+    }
 
     maps.n["<Leader>uB"] = {
       "<cmd>ToggleBuflineAutoSort<cr>",
