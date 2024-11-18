@@ -153,7 +153,7 @@ return {
         vim.fn.setreg("+", path)
         vim.notify('Copied "' .. path .. '" to the clipboard.')
       end,
-      desc = "Copy absolute path of current buffer to clipboard",
+      desc = "Copy the absolute path of the current buffer to the clipboard",
     }
 
     opts.commands.CopyRelPath = {
@@ -162,7 +162,7 @@ return {
         vim.fn.setreg("+", path)
         vim.notify('Copied "' .. path .. '" to the clipboard.')
       end,
-      desc = "Copy relative path of current buffer to clipboard",
+      desc = "Copy the relative path of the current buffer to the clipboard",
     }
 
     maps.n["<Leader>uB"] = {
