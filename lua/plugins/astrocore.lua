@@ -41,6 +41,7 @@ return {
     if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
     local maps = assert(opts.mappings)
     opts.commands = opts.commands or {}
+    local commands = assert(opts.commands)
     local is_macos = platform.is_macos()
     if is_macos then
       for _, mode in ipairs { "n", "x", "o", "i" } do
@@ -134,20 +135,20 @@ return {
       notify_bufline_auto_sort_state(is_bufline_auto_sort_enabled)
     end
 
-    opts.commands.EnableBuflineAutoSort = {
+    commands.EnableBuflineAutoSort = {
       function() switch_bufline_auto_sort_state(true) end,
       desc = "Enable automatic buffer line sorting",
     }
-    opts.commands.DisableBuflineAutoSort = {
+    commands.DisableBuflineAutoSort = {
       function() switch_bufline_auto_sort_state(false) end,
       desc = "Disable automatic buffer line sorting",
     }
-    opts.commands.ToggleBuflineAutoSort = {
+    commands.ToggleBuflineAutoSort = {
       function() switch_bufline_auto_sort_state(not is_bufline_auto_sort_enabled) end,
       desc = "Toggle automatic buffer line sorting",
     }
 
-    opts.commands.CopyPath = {
+    commands.CopyPath = {
       function()
         local path = vim.fn.expand "%:p"
         vim.fn.setreg("+", path)
@@ -156,7 +157,7 @@ return {
       desc = "Copy the absolute path of the current buffer to the clipboard",
     }
 
-    opts.commands.CopyRelPath = {
+    commands.CopyRelPath = {
       function()
         local path = vim.fn.expand "%:~:."
         vim.fn.setreg("+", path)
