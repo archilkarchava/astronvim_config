@@ -283,6 +283,11 @@ return {
             desc = "TypeScript: Restart TSServer",
             cond = function(client) return client.name == "vtsls" end,
           },
+          SelectTypeScriptVersion = {
+            function() require("vtsls").commands.select_ts_version() end,
+            desc = "TypeScript: Select TypeScript version",
+            cond = function(client) return client.name == "vtsls" end,
+          },
         },
       },
     },
