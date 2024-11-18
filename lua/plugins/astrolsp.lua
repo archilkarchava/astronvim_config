@@ -278,9 +278,9 @@ return {
       ---@type AstroLSPOpts
       opts = {
         commands = {
-          TSServerRestart = {
+          RestartTypeScriptServer = {
             function() require("vtsls").commands.restart_tsserver() end,
-            desc = "Restart TSServer",
+            desc = "TypeScript: Restart TSServer",
             cond = function(client) return client.name == "vtsls" end,
           },
         },
