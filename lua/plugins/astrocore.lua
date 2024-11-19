@@ -30,6 +30,8 @@ local function notify_bufline_auto_sort_state(enabled)
   return require("astrocore").notify(("buffer line sorting %s"):format(bool2str(enabled)))
 end
 
+local dotenv_ft = "dotenv"
+
 ---@type LazySpec
 return {
   "AstroNvim/astrocore",
@@ -195,7 +197,6 @@ return {
       maps[mode]["<C-S-PageDown>"] = move_buffer_tab_right_rhs
     end
 
-    ---@type AstroCoreOpts
     local modified_opts = {
       -- Configure core features of AstroNvim
       features = {
@@ -212,13 +213,6 @@ return {
         underline = true,
       },
       autocmds = {
-        __env = {
-          {
-            pattern = { ".env", ".env.*" },
-            event = { "BufRead", "BufNewFile" },
-            callback = function(args) vim.diagnostic.enable(false, { bufnr = args.buf }) end,
-          },
-        },
         bufline_auto_sort = {
           {
             event = "BufAdd",
@@ -317,11 +311,15 @@ return {
           ["spack.lock"] = "json",
           ["zuliprc"] = "confini",
         },
+        -- Change the filetype for .env files to disable shellcheck diagnostics
         pattern = {
-          [".env.*"] = "sh",
+          [".env%.?.*"] = dotenv_ft,
         },
       },
-    }
+    } --[[@as AstroCoreOpts]]
+
+    -- Enable syntax highlighting for .env files with treesitter
+    vim.treesitter.language.register("bash", dotenv_ft)
     return astrocore.extend_tbl(opts, modified_opts)
   end,
 }
