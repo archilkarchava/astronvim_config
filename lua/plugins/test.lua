@@ -34,19 +34,23 @@ return {
     "neotest",
     optional = true,
     dependencies = {
-      {
-        "neotest-jest",
-        optional = true,
-        opts = {
+      { "neotest-jest" },
+    },
+    opts = function(_, opts)
+      if not opts.adapters then opts.adapters = {} end
+      table.insert(
+        opts.adapters,
+        require "neotest-jest" {
           cwd = function(file)
             local lib = require "neotest.lib"
             local root_path = lib.files.match_root_pattern "package.json"(file)
             return root_path or vim.fn.getcwd()
           end,
+          jestCommand = "npm exec jest --",
           jest_test_discovery = false,
-        },
-      },
-    },
+        }
+      )
+    end,
   },
   {
     "neotest",
@@ -59,7 +63,7 @@ return {
       table.insert(
         opts.adapters,
         require "neotest-vitest" {
-          vitestCommand = "bunx vitest",
+          vitestCommand = "npm exec vitest --",
           filter_dir = function(name) return name ~= "node_modules" end,
         }
       )
