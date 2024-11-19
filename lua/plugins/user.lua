@@ -1295,10 +1295,8 @@ return {
             if vim.fn.filereadable(buf_name) == 0 then return end
             local dirname = get_parent_dir(buf_name)
             local branch = { dirname, buf_name }
-            local cwd = vim.fn.getcwd()
-            local parent_dirname = get_parent_dir(dirname)
-            if vim.startswith(parent_dirname, cwd) then table.insert(branch, 1, parent_dirname) end
             minifiles.set_branch(branch)
+            minifiles.reveal_cwd()
           end
           local open_current_file_in_explorer = function()
             local cur_buf_id = vim.api.nvim_get_current_buf()
