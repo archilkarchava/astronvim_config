@@ -1435,13 +1435,21 @@ return {
             event = "msg_show",
             any = {
               { find = "%d+L, %d+B" },
+            },
+          },
+          view = "mini",
+        },
+        {
+          filter = {
+            event = "msg_show",
+            any = {
               { find = "; after #%d+" },
               { find = "; before #%d+" },
               { find = "%d+ more lines" },
               { find = "%d+ fewer lines" },
             },
           },
-          view = "mini",
+          opts = { skip = true },
         },
         {
           filter = {
