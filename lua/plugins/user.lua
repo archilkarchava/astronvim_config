@@ -945,6 +945,7 @@ return {
       local util = require "util.terminal"
       opts.graph_style = util.is_kitty() and "kitty" or "unicode"
       opts.process_spinner = false
+      opts.console_timeout = 500
     end,
     dependencies = {
       {
