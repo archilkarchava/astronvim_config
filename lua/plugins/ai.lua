@@ -272,6 +272,23 @@ return {
         end,
       },
     },
+    specs = {
+      {
+        "noice.nvim",
+        optional = true,
+        opts = function(_, opts)
+          opts.routes = opts.routes or {}
+          vim.list_extend(opts.routes, {
+            {
+              filter = {
+                find = "File is too large to send to server. Skipping%.%.%.",
+              },
+              opts = { skip = true },
+            },
+          })
+        end,
+      },
+    },
   },
   {
     "yetone/avante.nvim",
