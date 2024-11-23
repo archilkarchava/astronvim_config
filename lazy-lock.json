@@ -107,7 +107,7 @@
   "resession.nvim": { "branch": "master", "commit": "c4d92a57b3936a2d6e1c087dbd6b670da2b1b082" },
   "rustaceanvim": { "branch": "master", "commit": "6e742b9fc6a37e46181879f6c32cecfa8cd2cebf" },
   "smart-splits.nvim": { "branch": "master", "commit": "d8b0e772a0244169534b1fd57c1660c9bf323d26" },
-  "snacks.nvim": { "branch": "main", "commit": "417e07c0d22173a0a50ed8207e913ba25b96088e" },
+  "snacks.nvim": { "branch": "main", "commit": "5edb3b55422a6325cf57b0e0017ac32aa723d13c" },
   "sqls.nvim": { "branch": "main", "commit": "4b1274b5b44c48ce784aac23747192f5d9d26207" },
   "substitute.nvim": { "branch": "main", "commit": "97f49d16f8eea7967d41db4f657dd63af53eeba1" },
   "supermaven-nvim": { "branch": "main", "commit": "07d20fce48a5629686aefb0a7cd4b25e33947d50" },
