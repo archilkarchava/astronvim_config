@@ -94,7 +94,7 @@ return {
               tsserver = {
                 useSeparateSyntaxServer = false,
                 useSyntaxServer = "never",
-                maxTsServerMemory = 4096,
+                maxTsServerMemory = 8192,
               },
             },
             javascript = {
