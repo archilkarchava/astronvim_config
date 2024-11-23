@@ -357,11 +357,25 @@ return {
             vim.schedule(function() vim.fn.setpos(".", cursor_pos) end)
           end
 
+          ---@param filetype string
+          local function check_is_avante_filetype(filetype) return filetype:find "^Avante" ~= nil end
+
+          local function check_is_avante_buffer()
+            if check_is_avante_filetype(vim.bo.filetype) then return true end
+            if vim.bo.buftype ~= "nofile" then return false end
+            local cur_bufnr = vim.api.nvim_get_current_buf()
+            local prev_buf_filetype = vim.fn.getbufvar(cur_bufnr - 1, "&filetype")
+            if check_is_avante_filetype(prev_buf_filetype) then return true end
+            local next_buf_filetype = vim.fn.getbufvar(cur_bufnr + 1, "&filetype")
+            if check_is_avante_filetype(next_buf_filetype) then return true end
+            return false
+          end
+
           for _, mode in ipairs { "n", "v", "s", "x", "i" } do
             maps[mode]["<D-C-i>"] = {
               function()
                 local prev_mode_buf_var_name = "avante_prev_mode"
-                local is_avante_buffer = vim.bo.filetype:find "^Avante" ~= nil
+                local is_avante_buffer = check_is_avante_buffer()
                 local cur_mode = vim.fn.mode()
                 if not is_avante_buffer then
                   vim.api.nvim_buf_set_var(0, prev_mode_buf_var_name, cur_mode)
