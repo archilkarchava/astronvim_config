@@ -84,23 +84,6 @@ return {
       end
     end
 
-    if vim.fn.executable "git" == 1 and vim.fn.executable "lazygit" == 1 then
-      maps.n["<Leader>gh"] = {
-        function()
-          local path = vim.fn.expand "%:p"
-          astrocore.toggle_term_cmd { cmd = "lazygit --filter " .. path, direction = "float" }
-        end,
-        desc = "Git commits (current file lazygit)",
-      }
-      maps.n["<Leader>pg"] = {
-        function()
-          local config_path = vim.fn.stdpath "config"
-          astrocore.toggle_term_cmd { cmd = "lazygit --path " .. config_path, direction = "float" }
-        end,
-        desc = "Open lazygit (AstroNvim config)",
-      }
-    end
-
     remap_key_if_exists(maps, "<C-PageUp>", "<C-Up>")
     remap_key_if_exists(maps, "<C-PageDown>", "<C-Down>")
     remap_key_if_exists(maps, "<C-Home>", "<C-Left>")
