@@ -49,4 +49,28 @@ function M.toggle_terminal(opt)
   vim.g[term_window_id_var] = window_id
 end
 
+function M.get_lazygit_config_dir()
+  if vim.g.lazygit_config_dir ~= nil then return vim.g.lazygit_config_dir end
+  local lg_config_dir = require("astrocore").cmd({ "lazygit", "--print-config-dir" }, false)
+  if not lg_config_dir then return end
+  lg_config_dir = vim.split(lg_config_dir, "\n", { plain = true })[1]
+  vim.g.lazygit_config_dir = lg_config_dir
+  return lg_config_dir
+end
+
+function M.get_lazygit_config_file()
+  if vim.g.lazygit_main_config_file == nil then vim.g.lazygit_main_config_file = vim.env.LG_CONFIG_FILE end
+  local lg_config_dir = M.get_lazygit_config_dir()
+  if lg_config_dir == nil then return vim.g.lazygit_main_config_file end
+  vim.g.lazygit_main_config_file = vim.g.lazygit_main_config_file or lg_config_dir .. "/config.yml"
+  vim.g.lazygit_dark_theme_config_file = vim.g.lazygit_dark_theme_config_file
+    or lg_config_dir .. "/themes/catppuccin-mocha.yml"
+  vim.g.lazygit_light_theme_config_file = vim.g.lazygit_light_theme_config_file
+    or lg_config_dir .. "/themes/catppuccin-latte.yml"
+  local lg_theme_config_file = vim.o.background == "dark" and vim.g.lazygit_dark_theme_config_file
+    or vim.g.lazygit_light_theme_config_file
+  if lg_theme_config_file == nil then return vim.g.lazygit_main_config_file end
+  return vim.fs.normalize(vim.g.lazygit_main_config_file) .. "," .. vim.fs.normalize(lg_theme_config_file)
+end
+
 return M

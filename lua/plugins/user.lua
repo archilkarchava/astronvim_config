@@ -1498,9 +1498,12 @@ return {
     specs = {
       {
         "AstroNvim/astrocore",
+        ---@param opts AstroCoreOpts
         opts = function(_, opts)
           if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
           local maps = assert(opts.mappings)
+          local autocmds = opts.autocmds or {}
+          local terminal = require "util.terminal"
           local astrocore = require "astrocore"
 
           ---@param key string The keybinding to toggle the terminal
@@ -1519,6 +1522,12 @@ return {
           add_terminal_mapping(prefix .. "t", "btop")
           add_terminal_mapping(prefix .. "y", "yazi")
           if vim.fn.executable "git" == 1 and vim.fn.executable "lazygit" == 1 then
+            autocmds.lazygit_theme_toggle = {
+              {
+                event = "ColorScheme",
+                callback = function() vim.env.LG_CONFIG_FILE = terminal.get_lazygit_config_file() end,
+              },
+            }
             maps.n["<Leader>gh"] = {
               function()
                 local path = vim.fn.expand "%:p"
