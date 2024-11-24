@@ -1493,6 +1493,35 @@ return {
     },
   },
   {
+    "toggleterm.nvim",
+    optional = true,
+    specs = {
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
+          local maps = assert(opts.mappings)
+          local astrocore = require "astrocore"
+
+          ---@param key string The keybinding to toggle the terminal
+          ---@param exec_name string The name of the executable to be mapped
+          local function add_terminal_mapping(key, exec_name)
+            if vim.fn.executable(exec_name) == 1 then
+              maps.n[key] = {
+                function() astrocore.toggle_term_cmd { cmd = exec_name, direction = "float" } end,
+                desc = "ToggleTerm " .. exec_name,
+                noremap = false,
+              }
+            end
+          end
+
+          local prefix = "<Leader>t"
+          add_terminal_mapping(prefix .. "t", "btop")
+        end,
+      },
+    },
+  },
+  {
     "better-escape.nvim",
     enabled = false,
   },

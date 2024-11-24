@@ -101,11 +101,6 @@ return {
       }
     end
 
-    if vim.fn.executable "btop" == 1 then
-      maps.n["<Leader>tt"] =
-        { function() astrocore.toggle_term_cmd { cmd = "btop", direction = "float" } end, desc = "ToggleTerm btop" }
-    end
-
     remap_key_if_exists(maps, "<C-PageUp>", "<C-Up>")
     remap_key_if_exists(maps, "<C-PageDown>", "<C-Down>")
     remap_key_if_exists(maps, "<C-Home>", "<C-Left>")
