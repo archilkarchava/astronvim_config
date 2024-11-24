@@ -77,6 +77,10 @@ return {
       for _, mode in ipairs { "n", "i" } do
         maps[mode]["<C-'>"] = toggle_terminal_rhs
         maps[mode]["<F7>"] = toggle_terminal_rhs
+        maps[mode]["<C-S-'>"] = {
+          function() terminal.toggle_terminal "vsplit" end,
+          desc = "Toggle terminal (vertical split)",
+        }
       end
     end
 
