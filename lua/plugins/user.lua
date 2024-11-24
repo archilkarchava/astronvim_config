@@ -1483,14 +1483,6 @@ return {
     },
   },
   {
-    "resession.nvim",
-    optional = true,
-    opts = function()
-      local resession = require "resession"
-      resession.add_hook("post_load", function() require("astrocore.buffer").sort "bufnr" end)
-    end,
-  },
-  {
     "nvim-colorizer.lua",
     optional = true,
     opts = {
