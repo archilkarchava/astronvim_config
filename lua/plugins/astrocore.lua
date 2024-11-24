@@ -70,36 +70,13 @@ return {
     maps.n["<C-c>"] = { "ciw", desc = "Change inner word", noremap = true }
     local is_kitty = terminal.is_kitty()
     if is_kitty then
+      local toggle_terminal_rhs = {
+        terminal.toggle_terminal,
+        desc = "Toggle terminal",
+      }
       for _, mode in ipairs { "n", "i" } do
-        maps[mode]["<C-'>"] = {
-          function()
-            local is_term_window_exists = false
-            if vim.g.kitty_toggle_term_window_id ~= nil then
-              local find_term_window_result =
-                vim.system({ "kitty", "@", "ls", "--match", "id:" .. vim.g.kitty_toggle_term_window_id }):wait()
-              is_term_window_exists = find_term_window_result.code == 0
-            end
-            if is_term_window_exists then
-              vim.system { "kitty", "@", "focus-window", "--match", "id:" .. vim.g.kitty_toggle_term_window_id }
-            else
-              local create_term_window_result = vim
-                .system({
-                  "kitty",
-                  "@",
-                  "launch",
-                  "--location=hsplit",
-                  "--cwd=current",
-                  "--bias=30",
-                }, { text = true })
-                :wait()
-              local window_id = tostring(create_term_window_result.stdout)
-              if create_term_window_result.code ~= 0 or not window_id then return end
-              vim.g.kitty_toggle_term_window_id = window_id
-            end
-            vim.system { "kitty", "@", "goto-layout", "splits" }
-          end,
-          desc = "Toggle terminal",
-        }
+        maps[mode]["<C-'>"] = toggle_terminal_rhs
+        maps[mode]["<F7>"] = toggle_terminal_rhs
       end
     end
 
