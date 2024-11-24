@@ -61,7 +61,7 @@ return {
               { function() require("various-textobjs").indentation("outer", "outer") end, desc = "Around indent" }
             maps[mode]["ie"] = { function() require("various-textobjs").entireBuffer() end, desc = "Entire buffer" }
             maps[mode]["ae"] = { function() require("various-textobjs").entireBuffer() end, desc = "Entire buffer" }
-            maps[mode]["<leader>r"] =
+            maps[mode]["<Leader>r"] =
               { function() require("various-textobjs").restOfParagraph() end, desc = "Rest of paragraph" }
             maps[mode]["R"] =
               { function() require("various-textobjs").restOfIndentation() end, desc = "Rest of indentation" }
@@ -361,8 +361,8 @@ return {
           maps.v["M"] = { mc.matchCursors, desc = "Match cursors" }
 
           -- Rotate visual selection contents.
-          maps.v["<leader>t"] = { function() mc.transposeCursors(1) end, desc = "Transpose selections (forward)" }
-          maps.v["<leader>T"] = { function() mc.transposeCursors(-1) end, desc = "Transpose selections (backward)" }
+          maps.v["<Leader>t"] = { function() mc.transposeCursors(1) end, desc = "Transpose selections (forward)" }
+          maps.v["<Leader>T"] = { function() mc.transposeCursors(-1) end, desc = "Transpose selections (backward)" }
         end,
       },
     },
@@ -638,7 +638,7 @@ return {
         opts = {
           mappings = {
             n = {
-              ["<leader>gB"] = { "<cmd>Gitsigns toggle_current_line_blame<cr>", desc = "Toggle inline git blame" },
+              ["<Leader>gB"] = { "<cmd>Gitsigns toggle_current_line_blame<cr>", desc = "Toggle inline git blame" },
             },
           },
         },
@@ -954,11 +954,11 @@ return {
         opts = function(_, opts)
           if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
           local maps = assert(opts.mappings)
-          maps.n["<leader>pG"] = {
+          maps.n["<Leader>pG"] = {
             function() vim.cmd.Neogit("cwd=" .. vim.fn.stdpath "config") end,
             desc = "Open Neogit (AstroNvim config)",
           }
-          maps.n["<leader>gH"] = { "<cmd>NeogitLogCurrent<cr>", desc = "Git commits (current file neogit)" }
+          maps.n["<Leader>gH"] = { "<cmd>NeogitLogCurrent<cr>", desc = "Git commits (current file neogit)" }
           for _, mode in ipairs { "n", "v", "s", "x", "i" } do
             maps[mode]["<D-0>"] = {
               function()

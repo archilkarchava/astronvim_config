@@ -318,7 +318,7 @@ return {
         opts = {
           mappings = {
             n = {
-              ["<leader>lc"] = {
+              ["<Leader>lc"] = {
                 function()
                   require("garbage-day.utils").stop_lsp()
                   require("garbage-day.utils").start_lsp()

@@ -85,14 +85,14 @@ return {
     end
 
     if vim.fn.executable "git" == 1 and vim.fn.executable "lazygit" == 1 then
-      maps.n["<leader>gh"] = {
+      maps.n["<Leader>gh"] = {
         function()
           local path = vim.fn.expand "%:p"
           astrocore.toggle_term_cmd { cmd = "lazygit --filter " .. path, direction = "float" }
         end,
         desc = "Git commits (current file lazygit)",
       }
-      maps.n["<leader>pg"] = {
+      maps.n["<Leader>pg"] = {
         function()
           local config_path = vim.fn.stdpath "config"
           astrocore.toggle_term_cmd { cmd = "lazygit --path " .. config_path, direction = "float" }
@@ -244,7 +244,7 @@ return {
         n = {
           ["<M-Tab>"] = { "<C-^>" },
           ["<M-c>"] = { "<cmd>tabclose<cr>" },
-          ["<leader>W"] = { "<cmd>noautocmd w<cr>", desc = "Save without running auto-commands" },
+          ["<Leader>W"] = { "<cmd>noautocmd w<cr>", desc = "Save without running auto-commands" },
           -- mappings seen under group name "Buffer"
           ["<Leader>bd"] = {
             function()
@@ -254,7 +254,7 @@ return {
             end,
             desc = "Close buffer from tabline",
           },
-          ["<leader>lc"] = {
+          ["<Leader>lc"] = {
             "<cmd>LspRestart<cr>",
             desc = "Restart (garbage Collect) LSP clients",
           },
