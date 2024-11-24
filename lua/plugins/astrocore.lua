@@ -78,7 +78,7 @@ return {
         maps[mode]["<C-'>"] = toggle_terminal_rhs
         maps[mode]["<F7>"] = toggle_terminal_rhs
         maps[mode]["<C-S-'>"] = {
-          function() terminal.toggle_terminal "vsplit" end,
+          function() terminal.toggle_terminal { direction = "vertical" } end,
           desc = "Toggle terminal (vertical split)",
         }
       end
