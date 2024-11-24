@@ -1517,6 +1517,7 @@ return {
 
           local prefix = "<Leader>t"
           add_terminal_mapping(prefix .. "t", "btop")
+          add_terminal_mapping(prefix .. "y", "yazi")
         end,
       },
     },
