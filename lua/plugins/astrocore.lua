@@ -133,7 +133,7 @@ return {
     }
     maps.n.H = navigate_to_prev_buffer_rhs
     maps.n.L = navigate_to_next_buffer_rhs
-    for _, mode in ipairs { "n", "v", "s", "x", "i" } do
+    for _, mode in ipairs { "n", "v", "s", "x", "i", "t" } do
       maps[mode]["<M-S-[>"] = navigate_to_prev_buffer_rhs
       maps[mode]["<M-S-]>"] = navigate_to_next_buffer_rhs
       maps[mode]["<C-S-PageUp>"] = move_buffer_tab_left_rhs
