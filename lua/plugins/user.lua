@@ -1562,7 +1562,7 @@ return {
             "n-v-c-sm:block-Cursor/lCursor,i-ci-ve:ver25-Cursor/lCursor,r-cr-o:hor20-Cursor/lCursor"
           autocmds.kitty_cursor_color_toggle = {
             {
-              event = "ColorScheme",
+              event = { "VimEnter", "ColorScheme" },
               desc = "Toggle Kitty cursor color",
               callback = function()
                 local is_dark_theme = vim.o.background == "dark"
