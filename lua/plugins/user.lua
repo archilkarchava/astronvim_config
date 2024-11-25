@@ -1551,7 +1551,6 @@ return {
             end
           end
 
-          maps.t["<esc>"] = { [[<C-\><C-n>]], desc = "Go back to normal mode" }
           maps.t["<C-PageUp>"] = { term_resize "<C-PageUp>", desc = "Resize split up" }
           maps.t["<C-PageDown>"] = { term_resize "<C-PageDown>", desc = "Resize split down" }
           maps.t["<C-Home>"] = { term_resize "<C-Home>", desc = "Resize split left" }
