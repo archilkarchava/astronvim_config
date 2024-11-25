@@ -67,7 +67,7 @@ function M.get_lazygit_config_file()
     or lg_config_dir .. "/themes/catppuccin-mocha.yml"
   vim.g.lazygit_light_theme_config_file = vim.g.lazygit_light_theme_config_file
     or lg_config_dir .. "/themes/catppuccin-latte.yml"
-  local lg_theme_config_file = vim.o.background == "dark" and vim.g.lazygit_dark_theme_config_file
+  local lg_theme_config_file = vim.go.background == "dark" and vim.g.lazygit_dark_theme_config_file
     or vim.g.lazygit_light_theme_config_file
   if lg_theme_config_file == nil then return vim.g.lazygit_main_config_file end
   return vim.fs.normalize(vim.g.lazygit_main_config_file) .. "," .. vim.fs.normalize(lg_theme_config_file)
