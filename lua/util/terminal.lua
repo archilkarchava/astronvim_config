@@ -2,13 +2,46 @@ local M = {}
 
 function M.is_kitty() return vim.env.KITTY_PID ~= nil and not vim.g.neovide and not vim.g.vscode end
 
----@param args string|string[]
-function M.kitty_set_colors(args)
-  local cmd = { "kitty", "@", "set-colors" }
+--- @param action string
+--- @param args string|string[]?
+--- @param opts vim.SystemOpts? Options:
+---   - cwd: (string) Set the current working directory for the sub-process.
+---   - env: table<string,string> Set environment variables for the new process. Inherits the
+---     current environment with `NVIM` set to |v:servername|.
+---   - clear_env: (boolean) `env` defines the job environment exactly, instead of merging current
+---     environment.
+---   - stdin: (string|string[]|boolean) If `true`, then a pipe to stdin is opened and can be written
+---     to via the `write()` method to SystemObj. If string or string[] then will be written to stdin
+---     and closed. Defaults to `false`.
+---   - stdout: (boolean|function)
+---     Handle output from stdout. When passed as a function must have the signature `fun(err: string, data: string)`.
+---     Defaults to `true`
+---   - stderr: (boolean|function)
+---     Handle output from stderr. When passed as a function must have the signature `fun(err: string, data: string)`.
+---     Defaults to `true`.
+---   - text: (boolean) Handle stdout and stderr as text. Replaces `\r\n` with `\n`.
+---   - timeout: (integer) Run the command with a time limit. Upon timeout the process is sent the
+---     TERM signal (15) and the exit code is set to 124.
+---   - detach: (boolean) If true, spawn the child process in a detached state - this will make it
+---     a process group leader, and will effectively enable the child to keep running after the
+---     parent exits. Note that the child process will still keep the parent's event loop alive
+---     unless the parent process calls |uv.unref()| on the child's process handle.
+---
+--- @param on_exit? fun(out: vim.SystemCompleted) Called when subprocess exits. When provided, the command runs
+---   asynchronously. Receives SystemCompleted object, see return of SystemObj:wait().
+function M.kitty_cmd(action, args, opts, on_exit)
+  local cmd = { "kitty", "@", action }
+  args = args or {}
   if type(args) == "string" then args = { args } end
   cmd = vim.list_extend(cmd, args)
-  return require("astrocore").cmd(cmd)
+  return vim.system(cmd, opts, on_exit)
 end
+
+---@param args string|string[]
+function M.kitty_set_colors(args) return M.kitty_cmd("set-colors", args) end
+
+---@param args string|string[]?
+function M.kitty_get_colors(args) return M.kitty_cmd("get-colors", args) end
 
 ---@param background "dark"|"light"|"default"?
 function M.kitty_set_theme(background)
@@ -25,7 +58,7 @@ end
 
 ---Changes the layout of the Kitty terminal.
 ---@param layout "fat" | "grid" | "horizontal" | "splits" | "stack" | "tall" | "vertical"
-local function kitty_goto_layout(layout) return vim.system { "kitty", "@", "goto-layout", layout } end
+local function kitty_goto_layout(layout) return M.kitty_cmd("goto-layout", layout) end
 
 ---@param opt? { direction?: "vertical" | "horizontal" }
 function M.toggle_terminal(opt)
@@ -45,26 +78,20 @@ function M.toggle_terminal(opt)
   local term_window_id_var = "kitty_toggle_" .. location .. "_term_window_id"
   local is_term_window_exists = false
   if vim.g[term_window_id_var] ~= nil then
-    local find_term_window_result =
-      vim.system({ "kitty", "@", "ls", "--match", "id:" .. vim.g[term_window_id_var] }):wait()
+    local find_term_window_result = M.kitty_cmd("ls", { "--match", "id:" .. vim.g[term_window_id_var] }):wait()
     is_term_window_exists = find_term_window_result.code == 0
   end
   if is_term_window_exists then
-    vim.system { "kitty", "@", "focus-window", "--match", "id:" .. vim.g[term_window_id_var] }
+    M.kitty_cmd("focus-window", { "--match", "id:" .. vim.g[term_window_id_var] })
     kitty_goto_layout "splits"
     return
   end
   kitty_goto_layout("splits"):wait()
-  local create_term_window_result = vim
-    .system({
-      "kitty",
-      "@",
-      "launch",
-      "--location=" .. location,
-      "--cwd=current",
-      "--bias=30",
-    }, { text = true })
-    :wait()
+  local create_term_window_result = M.kitty_cmd("launch", {
+    "--location=" .. location,
+    "--cwd=current",
+    "--bias=30",
+  }, { text = true }):wait()
   if create_term_window_result.stdout == nil or create_term_window_result.code ~= 0 then return end
   local window_id = tonumber(create_term_window_result.stdout:gsub("%s+", ""), 10)
   vim.g[term_window_id_var] = window_id
