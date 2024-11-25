@@ -2,6 +2,27 @@ local M = {}
 
 function M.is_kitty() return vim.env.KITTY_PID ~= nil end
 
+---@param args string|string[]
+local function kitty_call_set_colors_cmd(args)
+  local cmd = { "kitty", "@", "set-colors" }
+  if type(args) == "string" then args = { args } end
+  cmd = vim.list_extend(cmd, args)
+  return require("astrocore").cmd(cmd)
+end
+
+---@param background "dark"|"light"|"default"?
+function M.kitty_set_colors(background)
+  local cmd = {}
+  if background == nil or background == "default" then table.insert(cmd, "--reset") end
+  local is_dark_theme = background == "dark"
+  local theme_path = vim.fn.expand(
+    is_dark_theme and "$HOME/.config/kitty/themes/mocha-no-tabbar.conf"
+      or "$HOME/.config/kitty/themes/latte-no-tabbar.conf"
+  )
+  table.insert(cmd, theme_path)
+  return kitty_call_set_colors_cmd(cmd)
+end
+
 ---Changes the layout of the Kitty terminal.
 ---@param layout "fat" | "grid" | "horizontal" | "splits" | "stack" | "tall" | "vertical"
 local function kitty_goto_layout(layout) return vim.system { "kitty", "@", "goto-layout", layout } end
