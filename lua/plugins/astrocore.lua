@@ -31,6 +31,7 @@ local function notify_bufline_auto_sort_state(enabled)
 end
 
 local dotenv_ft = "dotenv"
+local is_bufline_auto_sort_enabled = false
 
 ---@type LazySpec
 return {
@@ -38,7 +39,6 @@ return {
   ---@param opts AstroCoreOpts
   opts = function(_, opts)
     local astrocore = require "astrocore"
-    local terminal = require "util.terminal"
     local platform = require "util.platform"
     if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
     local maps = assert(opts.mappings)
@@ -68,27 +68,11 @@ return {
       maps[mode]["<C-c>"] = { "<C-c>", noremap = true }
     end
     maps.n["<C-c>"] = { "ciw", desc = "Change inner word", noremap = true }
-    local is_kitty = terminal.is_kitty()
-    if is_kitty then
-      local toggle_terminal_rhs = {
-        terminal.toggle_terminal,
-        desc = "Toggle terminal",
-      }
-      for _, mode in ipairs { "n", "i" } do
-        maps[mode]["<C-'>"] = toggle_terminal_rhs
-        maps[mode]["<F7>"] = toggle_terminal_rhs
-        maps[mode]["<C-S-'>"] = {
-          function() terminal.toggle_terminal { direction = "vertical" } end,
-          desc = "Toggle terminal (vertical split)",
-        }
-      end
-    end
 
     remap_key_if_exists(maps, "<C-PageUp>", "<C-Up>")
     remap_key_if_exists(maps, "<C-PageDown>", "<C-Down>")
     remap_key_if_exists(maps, "<C-Home>", "<C-Left>")
     remap_key_if_exists(maps, "<C-End>", "<C-Right>")
-    local is_bufline_auto_sort_enabled = false
 
     ---@param enabled boolean
     local function switch_bufline_auto_sort_state(enabled)

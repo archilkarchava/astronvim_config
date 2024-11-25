@@ -1495,6 +1495,19 @@ return {
   {
     "toggleterm.nvim",
     optional = true,
+    opts = function(_, opts)
+      local on_create = opts.on_create or function() end
+      opts.on_create = function(term)
+        on_create(term)
+        if term.hidden then
+          local function toggle() term:toggle() end
+          local toggle_modes = { "n", "t", "i" }
+          local toggle_opts = { desc = "Toggle terminal", buffer = term.bufnr }
+          vim.keymap.set(toggle_modes, "<C-S-'>", toggle, toggle_opts)
+          vim.keymap.set(toggle_modes, '<C-">', toggle, toggle_opts)
+        end
+      end
+    end,
     specs = {
       {
         "AstroNvim/astrocore",
@@ -1505,10 +1518,54 @@ return {
           local autocmds = opts.autocmds or {}
           local terminal = require "util.terminal"
           local astrocore = require "astrocore"
+          local use_kitty_for_terminal_splits = false
+
+          local is_kitty = terminal.is_kitty()
+          if is_kitty and use_kitty_for_terminal_splits then
+            local toggle_terminal_horizontal_split_rhs = {
+              terminal.toggle_terminal,
+              desc = "Toggle terminal",
+            }
+            local toggle_terminal_vertical_split_rhs = {
+              function() terminal.toggle_terminal { direction = "vertical" } end,
+              desc = "Toggle terminal (vertical split)",
+            }
+            for _, mode in ipairs { "n", "i" } do
+              maps[mode]["<C-'>"] = toggle_terminal_horizontal_split_rhs
+              maps[mode]["<F7>"] = toggle_terminal_horizontal_split_rhs
+              maps[mode]["<C-S-'>"] = toggle_terminal_vertical_split_rhs
+              maps[mode]['<C-">'] = toggle_terminal_vertical_split_rhs
+            end
+          end
+
+          ---@param existing_normal_mode_mapping string The existing normal mode mapping to be used for resizing
+          local function term_resize(existing_normal_mode_mapping)
+            return function()
+              vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes([[<C-\><C-n>]], true, false, true), "n", false)
+              vim.api.nvim_feedkeys(
+                vim.api.nvim_replace_termcodes(existing_normal_mode_mapping, true, false, true),
+                "m",
+                false
+              )
+              vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("i", true, false, true), "n", false)
+            end
+          end
+
+          maps.t["<esc>"] = { [[<C-\><C-n>]], desc = "Go back to normal mode" }
+          maps.t["<C-PageUp>"] = { term_resize "<C-PageUp>", desc = "Resize split up" }
+          maps.t["<C-PageDown>"] = { term_resize "<C-PageDown>", desc = "Resize split down" }
+          maps.t["<C-Home>"] = { term_resize "<C-Home>", desc = "Resize split left" }
+          maps.t["<C-End>"] = { term_resize "<C-End>", desc = "Resize split right" }
+          maps.t["<M-Left>"] = { "<M-b>", desc = "Go to previous word" }
+          maps.t["<M-Right>"] = { "<M-f>", desc = "Go to next word" }
+
+          local toggle_term_rhs = { "<Cmd>ToggleTerm<CR>", desc = "Toggle terminal" }
+          maps.t['<C-">'] = toggle_term_rhs
+          maps.t["<C-S-'>"] = toggle_term_rhs
 
           ---@param key string The keybinding to toggle the terminal
           ---@param exec_name string The name of the executable to be mapped
-          local function add_terminal_mapping(key, exec_name)
+          local function add_terminal_program_mapping(key, exec_name)
             if vim.fn.executable(exec_name) == 1 then
               maps.n[key] = {
                 function() astrocore.toggle_term_cmd { cmd = exec_name, direction = "float" } end,
@@ -1519,8 +1576,8 @@ return {
           end
 
           local prefix = "<Leader>t"
-          add_terminal_mapping(prefix .. "t", "btop")
-          add_terminal_mapping(prefix .. "y", "yazi")
+          add_terminal_program_mapping(prefix .. "t", "btop")
+          add_terminal_program_mapping(prefix .. "y", "yazi")
           if vim.fn.executable "git" == 1 and vim.fn.executable "lazygit" == 1 then
             autocmds.lazygit_theme_toggle = {
               {
