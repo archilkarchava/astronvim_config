@@ -1551,6 +1551,30 @@ return {
     "shaun-mathew/Chameleon.nvim",
     opts = {},
     cond = function() return require("util.terminal").is_kitty() end,
+    specs = {
+      {
+        "AstroNvim/astrocore",
+        ---@param opts AstroCoreOpts
+        opts = function(_, opts)
+          local autocmds = opts.autocmds or {}
+          local terminal = require "util.terminal"
+          opts.options.opt.guicursor =
+            "n-v-c-sm:block-Cursor/lCursor,i-ci-ve:ver25-Cursor/lCursor,r-cr-o:hor20-Cursor/lCursor"
+          autocmds.kitty_cursor_color_toggle = {
+            {
+              event = "ColorScheme",
+              desc = "Toggle Kitty cursor color",
+              callback = function()
+                local is_dark_theme = vim.o.background == "dark"
+                terminal.kitty_set_colors(
+                  is_dark_theme and { "cursor_text_color=#1e1e2e" } or { "cursor_text_color=#eff1f5" }
+                )
+              end,
+            },
+          }
+        end,
+      },
+    },
   },
   {
     "better-escape.nvim",

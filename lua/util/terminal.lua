@@ -3,7 +3,7 @@ local M = {}
 function M.is_kitty() return vim.env.KITTY_PID ~= nil end
 
 ---@param args string|string[]
-local function kitty_call_set_colors_cmd(args)
+function M.kitty_set_colors(args)
   local cmd = { "kitty", "@", "set-colors" }
   if type(args) == "string" then args = { args } end
   cmd = vim.list_extend(cmd, args)
@@ -11,7 +11,7 @@ local function kitty_call_set_colors_cmd(args)
 end
 
 ---@param background "dark"|"light"|"default"?
-function M.kitty_set_colors(background)
+function M.kitty_set_theme(background)
   local cmd = {}
   if background == nil or background == "default" then table.insert(cmd, "--reset") end
   local is_dark_theme = background == "dark"
@@ -20,7 +20,7 @@ function M.kitty_set_colors(background)
       or "$HOME/.config/kitty/themes/latte-no-tabbar.conf"
   )
   table.insert(cmd, theme_path)
-  return kitty_call_set_colors_cmd(cmd)
+  return M.kitty_set_colors(cmd)
 end
 
 ---Changes the layout of the Kitty terminal.
