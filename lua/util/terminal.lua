@@ -43,6 +43,33 @@ function M.kitty_set_colors(args) return M.kitty_cmd("set-colors", args) end
 ---@param args string|string[]?
 function M.kitty_get_colors(args) return M.kitty_cmd("get-colors", args) end
 
+--- Returns all colors as a normalized string.
+---@return string|nil Normalized colors string or nil if colors are not available.
+local function kitty_get_all_colors_normalized_string()
+  local colors = M.kitty_get_colors():wait().stdout
+  if colors == nil then return nil end
+  colors = colors:gsub("[ \t]+", "="):gsub("\n$", "")
+  return colors
+end
+
+function M.kitty_get_all_colors_dict()
+  local colors = kitty_get_all_colors_normalized_string()
+  if colors == nil then return nil end
+  ---@type table<string,string>
+  local color_table = {}
+  for _, line in ipairs(vim.split(colors, "\n", { plain = true })) do
+    local key, value = unpack(vim.split(line, "=", { plain = true }))
+    if key and value then color_table[key] = value end
+  end
+  return color_table
+end
+
+function M.kitty_get_all_colors_list()
+  local colors = kitty_get_all_colors_normalized_string()
+  if colors == nil then return nil end
+  return vim.split(colors, "\n", { plain = true })
+end
+
 ---@param background "dark"|"light"|"default"?
 function M.kitty_set_theme(background)
   local cmd = {}
