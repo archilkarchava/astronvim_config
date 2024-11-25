@@ -1580,7 +1580,7 @@ return {
           if vim.fn.executable "git" == 1 and vim.fn.executable "lazygit" == 1 then
             autocmds.lazygit_theme_toggle = {
               {
-                event = "ColorScheme",
+                event = { "VimEnter", "ColorScheme" },
                 callback = function() vim.env.LG_CONFIG_FILE = terminal.get_lazygit_config_file() end,
               },
             }
