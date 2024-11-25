@@ -1,6 +1,6 @@
 local M = {}
 
-function M.is_kitty() return vim.env.KITTY_PID ~= nil end
+function M.is_kitty() return vim.env.KITTY_PID ~= nil and not vim.g.neovide and not vim.g.vscode end
 
 ---@param args string|string[]
 function M.kitty_set_colors(args)
