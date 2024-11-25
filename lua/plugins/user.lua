@@ -1548,6 +1548,11 @@ return {
     },
   },
   {
+    "shaun-mathew/Chameleon.nvim",
+    opts = {},
+    cond = function() return require("util.terminal").is_kitty() end,
+  },
+  {
     "better-escape.nvim",
     enabled = false,
   },
