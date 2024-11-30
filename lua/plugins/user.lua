@@ -1693,6 +1693,15 @@ return {
     end,
   },
   {
+    "lambdalisue/suda.vim",
+    cmd = { "SudaRead", "SudaWrite" },
+    lazy = false,
+    init = function()
+      vim.g["suda#noninteractive"] = 1
+      vim.g.suda_smart_edit = 1
+    end,
+  },
+  {
     "better-escape.nvim",
     enabled = false,
   },
