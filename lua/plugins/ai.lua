@@ -236,6 +236,7 @@ return {
               copilot_helpers.disable()
               supermaven_helpers.restart()
               vim.g.current_suggestions_provider = suggestion_providers.supermaven
+              vim.notify "Switched to Supermaven inline suggestions provider"
             end,
             desc = require("astroui").get_icon("Supermaven", 1, true) .. "Supermaven",
           }
@@ -245,6 +246,7 @@ return {
                 supermaven_helpers.disable()
                 copilot_helpers.restart()
                 vim.g.current_suggestions_provider = suggestion_providers.copilot
+                vim.notify "Switched to Copilot inline suggestions provider"
               end,
               desc = require("astroui").get_icon("Copilot", 1, true) .. "Copilot",
             }
@@ -254,6 +256,7 @@ return {
               supermaven_helpers.disable()
               copilot_helpers.disable()
               vim.g.current_suggestions_provider = suggestion_providers.none
+              vim.notify "Disabled inline suggestions"
             end,
             desc = "Disable all",
           }
