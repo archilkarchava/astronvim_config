@@ -107,7 +107,7 @@ return {
               },
             },
             vtsls = {
-              autoUseWorkspaceTsdk = false,
+              autoUseWorkspaceTsdk = true,
               tsserver = {
                 globalPlugins = {
                   {
