@@ -1448,6 +1448,18 @@ return {
               { find = "; before #%d+" },
               { find = "%d+ more lines" },
               { find = "%d+ fewer lines" },
+              { find = "vim%.tbl_islist is deprecated" },
+              { find = "vim%.lsp%.get_active_clients%(%) is deprecated" },
+            },
+          },
+          opts = { skip = true },
+        },
+        {
+          filter = {
+            event = "notify",
+            kind = "warn",
+            any = {
+              { find = "position_encoding param is required" },
             },
           },
           opts = { skip = true },
