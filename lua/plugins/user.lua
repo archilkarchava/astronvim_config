@@ -1570,6 +1570,7 @@ return {
           maps.t["<C-End>"] = { term_resize "<C-End>", desc = "Resize split right" }
           maps.t["<M-Left>"] = { "<M-b>", desc = "Go to previous word" }
           maps.t["<M-Right>"] = { "<M-f>", desc = "Go to next word" }
+          maps.t["<D-Esc>"] = { [[<C-\><C-n>]], desc = "Switch to normal mode" }
 
           local toggle_term_rhs = { "<Cmd>ToggleTerm<CR>", desc = "Toggle terminal" }
           maps.t['<C-">'] = toggle_term_rhs
