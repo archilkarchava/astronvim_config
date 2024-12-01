@@ -1691,48 +1691,7 @@ return {
     ---@param opts AstroCoreOpts
     opts = function(_, opts)
       local terminal = require "util.terminal"
-      if not terminal.is_kitty() then return end
       local autocmds = opts.autocmds or {}
-      local initial_kitty_colors = nil
-      local current_nvim_terminal_colors = {}
-
-      --- Converts a decimal color value to a hexadecimal color string.
-      ---@param d number? The decimal color value.
-      local function get_hex_color_from_decimal(d)
-        if d == nil then return nil end
-        return string.format("#%06X", d)
-      end
-
-      local function get_nvim_terminal_colors()
-        local terminal_colors = {}
-        for i = 0, 15 do
-          local color_name = "terminal_color_" .. i
-          local color_value = vim.g[color_name]
-          if color_value ~= nil then terminal_colors[color_name] = color_value end
-        end
-        return terminal_colors
-      end
-
-      local function set_kitty_colors()
-        local colors_table = {}
-        local cursor_highlight = vim.api.nvim_get_hl(0, { name = "Cursor" })
-        local cursor_text_color = get_hex_color_from_decimal(cursor_highlight.fg)
-        if cursor_text_color ~= nil then table.insert(colors_table, "cursor_text_color=" .. cursor_text_color) end
-        local normal_highlight = vim.api.nvim_get_hl(0, { name = "Normal" })
-        local background_color = get_hex_color_from_decimal(normal_highlight.bg)
-        if background_color ~= nil then table.insert(colors_table, "background=" .. background_color) end
-        -- Setting terminal colors in Kitty will also update the colors for Neovim terminal instances that are already running
-        for i = 0, 15 do
-          local color_name = "terminal_color_" .. i
-          vim.g[color_name] = nil
-          local color_value = current_nvim_terminal_colors[color_name]
-          if color_value ~= nil then
-            local value = "color" .. i .. "=" .. color_value
-            table.insert(colors_table, value)
-          end
-        end
-        terminal.kitty_set_colors(colors_table)
-      end
 
       --- Parse a string of hex characters as a color.
       ---
@@ -1788,18 +1747,7 @@ return {
 
         return nil, nil, nil
       end
-      opts.options.opt.guicursor =
-        "n-v-c-sm:block-Cursor/lCursor,i-ci-ve:ver25-Cursor/lCursor,r-cr-o:hor20-Cursor/lCursor"
-      autocmds.kitty_colors_toggle = {
-        {
-          event = "VimEnter",
-          desc = "Set initial Kitty colors on VimEnter",
-          callback = function()
-            initial_kitty_colors = terminal.kitty_get_all_colors_list()
-            current_nvim_terminal_colors = get_nvim_terminal_colors()
-            set_kitty_colors()
-          end,
-        },
+      autocmds.background_temrinal_toggle = {
         {
           event = "TermResponse",
           desc = "Update the value of 'background' automatically based on the terminal emulator's background color",
@@ -1823,6 +1771,61 @@ return {
                 vim.go.background = bg
               end
             end
+          end,
+        },
+      }
+      if not terminal.is_kitty() then return end
+      local initial_kitty_colors = nil
+      local current_nvim_terminal_colors = {}
+
+      --- Converts a decimal color value to a hexadecimal color string.
+      ---@param d number? The decimal color value.
+      local function get_hex_color_from_decimal(d)
+        if d == nil then return nil end
+        return string.format("#%06X", d)
+      end
+
+      local function get_nvim_terminal_colors()
+        local terminal_colors = {}
+        for i = 0, 15 do
+          local color_name = "terminal_color_" .. i
+          local color_value = vim.g[color_name]
+          if color_value ~= nil then terminal_colors[color_name] = color_value end
+        end
+        return terminal_colors
+      end
+
+      local function set_kitty_colors()
+        local colors_table = {}
+        local cursor_highlight = vim.api.nvim_get_hl(0, { name = "Cursor" })
+        local cursor_text_color = get_hex_color_from_decimal(cursor_highlight.fg)
+        if cursor_text_color ~= nil then table.insert(colors_table, "cursor_text_color=" .. cursor_text_color) end
+        local normal_highlight = vim.api.nvim_get_hl(0, { name = "Normal" })
+        local background_color = get_hex_color_from_decimal(normal_highlight.bg)
+        if background_color ~= nil then table.insert(colors_table, "background=" .. background_color) end
+        -- Setting terminal colors in Kitty will also update the colors for Neovim terminal instances that are already running
+        for i = 0, 15 do
+          local color_name = "terminal_color_" .. i
+          vim.g[color_name] = nil
+          local color_value = current_nvim_terminal_colors[color_name]
+          if color_value ~= nil then
+            local value = "color" .. i .. "=" .. color_value
+            table.insert(colors_table, value)
+          end
+        end
+        terminal.kitty_set_colors(colors_table)
+      end
+
+      opts.options.opt.guicursor =
+        "n-v-c-sm:block-Cursor/lCursor,i-ci-ve:ver25-Cursor/lCursor,r-cr-o:hor20-Cursor/lCursor"
+      autocmds.kitty_colors_toggle = {
+        {
+          event = "VimEnter",
+          desc = "Set initial Kitty colors on VimEnter",
+          callback = function()
+            initial_kitty_colors = terminal.kitty_get_all_colors_list()
+            current_nvim_terminal_colors = get_nvim_terminal_colors()
+            set_kitty_colors()
           end,
         },
         {
