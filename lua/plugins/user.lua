@@ -1409,7 +1409,7 @@ return {
   },
   {
     "noice.nvim",
-    event = "VeryLazy",
+    lazy = false,
     optional = true,
     opts_extend = { "routes" },
     opts = {
