@@ -1459,6 +1459,7 @@ return {
             event = "notify",
             kind = "warn",
             any = {
+              { find = "offset_encoding is required" },
               { find = "position_encoding param is required" },
             },
           },
