@@ -1672,6 +1672,61 @@ return {
         end
         terminal.kitty_set_colors(colors_table)
       end
+
+      --- Parse a string of hex characters as a color.
+      ---
+      --- The string can contain 1 to 4 hex characters. The returned value is
+      --- between 0.0 and 1.0 (inclusive) representing the intensity of the color.
+      ---
+      --- For instance, if only a single hex char "a" is used, then this function
+      --- returns 0.625 (10 / 16), while a value of "aa" would return 0.664 (170 /
+      --- 256).
+      ---
+      --- @param c string Color as a string of hex chars
+      --- @return number? Intensity of the color
+      local function parsecolor(c)
+        if #c == 0 or #c > 4 then return nil end
+
+        local val = tonumber(c, 16)
+        if not val then return nil end
+
+        local max = tonumber(string.rep("f", #c), 16)
+        return val / max
+      end
+
+      --- Parse an OSC 11 response
+      ---
+      --- Either of the two formats below are accepted:
+      ---
+      ---   OSC 11 ; rgb:<red>/<green>/<blue>
+      ---
+      --- or
+      ---
+      ---   OSC 11 ; rgba:<red>/<green>/<blue>/<alpha>
+      ---
+      --- where
+      ---
+      ---   <red>, <green>, <blue>, <alpha> := h | hh | hhh | hhhh
+      ---
+      --- The alpha component is ignored, if present.
+      ---
+      --- @param resp string OSC 11 response
+      --- @return string? Red component
+      --- @return string? Green component
+      --- @return string? Blue component
+      local function parseosc11(resp)
+        local r, g, b
+        r, g, b = resp:match "^\027%]11;rgb:(%x+)/(%x+)/(%x+)$"
+        if not r and not g and not b then
+          local a
+          r, g, b, a = resp:match "^\027%]11;rgba:(%x+)/(%x+)/(%x+)/(%x+)$"
+          if not a or #a > 4 then return nil, nil, nil end
+        end
+
+        if r and g and b and #r <= 4 and #g <= 4 and #b <= 4 then return r, g, b end
+
+        return nil, nil, nil
+      end
       opts.options.opt.guicursor =
         "n-v-c-sm:block-Cursor/lCursor,i-ci-ve:ver25-Cursor/lCursor,r-cr-o:hor20-Cursor/lCursor"
       autocmds.kitty_colors_toggle = {
@@ -1682,6 +1737,31 @@ return {
             initial_kitty_colors = terminal.kitty_get_all_colors_list()
             current_nvim_terminal_colors = get_nvim_terminal_colors()
             set_kitty_colors()
+          end,
+        },
+        {
+          event = "TermResponse",
+          desc = "Update the value of 'background' automatically based on the terminal emulator's background color",
+          nested = true,
+          callback = function(args)
+            -- This logic already exists in nvim-0.11, but it runs only if the background option wasn't set manually.
+            -- We want to run it unconditionally, so we check if the background option was set manually to not run it twice.
+            if vim.fn.has "nvim-0.11" == 1 and not vim.api.nvim_get_option_info2("background", {}).was_set then
+              return
+            end
+            local resp = args.data ---@type string
+            local r, g, b = parseosc11(resp)
+            if r and g and b then
+              local rr = parsecolor(r)
+              local gg = parsecolor(g)
+              local bb = parsecolor(b)
+
+              if rr and gg and bb then
+                local luminance = (0.299 * rr) + (0.587 * gg) + (0.114 * bb)
+                local bg = luminance < 0.5 and "dark" or "light"
+                vim.go.background = bg
+              end
+            end
           end,
         },
         {
