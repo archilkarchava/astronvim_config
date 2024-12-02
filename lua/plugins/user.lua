@@ -374,6 +374,7 @@ return {
   },
   {
     "wellle/targets.vim",
+    enabled = false,
     cond = true,
     event = "VeryLazy",
     dependencies = {
