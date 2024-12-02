@@ -1419,28 +1419,31 @@ return {
           enabled = true,
           silent = true,
         },
+        progress = {
+          enabled = false,
+        },
         signature = {
           enabled = true,
         },
       },
       routes = {
-        {
-          filter = {
-            event = "msg_show",
-            kind = "",
-            find = "written",
-          },
-          view = "mini",
-        },
-        {
-          filter = {
-            event = "msg_show",
-            any = {
-              { find = "%d+L, %d+B" },
-            },
-          },
-          view = "mini",
-        },
+        -- {
+        --   filter = {
+        --     event = "msg_show",
+        --     kind = "",
+        --     find = "written",
+        --   },
+        --   view = "mini",
+        -- },
+        -- {
+        --   filter = {
+        --     event = "msg_show",
+        --     any = {
+        --       { find = "%d+L, %d+B" },
+        --     },
+        --   },
+        --   view = "mini",
+        -- },
         {
           filter = {
             event = "msg_show",
@@ -1466,14 +1469,14 @@ return {
           },
           opts = { skip = true },
         },
-        {
-          filter = {
-            event = "msg_show",
-            kind = "lua_error",
-            find = "share/nvim/runtime/lua/vim/lsp/semantic_tokens.lua",
-          },
-          view = "mini",
-        },
+        -- {
+        --   filter = {
+        --     event = "msg_show",
+        --     kind = "lua_error",
+        --     find = "share/nvim/runtime/lua/vim/lsp/semantic_tokens.lua",
+        --   },
+        --   view = "mini",
+        -- },
         {
           filter = {
             event = "msg_show",
