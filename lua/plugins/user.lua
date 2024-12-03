@@ -1427,23 +1427,15 @@ return {
         },
       },
       routes = {
-        -- {
-        --   filter = {
-        --     event = "msg_show",
-        --     kind = "",
-        --     find = "written",
-        --   },
-        --   view = "mini",
-        -- },
-        -- {
-        --   filter = {
-        --     event = "msg_show",
-        --     any = {
-        --       { find = "%d+L, %d+B" },
-        --     },
-        --   },
-        --   view = "mini",
-        -- },
+        {
+          filter = {
+            event = "msg_show",
+            any = {
+              { find = "%d+L, %d+B" },
+            },
+          },
+          opts = { skip = true },
+        },
         {
           filter = {
             event = "msg_show",
