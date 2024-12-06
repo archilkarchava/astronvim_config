@@ -130,6 +130,13 @@ return {
               or util.root_pattern("package.json", ".git")(...)
           end,
         },
+        eslint = {
+          settings = {
+            eslint = {
+              workingDirectories = { mode = "auto" },
+            },
+          },
+        },
         graphql = {
           filetypes = { "graphql", "javascript", "javascriptreact", "typescript", "typescriptreact", "svelte" },
           root_dir = function(...)
