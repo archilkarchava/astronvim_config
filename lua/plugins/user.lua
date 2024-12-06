@@ -1272,6 +1272,7 @@ return {
   },
   {
     "mini.files",
+    event = "VeryLazy",
     optional = true,
     dependencies = {
       {
