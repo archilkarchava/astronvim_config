@@ -48,6 +48,7 @@ return {
           function()
             require("telescope.builtin").buffers {
               sort_lastused = true,
+              sort_mru = true,
               ignore_current_buffer = true,
             }
           end,
