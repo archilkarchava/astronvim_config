@@ -126,8 +126,9 @@ return {
           },
           root_dir = function(...)
             local util = require "lspconfig.util"
-            return util.root_pattern("tsconfig.json", "jsconfig.json")(...)
-              or util.root_pattern("package.json", ".git")(...)
+            local git_root = util.find_git_ancestor(...)
+            if git_root ~= nil and git_root == util.find_package_json_ancestor(git_root) then return git_root end
+            return util.root_pattern("tsconfig.json", "jsconfig.json")(...) or util.find_package_json_ancestor(...)
           end,
         },
         eslint = {
