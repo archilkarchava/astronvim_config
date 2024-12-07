@@ -80,15 +80,15 @@ return {
       notify_bufline_auto_sort_state(is_bufline_auto_sort_enabled)
     end
 
-    commands.EnableBuflineAutoSort = {
+    commands.BuflineAutoSortEnable = {
       function() switch_bufline_auto_sort_state(true) end,
       desc = "Enable automatic buffer line sorting",
     }
-    commands.DisableBuflineAutoSort = {
+    commands.BuflineAutoSortDisable = {
       function() switch_bufline_auto_sort_state(false) end,
       desc = "Disable automatic buffer line sorting",
     }
-    commands.ToggleBuflineAutoSort = {
+    commands.BuflineAutoSortToggle = {
       function() switch_bufline_auto_sort_state(not is_bufline_auto_sort_enabled) end,
       desc = "Toggle automatic buffer line sorting",
     }
