@@ -1503,6 +1503,13 @@ return {
     },
   },
   {
+    "nvim-highlight-colors",
+    optional = true,
+    opts = {
+      enable_tailwind = true,
+    },
+  },
+  {
     "toggleterm.nvim",
     optional = true,
     opts = function(_, opts)
