@@ -35,6 +35,25 @@ local function set_gofumpt(value)
   vim.notify(new_value and "Enabled gofumpt for the current client" or "Disabled gofumpt for the current client")
 end
 
+local function find_eslint_config(...)
+  return require("lspconfig.util").root_pattern(
+    ".eslintrc",
+    ".eslintrc.js",
+    "eslint.config.js",
+    "eslint.config.mjs",
+    "eslint.config.cjs",
+    "eslint.config.ts",
+    "eslint.config.mts",
+    "eslint.config.cts",
+    ".eslintrc.cjs",
+    ".eslintrc.mjs",
+    ".eslintrc.yaml",
+    ".eslintrc.yml",
+    ".eslintrc.json",
+    ".eslintrc.jsonc"
+  )(...)
+end
+
 ---@type LazySpec
 return {
   {
@@ -137,6 +156,12 @@ return {
               workingDirectories = { mode = "auto" },
             },
           },
+          root_dir = function(...)
+            local util = require "lspconfig.util"
+            local git_root = util.find_git_ancestor(...)
+            if git_root ~= nil and git_root == find_eslint_config(git_root) then return git_root end
+            return find_eslint_config(...)
+          end,
         },
         graphql = {
           filetypes = { "graphql", "javascript", "javascriptreact", "typescript", "typescriptreact", "svelte" },
