@@ -82,6 +82,7 @@ return {
     optional = true,
     opts = {
       auto_reload = true,
+      auto_reload_timeout_ms = 1000,
       lang = {
         go = {
           coverage_file = coverage_paths.go,
