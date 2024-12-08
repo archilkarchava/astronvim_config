@@ -261,6 +261,11 @@ return {
       },
     } --[[@as AstroCoreOpts]]
 
+    if vim.fn.has "nvim-0.11" == 1 then
+      -- Disable "Hit ENTER to continue" messages
+      modified_opts.options.opt.messagesopt = "wait:1000,history:500"
+    end
+
     -- Enable syntax highlighting for .env files with treesitter
     vim.treesitter.language.register("bash", dotenv_ft)
     return astrocore.extend_tbl(opts, modified_opts)
