@@ -1417,7 +1417,7 @@ return {
     opts = {
       lsp = {
         hover = {
-          enabled = true,
+          enabled = false,
           silent = true,
         },
         progress = {
