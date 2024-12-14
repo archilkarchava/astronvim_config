@@ -295,7 +295,6 @@ return {
   },
   {
     "yetone/avante.nvim",
-    version = "*",
     event = "User AstroFile",
     build = is_windows and "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" or "make",
     opts = {
