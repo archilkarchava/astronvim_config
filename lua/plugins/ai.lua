@@ -445,6 +445,20 @@ return {
           opts.filetypes = require("astrocore").list_insert_unique(opts.filetypes, { "Avante" })
         end,
       },
+      {
+        "snacks.nvim",
+        optional = true,
+        opts = {
+          scroll = {
+            filter = function(buf)
+              return vim.g.snacks_scroll ~= false
+                and vim.b[buf].snacks_scroll ~= false
+                and vim.bo[buf].buftype ~= "terminal"
+                and vim.bo[buf].filetype ~= "Avante"
+            end,
+          },
+        },
+      },
     },
   },
   {
