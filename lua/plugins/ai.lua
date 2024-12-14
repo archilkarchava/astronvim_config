@@ -412,6 +412,20 @@ return {
           },
         },
       },
+      {
+        "telescope.nvim",
+        optional = true,
+        specs = {
+          {
+            "avante.nvim",
+            opts = {
+              file_selector = {
+                provider = "telescope",
+              },
+            },
+          },
+        },
+      },
     },
     specs = {
       { -- if copilot.lua is available, default to copilot provider
