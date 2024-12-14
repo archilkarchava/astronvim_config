@@ -1257,6 +1257,7 @@ return {
       quickfile = { enabled = true },
       statuscolumn = { enabled = false },
       words = { enabled = false },
+      scroll = { enabled = true },
     },
     init = function()
       vim.api.nvim_create_autocmd("User", {
