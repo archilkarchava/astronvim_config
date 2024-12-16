@@ -120,9 +120,27 @@ local function clear_suggestion()
 end
 
 local keymaps = {
-  accept_suggestion = { "<C-x>", accept_suggestion, desc = "Accept suggestion", noremap = true, silent = true },
-  accept_word = { "<C-z>", accept_word, desc = "Accept word", noremap = true, silent = true },
-  clear_suggestion = { "<C-]>", clear_suggestion, desc = "Clear suggestion", noremap = true, silent = true },
+  accept_suggestion = {
+    lhs = { "<C-x>", "<D-S-right>" },
+    rhs = accept_suggestion,
+    desc = "Accept suggestion",
+    noremap = true,
+    silent = true,
+  },
+  accept_word = {
+    lhs = { "<C-z>", "<D-right>" },
+    rhs = accept_word,
+    desc = "Accept word",
+    noremap = true,
+    silent = true,
+  },
+  clear_suggestion = {
+    lhs = { "<C-]>", "<M-Esc>" },
+    rhs = clear_suggestion,
+    desc = "Clear suggestion",
+    noremap = true,
+    silent = true,
+  },
 }
 
 ---@type LazySpec
@@ -171,9 +189,9 @@ return {
     opts = function(_, opts)
       return {
         keymaps = {
-          accept_suggestion = keymaps.accept_suggestion[1],
-          accept_word = keymaps.accept_word[1],
-          clear_suggestion = keymaps.clear_suggestion[1],
+          accept_suggestion = keymaps.accept_suggestion.lhs[1],
+          accept_word = keymaps.accept_word.lhs[1],
+          clear_suggestion = keymaps.clear_suggestion.lhs[1],
         },
         -- ignore_filetypes = { cpp = true },
         -- color = {
@@ -207,24 +225,16 @@ return {
         ---@param opts AstroCoreOpts
         opts = function(_, opts)
           local maps = assert(opts.mappings)
-          maps.i[keymaps.accept_suggestion[1]] = {
-            keymaps.accept_suggestion[2],
-            desc = keymaps.accept_suggestion.desc,
-            noremap = keymaps.accept_suggestion.noremap,
-            silent = keymaps.accept_suggestion.silent,
-          }
-          maps.i[keymaps.accept_word[1]] = {
-            keymaps.accept_word[2],
-            desc = keymaps.accept_word.desc,
-            noremap = keymaps.accept_word.noremap,
-            silent = keymaps.accept_word.silent,
-          }
-          maps.i[keymaps.clear_suggestion[1]] = {
-            keymaps.clear_suggestion[2],
-            desc = keymaps.clear_suggestion.desc,
-            noremap = keymaps.clear_suggestion.noremap,
-            silent = keymaps.clear_suggestion.silent,
-          }
+          for _, keymap in pairs(keymaps) do
+            for _, lhs in ipairs(keymap.lhs) do
+              maps.i[lhs] = {
+                keymap.rhs,
+                desc = keymap.desc,
+                noremap = keymap.noremap,
+                silent = keymap.silent,
+              }
+            end
+          end
 
           local utils = require "astrocore"
           local prefix = "<Leader>i"
