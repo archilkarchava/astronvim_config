@@ -138,6 +138,9 @@ return {
       maps[mode]["<M-S-]>"] = navigate_to_next_buffer_rhs
       maps[mode]["<C-S-PageUp>"] = move_buffer_tab_left_rhs
       maps[mode]["<C-S-PageDown>"] = move_buffer_tab_right_rhs
+
+      -- Revert changes
+      maps[mode]["<D-k><D-R>"] = "<cmd>edit!<cr>"
     end
 
     local modified_opts = {
