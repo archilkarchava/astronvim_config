@@ -1257,7 +1257,15 @@ return {
       quickfile = { enabled = true },
       statuscolumn = { enabled = false },
       words = { enabled = false },
-      scroll = { enabled = true },
+      scroll = {
+        enabled = true,
+        filter = function(buf)
+          return vim.g.snacks_scroll ~= false
+            and vim.b[buf].snacks_scroll ~= false
+            and vim.bo[buf].buftype ~= "terminal"
+            and vim.bo[buf].filetype ~= "Avante"
+        end,
+      },
     },
     init = function()
       vim.api.nvim_create_autocmd("User", {
