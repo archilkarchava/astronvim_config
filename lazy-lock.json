@@ -11,7 +11,7 @@
   "astrolsp": { "branch": "main", "commit": "9f1c8fb22223aaf7224710d677338114690ee8d6" },
   "astrotheme": { "branch": "main", "commit": "e612ee356bbf42dc28f181cb966730ed3befb1ab" },
   "astroui": { "branch": "main", "commit": "076766c1d422db486378354729f8fa7c1a68b745" },
-  "avante.nvim": { "branch": "main", "commit": "8067cb0240df4c3b360783ab0809b1e0f1bde9f0" },
+  "avante.nvim": { "branch": "main", "commit": "e98fa46becb7d6cd108a94c1fbf4348d8c44a8b1" },
   "better-escape.nvim": { "branch": "master", "commit": "f45b52f8f87792e8659526f23261ffe278a54be5" },
   "catppuccin": { "branch": "main", "commit": "faf15ab0201b564b6368ffa47b56feefc92ce3f4" },
   "cmp-buffer": { "branch": "main", "commit": "3022dbc9166796b644a841a02de8dd1cc1d311fa" },
