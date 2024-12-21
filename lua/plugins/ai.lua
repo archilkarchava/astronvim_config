@@ -444,7 +444,7 @@ return {
         optional = true,
         specs = {
           {
-            "yetone/avante.nvim",
+            "avante.nvim",
             opts = {
               provider = "copilot",
             },
