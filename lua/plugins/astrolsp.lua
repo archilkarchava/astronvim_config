@@ -239,36 +239,6 @@ return {
           },
         },
       },
-      -- mappings to be set up on attaching of a language server
-      mappings = {
-        n = {
-          K = {
-            ---@diagnostic disable-next-line: redundant-parameter
-            function() vim.lsp.buf.hover { silent = true } end,
-            desc = "LSP hover",
-          },
-          -- a `cond` key can provided as the string of a server capability to be required to attach, or a function with `client` and `bufnr` parameters from the `on_attach` that returns a boolean
-          gD = {
-            function() vim.lsp.buf.declaration() end,
-            desc = "Declaration of current symbol",
-            cond = "textDocument/declaration",
-          },
-          ["<Leader>uY"] = {
-            function() require("astrolsp.toggles").buffer_semantic_tokens() end,
-            desc = "Toggle LSP semantic highlight (buffer)",
-            cond = function(client)
-              return client.supports_method "textDocument/semanticTokens/full" and vim.lsp.semantic_tokens
-            end,
-          },
-        },
-        i = {
-          ["<C-s>"] = {
-            function() vim.lsp.buf.signature_help() end,
-            desc = "Signature help",
-            cond = "textDocument/signatureHelp",
-          },
-        },
-      },
       commands = {
         GofumptEnable = {
           function() set_gofumpt(true) end,
@@ -309,6 +279,38 @@ return {
         -- client.server_capabilities.semanticTokensProvider = nil
       end,
     },
+  },
+  {
+    "AstroNvim/astrolsp",
+    ---@param opts AstroLSPOpts
+    opts = function(_, opts)
+      local astrocore = require "astrocore"
+      local maps = astrocore.empty_map_table()
+      -- mappings to be set up on attaching of a language server
+      maps.n.K = {
+        ---@diagnostic disable-next-line: redundant-parameter
+        function() vim.lsp.buf.hover { silent = true } end,
+        desc = "LSP hover",
+      }
+      maps.n.gD = {
+        function() vim.lsp.buf.declaration() end,
+        desc = "Declaration of current symbol",
+        cond = "textDocument/declaration",
+      }
+      maps.n["<Leader>uY"] = {
+        function() require("astrolsp.toggles").buffer_semantic_tokens() end,
+        desc = "Toggle LSP semantic highlight (buffer)",
+        cond = function(client)
+          return client.supports_method "textDocument/semanticTokens/full" and vim.lsp.semantic_tokens
+        end,
+      }
+      maps.i["<C-s>"] = {
+        function() vim.lsp.buf.signature_help() end,
+        desc = "Signature help",
+        cond = "textDocument/signatureHelp",
+      }
+      opts.mappings = astrocore.extend_tbl(opts.mappings, maps)
+    end,
   },
   {
     "yioneko/nvim-vtsls",
