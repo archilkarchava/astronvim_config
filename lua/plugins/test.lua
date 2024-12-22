@@ -156,7 +156,12 @@ return {
                 args = type(args) == "string" and { args } or args
                 if coverage_collection_enabled then
                   local filetype = vim.bo.filetype
-                  if filetype == "javascript" then
+                  if
+                    filetype == "javascript"
+                    or filetype == "javascriptreact"
+                    or filetype == "typescript"
+                    or filetype == "typescriptreact"
+                  then
                     args.extra_args =
                       { "--coverage", "--coverageDirectory=" .. vim.fn.fnamemodify(coverage_paths.javascript, ":h") }
                   elseif filetype == "go" then
