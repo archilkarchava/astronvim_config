@@ -1258,7 +1258,7 @@ return {
       statuscolumn = { enabled = false },
       words = { enabled = false },
       scroll = {
-        enabled = true,
+        enabled = false,
         filter = function(buf)
           return vim.g.snacks_scroll ~= false
             and vim.b[buf].snacks_scroll ~= false
