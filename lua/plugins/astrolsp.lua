@@ -309,6 +309,10 @@ return {
         desc = "Signature help",
         cond = "textDocument/signatureHelp",
       }
+      for _, mode in ipairs { "n", "i", "x" } do
+        maps[mode]["<D-.>"] =
+          { function() vim.lsp.buf.code_action() end, desc = "LSP code action", cond = "textDocument/codeAction" }
+      end
       opts.mappings = astrocore.extend_tbl(opts.mappings, maps)
     end,
   },
