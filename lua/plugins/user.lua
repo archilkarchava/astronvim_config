@@ -1630,6 +1630,7 @@ return {
       },
       {
         "flatten.nvim",
+        version = "*",
         optional = true,
         opts = function(_, opts)
           ---@type Terminal?
