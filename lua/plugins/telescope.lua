@@ -43,6 +43,11 @@ return {
           { function() require("telescope.builtin").grep_string() end, desc = "Find selected word" }
       end
 
+      for _, mode in ipairs { "n", "v", "s", "x", "o", "i", "l", "c", "t" } do
+        maps[mode]["<D-p>"] = { function() require("telescope.builtin").find_files() end, desc = "Find files" }
+        maps[mode]["<D-P>"] = { function() require("telescope.builtin").commands() end, desc = "Find commands" }
+      end
+
       for _, mode in ipairs { "n", "v", "i" } do
         maps[mode]["<M-S-Tab>"] = {
           function()
