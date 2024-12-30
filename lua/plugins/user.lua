@@ -1833,6 +1833,9 @@ return {
 
       opts.options.opt.guicursor =
         "n-v-c-sm:block-Cursor/lCursor,i-ci-ve:ver25-Cursor/lCursor,r-cr-o:hor20-Cursor/lCursor"
+      if vim.fn.has "nvim-0.11" == 1 then
+        opts.options.opt.guicursor = opts.options.opt.guicursor .. ",t:block-blinkon500-blinkoff500-TermCursor"
+      end
       autocmds.kitty_colors_toggle = {
         {
           event = "VimEnter",
