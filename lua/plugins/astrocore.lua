@@ -140,7 +140,7 @@ return {
       maps[mode]["<C-S-PageDown>"] = move_buffer_tab_right_rhs
 
       -- Revert changes
-      maps[mode]["<D-k><D-R>"] = "<cmd>edit!<cr>"
+      maps[mode]["<D-k><D-R>"] = { "<cmd>edit!<cr>", desc = "Revert buffer" }
     end
 
     local modified_opts = {
