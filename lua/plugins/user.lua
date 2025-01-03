@@ -21,7 +21,7 @@ return {
     },
   },
   {
-    "hrsh7th/nvim-cmp",
+    "nvim-cmp",
     optional = true,
     opts = function(_, opts)
       local cmp = require "cmp"
@@ -38,6 +38,15 @@ return {
       }
       opts.mapping["<C-i>"] = toggle_cmp
       if is_macos then opts.mapping["<D-i>"] = toggle_cmp end
+    end,
+  },
+  {
+    "blink.cmp",
+    optional = true,
+    opts = function(_, opts)
+      local platform = require "util.platform"
+      local is_macos = platform.is_macos()
+      opts.keymap[is_macos and "<D-i>" or "<C-i>"] = { "show", "hide", "fallback" }
     end,
   },
   {
