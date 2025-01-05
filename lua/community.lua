@@ -49,6 +49,7 @@ return {
   -- { import = "astrocommunity.scrolling.neoscroll-nvim" },
   { import = "astrocommunity.search.grug-far-nvim" },
   -- { import = "astrocommunity.completion.avante-nvim" },
+  { import = "astrocommunity.completion.cmp-cmdline" },
   { import = "astrocommunity.completion.copilot-lua" },
   { import = "astrocommunity.completion.magazine-nvim" },
   -- { import = "astrocommunity.completion.blink-cmp" },
