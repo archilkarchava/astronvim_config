@@ -131,7 +131,7 @@ return {
                   {
                     -- pnpm -g install @styled/typescript-styled-plugin
                     name = "@styled/typescript-styled-plugin",
-                    location = vim.fn.expand "$PNPM_HOME/global/5/node_modules",
+                    location = vim.fn.expand "$HOME/.local/share/mise/installs/npm-styled-typescript-styled-plugin/latest/lib/node_modules",
                     enableForWorkspaceTypeScriptVersions = true,
                   },
                 },
