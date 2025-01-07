@@ -1866,7 +1866,7 @@ return {
           desc = "Reset Kitty to default when exiting or suspending Neovim",
           callback = function()
             if initial_kitty_colors == nil then return end
-            terminal.kitty_set_colors(initial_kitty_colors)
+            terminal.kitty_set_colors(initial_kitty_colors):wait()
           end,
         },
       }
