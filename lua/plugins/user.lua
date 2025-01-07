@@ -1882,6 +1882,24 @@ return {
     end,
   },
   {
+    "nvim-notify",
+    config = function(_, opts)
+      require("notify").setup(opts)
+
+      local banned_messages = { "position_encoding param is required" }
+
+      ---@diagnostic disable-next-line: duplicate-set-field
+      vim.notify = function(msg, ...)
+        if type(msg) == "string" then
+          for _, banned in ipairs(banned_messages) do
+            if msg:find(banned, 0, true) then return end
+          end
+        end
+        require "notify"(msg, ...)
+      end
+    end,
+  },
+  {
     "better-escape.nvim",
     enabled = false,
   },
