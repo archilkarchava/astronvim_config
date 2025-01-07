@@ -1434,17 +1434,13 @@ return {
     opts_extend = { "routes" },
     opts = {
       lsp = {
-        hover = {
-          enabled = false,
-          silent = true,
-        },
-        progress = {
-          enabled = false,
-        },
-        signature = {
-          enabled = true,
-        },
+        hover = { enabled = false, silent = true },
+        progress = { enabled = false },
+        signature = { enabled = true },
       },
+      messages = { enabled = false },
+      cmdline = { enabled = false },
+      popupmenu = { enabled = false },
       routes = {
         {
           filter = {
