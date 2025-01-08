@@ -12,6 +12,14 @@ end
 local is_gopls_client = is_client "gopls"
 local is_vtsls_client = is_client "vtsls"
 
+local function find_git_ancestor(startpath)
+  return vim.fs.dirname(vim.fs.find(".git", { path = startpath, upward = true })[1])
+end
+
+local function find_package_json_ancestor(startpath)
+  return vim.fs.dirname(vim.fs.find("package.json", { path = startpath, upward = true })[1])
+end
+
 ---@param value boolean | nil
 local function set_gofumpt(value)
   local cur_buf_clients = vim.lsp.get_clients { name = "gopls", bufnr = 0 }
@@ -145,9 +153,9 @@ return {
           },
           root_dir = function(...)
             local util = require "lspconfig.util"
-            local git_root = util.find_git_ancestor(...)
-            if git_root ~= nil and git_root == util.find_package_json_ancestor(git_root) then return git_root end
-            return util.root_pattern("tsconfig.json", "jsconfig.json")(...) or util.find_package_json_ancestor(...)
+            local git_root = find_git_ancestor(...)
+            if git_root ~= nil and git_root == find_package_json_ancestor(git_root) then return git_root end
+            return util.root_pattern("tsconfig.json", "jsconfig.json")(...) or find_package_json_ancestor(...)
           end,
         },
         eslint = {
@@ -157,8 +165,7 @@ return {
             },
           },
           root_dir = function(...)
-            local util = require "lspconfig.util"
-            local git_root = util.find_git_ancestor(...)
+            local git_root = find_git_ancestor(...)
             if git_root ~= nil and git_root == find_eslint_config(git_root) then return git_root end
             return find_eslint_config(...)
           end,
