@@ -1438,9 +1438,6 @@ return {
         progress = { enabled = false },
         signature = { enabled = true },
       },
-      messages = { enabled = false },
-      cmdline = { enabled = false },
-      popupmenu = { enabled = false },
       routes = {
         {
           filter = {
