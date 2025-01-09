@@ -1461,6 +1461,7 @@ return {
               { find = "%d+ fewer lines" },
               { find = "vim%.tbl_islist is deprecated" },
               { find = "vim%.lsp%.get_active_clients%(%) is deprecated" },
+              { find = "'width' key must be a positive Integer" },
             },
           },
           opts = { skip = true },
