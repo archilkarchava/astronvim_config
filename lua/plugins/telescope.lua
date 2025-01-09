@@ -162,7 +162,7 @@ return {
             extensions = {
               zoxide = {
                 mappings = {
-                  ["<Enter>"] = {
+                  ["<CR>"] = {
                     action = function(selection)
                       local dir_changed = cd_action(selection)
                       if not dir_changed then return end
@@ -173,7 +173,7 @@ return {
                       notify_dir_changed(selection)
                     end,
                   },
-                  ["<C-Enter>"] = {
+                  ["<C-CR>"] = {
                     action = function(selection)
                       local dir_changed = cd_action(selection)
                       if not dir_changed then return end
