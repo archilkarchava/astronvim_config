@@ -1833,7 +1833,7 @@ return {
             table.insert(colors_table, value)
           end
         end
-        terminal.kitty_set_colors(colors_table)
+        terminal.kitty_set_colors(colors_table):wait()
       end
 
       opts.options.opt.guicursor =
