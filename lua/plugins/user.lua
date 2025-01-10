@@ -1434,7 +1434,7 @@ return {
     opts_extend = { "routes" },
     opts = {
       lsp = {
-        hover = { enabled = false, silent = true },
+        hover = { enabled = true, silent = true },
         progress = { enabled = false },
         signature = { enabled = true },
       },
