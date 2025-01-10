@@ -1470,6 +1470,7 @@ return {
             any = {
               { find = "offset_encoding is required" },
               { find = "position_encoding param is required" },
+              { find = "Cursor position outside buffer" },
             },
           },
           opts = { skip = true },
