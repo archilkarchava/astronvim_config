@@ -1241,6 +1241,26 @@ return {
           target = "%1/%2/index.%3",
           context = "implementation",
         },
+        {
+          pattern = "(.*).([tj]s)x?$",
+          target = "%1.test.%2",
+          context = "test",
+        },
+        {
+          pattern = "(.*).test.([tj]s)$",
+          target = "%1.%2x",
+          context = "implementation",
+        },
+        {
+          pattern = "(.*).([tj]s)$",
+          target = "%1.test.%2x",
+          context = "test",
+        },
+        {
+          pattern = "(.*).test.([tj]s)x?$",
+          target = "%1.%2",
+          context = "implementation",
+        },
       },
     },
   },
