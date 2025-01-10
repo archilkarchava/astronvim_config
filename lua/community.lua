@@ -12,6 +12,7 @@ return {
   { import = "astrocommunity.pack.lua" },
   -- import/override with your plugins folder
 
+  { import = "astrocommunity.code-runner.overseer-nvim" },
   { import = "astrocommunity.color.nvim-highlight-colors" },
   -- { import = "astrocommunity.colorscheme.vscode-nvim" },
   -- { import = "astrocommunity.colorscheme.github-nvim-theme" },
