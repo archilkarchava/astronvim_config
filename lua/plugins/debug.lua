@@ -4,6 +4,23 @@
 return {
   "nvim-dap",
   optional = true,
+  dependencies = {
+    {
+      "overseer.nvim",
+      optional = false,
+      opts = {
+        strategy = {
+          "jobstart",
+          use_terminal = true,
+        },
+        -- strategy = {
+        --   "toggleterm",
+        --   quit_on_exit = "success",
+        --   open_on_start = false,
+        -- },
+      },
+    },
+  },
   specs = {
     {
       "AstroNvim/astrocore",
