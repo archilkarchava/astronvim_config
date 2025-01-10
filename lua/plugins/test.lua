@@ -39,6 +39,21 @@ return {
     },
   },
   {
+    "overseer.nvim",
+    optional = true,
+    specs = {
+      {
+        "neotest",
+        optional = true,
+        opts = {
+          consumers = {
+            overseer = require "neotest.consumers.overseer",
+          },
+        },
+      },
+    },
+  },
+  {
     "neotest",
     optional = true,
     dependencies = {
