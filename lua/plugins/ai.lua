@@ -435,6 +435,19 @@ return {
             },
           },
         },
+        opts = function(_, opts)
+          for _, mode in ipairs { "n", "i" } do
+            local enter_action = opts.defaults.mappings[mode]["<CR>"]
+            if not enter_action then return end
+            opts.defaults.mappings[mode]["<CR>"] = function(...)
+              local picker = require("telescope.actions.state").get_current_picker(...)
+              if picker.prompt_title:find "%(Avante%) Add" then
+                return require("telescope.actions").select_default(...)
+              end
+              return enter_action(...)
+            end
+          end
+        end,
       },
     },
     specs = {
