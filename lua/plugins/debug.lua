@@ -14,13 +14,15 @@ return {
       end,
     },
   },
-  config = function()
+  opts = function()
     local dap = require "dap"
     local homebrew_prefix = os.getenv "HOMEBREW_PREFIX" or "/opt/homebrew"
-    dap.adapters.lldb = {
-      type = "executable",
-      command = homebrew_prefix .. "/opt/llvm/bin/lldb-dap",
-      name = "lldb",
-    }
+    if not dap.adapters.lldb then
+      dap.adapters.lldb = {
+        type = "executable",
+        command = homebrew_prefix .. "/opt/llvm/bin/lldb-dap",
+        name = "lldb",
+      }
+    end
   end,
 }
