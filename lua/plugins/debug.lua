@@ -35,11 +35,12 @@ return {
     local dap = require "dap"
     local homebrew_prefix = os.getenv "HOMEBREW_PREFIX" or "/opt/homebrew"
     if not dap.adapters.lldb then
-      dap.adapters.lldb = {
-        type = "executable",
-        command = homebrew_prefix .. "/opt/llvm/bin/lldb-dap",
-        name = "lldb",
-      }
+      dap.adapters.lldb = dap.adapters.codelldb
+        or {
+          type = "executable",
+          command = homebrew_prefix .. "/opt/llvm/bin/lldb-dap",
+          name = "lldb",
+        }
     end
   end,
 }
