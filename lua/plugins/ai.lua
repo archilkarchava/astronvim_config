@@ -316,7 +316,7 @@ return {
         -- model = "claude-3.5-sonnet",
         -- model = "gpt-4o-2024-08-06",
       },
-      auto_suggestions_provider = "copilot",
+      -- auto_suggestions_provider = "copilot",
       hints = {
         enabled = false,
       },
