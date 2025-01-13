@@ -38,6 +38,12 @@ return {
       }
       opts.mapping["<C-i>"] = toggle_cmp
       if is_macos then opts.mapping["<D-i>"] = toggle_cmp end
+      local orig_format = vim.tbl_get(opts, "formatting", "format") or function() end
+      opts.formatting = opts.formatting or {}
+      opts.formatting.format = function(entry, item)
+        item.abbr = string.sub(item.abbr, 1, 15)
+        return orig_format(entry, item)
+      end
     end,
   },
   {
