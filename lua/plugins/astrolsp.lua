@@ -214,6 +214,11 @@ return {
             )(...)
           end,
         },
+        html = {
+          init_options = {
+            provideFormatter = true,
+          },
+        },
       },
       -- customize how language servers are attached
       handlers = {
