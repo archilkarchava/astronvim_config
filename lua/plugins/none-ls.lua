@@ -22,6 +22,7 @@ return {
               "json",
               "jsonc",
               "yaml",
+              "html",
             },
           })
         end

@@ -216,7 +216,7 @@ return {
         },
         html = {
           init_options = {
-            provideFormatter = true,
+            provideFormatter = false,
           },
         },
       },
