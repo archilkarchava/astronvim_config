@@ -41,7 +41,7 @@ return {
       local orig_format = vim.tbl_get(opts, "formatting", "format") or function() end
       opts.formatting = opts.formatting or {}
       opts.formatting.format = function(entry, item)
-        item.abbr = string.sub(item.abbr, 1, 15)
+        item.abbr = string.sub(item.abbr, 1, 25)
         return orig_format(entry, item)
       end
     end,
