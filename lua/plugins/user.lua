@@ -1276,6 +1276,15 @@ return {
     lazy = false,
     specs = {
       {
+        "lazydev.nvim",
+        optional = true,
+        opts = {
+          library = {
+            { path = "snacks.nvim", words = { "Snacks" } },
+          },
+        },
+      },
+      {
         "mini.files",
         optional = true,
         init = function()
