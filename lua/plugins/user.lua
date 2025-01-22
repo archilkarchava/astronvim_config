@@ -1499,6 +1499,7 @@ return {
               { find = "vim%.tbl_islist is deprecated" },
               { find = "vim%.lsp%.get_active_clients%(%) is deprecated" },
               { find = "'width' key must be a positive Integer" },
+              { find = "Cursor position outside buffer" },
             },
           },
           opts = { skip = true },
