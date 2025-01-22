@@ -26,7 +26,7 @@ return {
   { import = "astrocommunity.git.neogit" },
   { import = "astrocommunity.file-explorer.mini-files" },
   { import = "astrocommunity.file-explorer.oil-nvim" },
-  { import = "astrocommunity.file-explorer.telescope-file-browser-nvim" },
+  -- { import = "astrocommunity.file-explorer.telescope-file-browser-nvim" },
   { import = "astrocommunity.git.octo-nvim" },
   -- { import = "astrocommunity.lsp.garbage-day-nvim" },
   { import = "astrocommunity.pack.bash" },
