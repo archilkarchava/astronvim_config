@@ -481,6 +481,44 @@ return {
           opts.filetypes = require("astrocore").list_insert_unique(opts.filetypes, { "Avante" })
         end,
       },
+      {
+        "saghen/blink.cmp",
+        optional = true,
+        specs = {
+          {
+            "saghen/blink.compat",
+            lazy = true,
+          },
+        },
+        opts = function(_, opts)
+          opts.sources = opts.sources or {}
+          opts.sources.default = vim.list_extend(opts.sources.default, {
+            "avante_commands",
+            "avante_mentions",
+            "avante_files",
+          })
+          opts.sources.providers = vim.tbl_extend("force", opts.sources.providers, {
+            avante_commands = {
+              name = "avante_commands",
+              module = "blink.compat.source",
+              score_offset = 90, -- show at a higher priority than lsp
+              opts = {},
+            },
+            avante_files = {
+              name = "avante_files",
+              module = "blink.compat.source",
+              score_offset = 100, -- show at a higher priority than lsp
+              opts = {},
+            },
+            avante_mentions = {
+              name = "avante_mentions",
+              module = "blink.compat.source",
+              score_offset = 1000, -- show at a higher priority than lsp
+              opts = {},
+            },
+          })
+        end,
+      },
     },
   },
   {
