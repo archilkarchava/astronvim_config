@@ -506,6 +506,11 @@ return {
     end,
   },
   {
+    "nvim-lspconfig",
+    version = "*",
+    optional = true,
+  },
+  {
     "jedrzejboczar/exrc.nvim",
     lazy = false,
     dependencies = {
