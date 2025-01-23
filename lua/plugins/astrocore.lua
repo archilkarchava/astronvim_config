@@ -39,6 +39,17 @@ return {
   ---@param opts AstroCoreOpts
   opts = function(_, opts)
     local astrocore = require "astrocore"
+    local patch_func = astrocore.patch_func
+    vim.g.ignored_messages = vim.g.ignored_messages or {}
+    _G.print = patch_func(_G.print, function(orig, ...)
+      local args = { ... }
+      for _, arg in ipairs(args) do
+        for _, msg in ipairs(vim.g.ignored_messages) do
+          if type(arg) == "string" and arg:find(msg) then return end
+        end
+      end
+      return orig(...)
+    end)
     local platform = require "util.platform"
     if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
     local maps = assert(opts.mappings)
