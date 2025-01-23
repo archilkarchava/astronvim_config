@@ -1276,59 +1276,6 @@ return {
     },
   },
   {
-    "folke/snacks.nvim",
-    priority = 1000,
-    lazy = false,
-    specs = {
-      {
-        "lazydev.nvim",
-        optional = true,
-        opts = {
-          library = {
-            { path = "snacks.nvim", words = { "Snacks" } },
-          },
-        },
-      },
-      {
-        "mini.files",
-        optional = true,
-        init = function()
-          vim.api.nvim_create_autocmd("User", {
-            pattern = "MiniFilesActionRename",
-            callback = function(event) Snacks.rename.on_rename_file(event.data.from, event.data.to) end,
-          })
-        end,
-      },
-    },
-    opts = {
-      bigfile = { enabled = false },
-      notifier = { enabled = false },
-      quickfile = { enabled = true },
-      statuscolumn = { enabled = false },
-      words = { enabled = false },
-      scroll = {
-        enabled = false,
-        filter = function(buf)
-          return vim.g.snacks_scroll ~= false
-            and vim.b[buf].snacks_scroll ~= false
-            and vim.bo[buf].buftype ~= "terminal"
-            and vim.bo[buf].filetype ~= "Avante"
-        end,
-      },
-    },
-    init = function()
-      vim.api.nvim_create_autocmd("User", {
-        pattern = "VeryLazy",
-        callback = function()
-          -- Setup some globals for debugging (lazy-loaded)
-          _G.dd = function(...) Snacks.debug.inspect(...) end
-          _G.bt = function() Snacks.debug.backtrace() end
-          vim.print = _G.dd -- Override print to use snacks for `:=` command
-        end,
-      })
-    end,
-  },
-  {
     "mini.files",
     event = "VeryLazy",
     optional = true,
@@ -1473,6 +1420,8 @@ return {
     optional = true,
     opts_extend = { "routes" },
     opts = {
+      cmdline = { enabled = false },
+      messages = { enabled = false },
       lsp = {
         hover = { enabled = true, silent = true },
         progress = { enabled = false },

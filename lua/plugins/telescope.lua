@@ -1,119 +1,13 @@
+local function is_snacks_picker_enabled()
+  local snacks_opts = require("astrocore").plugin_opts "snacks.nvim"
+  return not not vim.tbl_get(snacks_opts, "picker", "ui_select")
+end
+
 ---@type LazySpec
 return {
   {
-    "AstroNvim/astrocore",
-    ---@param opts AstroCoreOpts
-    opts = function(_, opts)
-      if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
-      local maps = assert(opts.mappings)
-      local git_command = { "git", "log", "--pretty=format:%<|(10)%h %<(100,trunc)%s [%ar] [%an]\n", "--date=short" }
-      local common_git_commits_options = {
-        git_command = git_command,
-        use_file_path = true,
-        layout_strategy = "vertical",
-        layout_config = {
-          height = 0.99,
-          width = 0.99,
-          preview_cutoff = 0,
-        },
-      }
-      maps.n["<Leader>gc"] = {
-        function() require("telescope.builtin").git_commits(vim.tbl_extend("force", {}, common_git_commits_options)) end,
-        desc = "Git commits (repository)",
-      }
-      maps.n["<Leader>gC"] = {
-        function() require("telescope.builtin").git_bcommits(vim.tbl_extend("force", {}, common_git_commits_options)) end,
-        desc = "Git commits (current file)",
-      }
-      if vim.fn.executable "rg" == 1 then
-        maps.n["<Leader>fW"] = {
-          function()
-            require("telescope.builtin").live_grep {
-              additional_args = { "--hidden", "--no-ignore" },
-            }
-          end,
-          desc = "Find words in all files",
-        }
-        maps.n["<Leader>fs"] = {
-          function() require("util.telescope").grep_last_search() end,
-          desc = "Find last search pattern",
-        }
-        if maps.n["<Leader>f"] then maps.v["<Leader>f"] = { desc = maps.n["<Leader>f"].desc } end
-        maps.v["<Leader>fc"] =
-          { function() require("telescope.builtin").grep_string() end, desc = "Find selected word" }
-      end
-
-      for _, mode in ipairs { "n", "v", "s", "x", "o", "i", "l", "c", "t" } do
-        maps[mode]["<D-p>"] = { function() require("telescope.builtin").find_files() end, desc = "Find files" }
-        maps[mode]["<D-P>"] = { function() require("telescope.builtin").commands() end, desc = "Find commands" }
-      end
-
-      for _, mode in ipairs { "n", "v", "i" } do
-        maps[mode]["<M-S-Tab>"] = {
-          function()
-            require("telescope.builtin").buffers {
-              sort_lastused = true,
-              sort_mru = true,
-              ignore_current_buffer = true,
-            }
-          end,
-          desc = "Find buffers (last used)",
-        }
-      end
-    end,
-  },
-  {
-    "AstroNvim/astrolsp",
-    ---@param opts AstroLSPOpts
-    opts = function(_, opts)
-      local utils = require "astrocore"
-      if utils.is_available "nvim-bqf" then return end
-      if opts.mappings.n.gd then
-        opts.mappings.n.gd[1] = function() require("telescope.builtin").lsp_definitions { reuse_win = true } end
-      end
-      if opts.mappings.n.gI then
-        opts.mappings.n.gI[1] = function() require("telescope.builtin").lsp_implementations { reuse_win = true } end
-      end
-      if opts.mappings.n.gy then
-        opts.mappings.n.gy[1] = function() require("telescope.builtin").lsp_type_definitions { reuse_win = true } end
-      end
-      if opts.mappings.n["<Leader>lG"] then
-        opts.mappings.n["<Leader>lG"][1] = function()
-          vim.ui.input({ prompt = "Symbol Query: (leave empty for word under cursor)" }, function(query)
-            if query then
-              -- word under cursor if given query is empty
-              if query == "" then query = vim.fn.expand "<cword>" end
-              require("telescope.builtin").lsp_workspace_symbols {
-                query = query,
-                prompt_title = ("Find word (%s)"):format(query),
-              }
-            end
-          end)
-        end
-      end
-      if opts.mappings.n["<Leader>lR"] then
-        opts.mappings.n["<Leader>lR"][1] = function()
-          require("telescope.builtin").lsp_references {
-            trim_text = false,
-            show_line = true,
-            fname_width = 70,
-            layout_strategy = "vertical",
-            path_display = {
-              shorten = 2,
-            },
-            layout_config = {
-              height = 0.99,
-              width = 0.99,
-              preview_cutoff = 0,
-            },
-          }
-        end
-      end
-    end,
-  },
-  {
     "nvim-telescope/telescope.nvim",
-    optional = true,
+    enabled = true,
     branch = "master",
     opts = function(_, opts)
       local actions = require "telescope.actions"
@@ -127,9 +21,129 @@ return {
         opts.defaults.mappings[mode]["<C-S-\\>"] = actions.select_vertical
       end
     end,
+    specs = {
+      {
+        "AstroNvim/astrocore",
+        ---@param opts AstroCoreOpts
+        opts = function(_, opts)
+          if is_snacks_picker_enabled() then return end
+          if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
+          local maps = assert(opts.mappings)
+          local git_command =
+            { "git", "log", "--pretty=format:%<|(10)%h %<(100,trunc)%s [%ar] [%an]\n", "--date=short" }
+          local common_git_commits_options = {
+            git_command = git_command,
+            use_file_path = true,
+            layout_strategy = "vertical",
+            layout_config = {
+              height = 0.99,
+              width = 0.99,
+              preview_cutoff = 0,
+            },
+          }
+          maps.n["<Leader>gc"] = {
+            function()
+              require("telescope.builtin").git_commits(vim.tbl_extend("force", {}, common_git_commits_options))
+            end,
+            desc = "Git commits (repository)",
+          }
+          maps.n["<Leader>gC"] = {
+            function()
+              require("telescope.builtin").git_bcommits(vim.tbl_extend("force", {}, common_git_commits_options))
+            end,
+            desc = "Git commits (current file)",
+          }
+          if vim.fn.executable "rg" == 1 then
+            maps.n["<Leader>fW"] = {
+              function()
+                require("telescope.builtin").live_grep {
+                  additional_args = { "--hidden", "--no-ignore" },
+                }
+              end,
+              desc = "Find words in all files",
+            }
+            maps.n["<Leader>fs"] = {
+              function() require("util.telescope").grep_last_search() end,
+              desc = "Find last search pattern",
+            }
+            if maps.n["<Leader>f"] then maps.v["<Leader>f"] = { desc = maps.n["<Leader>f"].desc } end
+            maps.v["<Leader>fc"] =
+              { function() require("telescope.builtin").grep_string() end, desc = "Find selected word" }
+          end
+
+          for _, mode in ipairs { "n", "v", "s", "x", "o", "i", "l", "c", "t" } do
+            maps[mode]["<D-p>"] = { function() require("telescope.builtin").find_files() end, desc = "Find files" }
+            maps[mode]["<D-P>"] = { function() require("telescope.builtin").commands() end, desc = "Find commands" }
+          end
+
+          for _, mode in ipairs { "n", "v", "i" } do
+            maps[mode]["<M-S-Tab>"] = {
+              function()
+                require("telescope.builtin").buffers {
+                  sort_lastused = true,
+                  sort_mru = true,
+                  ignore_current_buffer = true,
+                }
+              end,
+              desc = "Find buffers (last used)",
+            }
+          end
+        end,
+      },
+      {
+        "AstroNvim/astrolsp",
+        ---@param opts AstroLSPOpts
+        opts = function(_, opts)
+          local utils = require "astrocore"
+          if utils.is_available "nvim-bqf" then return end
+          if opts.mappings.n.gd then
+            opts.mappings.n.gd[1] = function() require("telescope.builtin").lsp_definitions { reuse_win = true } end
+          end
+          if opts.mappings.n.gI then
+            opts.mappings.n.gI[1] = function() require("telescope.builtin").lsp_implementations { reuse_win = true } end
+          end
+          if opts.mappings.n.gy then
+            opts.mappings.n.gy[1] = function() require("telescope.builtin").lsp_type_definitions { reuse_win = true } end
+          end
+          if opts.mappings.n["<Leader>lG"] then
+            opts.mappings.n["<Leader>lG"][1] = function()
+              vim.ui.input({ prompt = "Symbol Query: (leave empty for word under cursor)" }, function(query)
+                if query then
+                  -- word under cursor if given query is empty
+                  if query == "" then query = vim.fn.expand "<cword>" end
+                  require("telescope.builtin").lsp_workspace_symbols {
+                    query = query,
+                    prompt_title = ("Find word (%s)"):format(query),
+                  }
+                end
+              end)
+            end
+          end
+          if opts.mappings.n["<Leader>lR"] then
+            opts.mappings.n["<Leader>lR"][1] = function()
+              require("telescope.builtin").lsp_references {
+                trim_text = false,
+                show_line = true,
+                fname_width = 70,
+                layout_strategy = "vertical",
+                path_display = {
+                  shorten = 2,
+                },
+                layout_config = {
+                  height = 0.99,
+                  width = 0.99,
+                  preview_cutoff = 0,
+                },
+              }
+            end
+          end
+        end,
+      },
+    },
   },
   {
     "jvgrootveld/telescope-zoxide",
+    enabled = not is_snacks_picker_enabled(),
     lazy = true,
     specs = {
       {
