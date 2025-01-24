@@ -143,6 +143,8 @@ local keymaps = {
   },
 }
 
+local function get_avante_file_selector_provider() return require("util.picker").picker end
+
 ---@type LazySpec
 return {
   {
@@ -313,8 +315,10 @@ return {
     opts = {
       ---@type Provider
       provider = "copilot", -- Recommend using Claude
+      file_selector = {
+        provider = get_avante_file_selector_provider(),
+      },
       ---@type AvanteProvider
-      ---@diagnostic disable-next-line: missing-fields
       copilot = {
         -- model = "claude-3.5-sonnet",
         -- model = "gpt-4o-2024-08-06",
@@ -428,17 +432,8 @@ return {
       {
         "telescope.nvim",
         optional = true,
-        specs = {
-          {
-            "avante.nvim",
-            opts = {
-              file_selector = {
-                provider = "telescope",
-              },
-            },
-          },
-        },
         opts = function(_, opts)
+          if get_avante_file_selector_provider() ~= "telescope" then return end
           for _, mode in ipairs { "n", "i" } do
             local enter_action = opts.defaults.mappings[mode]["<CR>"]
             if not enter_action then return end
