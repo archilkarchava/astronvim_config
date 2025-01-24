@@ -1,7 +1,4 @@
-local function is_snacks_picker_enabled()
-  local snacks_opts = require("astrocore").plugin_opts "snacks.nvim"
-  return not not vim.tbl_get(snacks_opts, "picker", "ui_select")
-end
+local picker_utils = require "util.picker"
 
 ---@type LazySpec
 return {
@@ -26,7 +23,8 @@ return {
         "AstroNvim/astrocore",
         ---@param opts AstroCoreOpts
         opts = function(_, opts)
-          if is_snacks_picker_enabled() then return end
+          local picker = picker_utils.get_picker()
+          if picker == "snacks" then return end
           if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
           local maps = assert(opts.mappings)
           local git_command =
@@ -63,7 +61,7 @@ return {
               desc = "Find words in all files",
             }
             maps.n["<Leader>fs"] = {
-              function() require("util.telescope").grep_last_search() end,
+              function() picker_utils.grep_last_search() end,
               desc = "Find last search pattern",
             }
             if maps.n["<Leader>f"] then maps.v["<Leader>f"] = { desc = maps.n["<Leader>f"].desc } end
@@ -143,7 +141,7 @@ return {
   },
   {
     "jvgrootveld/telescope-zoxide",
-    enabled = not is_snacks_picker_enabled(),
+    enabled = not require("util.picker").get_picker() == "telescope",
     lazy = true,
     specs = {
       {
