@@ -90,7 +90,19 @@ return {
     priority = 1000,
     lazy = false,
     dependencies = { "nvim-treesitter/nvim-treesitter" },
-    opts = { picker = { ui_select = true } },
+    opts = {
+      picker = {
+        ui_select = true,
+        win = {
+          input = {
+            keys = {
+              ["<PageUp>"] = { "history_back", mode = { "i", "n" } },
+              ["<PageDown>"] = { "history_forward", mode = { "i", "n" } },
+            },
+          },
+        },
+      },
+    },
     specs = {
       {
         "AstroNvim/astrocore",
