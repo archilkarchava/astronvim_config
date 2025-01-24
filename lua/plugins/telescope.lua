@@ -23,8 +23,7 @@ return {
         "AstroNvim/astrocore",
         ---@param opts AstroCoreOpts
         opts = function(_, opts)
-          local picker = picker_utils.picker
-          if picker == "snacks" then return end
+          if picker_utils.picker ~= "telescope" then return end
           if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
           local maps = assert(opts.mappings)
           local git_command =
@@ -93,7 +92,7 @@ return {
         ---@param opts AstroLSPOpts
         opts = function(_, opts)
           local utils = require "astrocore"
-          if utils.is_available "nvim-bqf" then return end
+          if utils.is_available "nvim-bqf" or picker_utils.picker ~= "telescope" then return end
           if opts.mappings.n.gd then
             opts.mappings.n.gd[1] = function() require("telescope.builtin").lsp_definitions { reuse_win = true } end
           end
