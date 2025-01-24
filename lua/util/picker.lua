@@ -2,25 +2,8 @@ local builtins = require "telescope.builtin"
 
 local M = {}
 
-local picker = nil
-
-function M.get_picker()
-  if picker then return picker end
-  local astrocore = require "astrocore"
-  local is_snacks_available = astrocore.is_available "snacks.nvim"
-  local is_telescope_available = astrocore.is_available "telescope.nvim"
-
-  if not is_snacks_available then
-    picker = is_telescope_available and "telescope" or "native"
-    return picker
-  end
-
-  local snacks_opts = astrocore.plugin_opts "snacks.nvim"
-  local is_snacks_picker_enabled = vim.tbl_get(snacks_opts, "picker", "ui_select")
-
-  picker = is_snacks_picker_enabled and "snacks" or (is_telescope_available and "telescope" or "native")
-  return picker
-end
+---@type "native" | "fzf" | "mini.pick" | "snacks" | "telescope" | string
+M.picker = "snacks"
 
 function M.grep_last_search(opts)
   opts = opts or {}

@@ -23,7 +23,7 @@ return {
         "AstroNvim/astrocore",
         ---@param opts AstroCoreOpts
         opts = function(_, opts)
-          local picker = picker_utils.get_picker()
+          local picker = picker_utils.picker
           if picker == "snacks" then return end
           if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
           local maps = assert(opts.mappings)
@@ -141,7 +141,7 @@ return {
   },
   {
     "jvgrootveld/telescope-zoxide",
-    enabled = not require("util.picker").get_picker() == "telescope",
+    enabled = picker_utils.picker == "telescope",
     lazy = true,
     specs = {
       {
