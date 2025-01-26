@@ -77,4 +77,5 @@ return {
   { import = "astrocommunity.utility.lua-json5" },
   { import = "astrocommunity.utility.noice-nvim" },
   -- { import = "astrocommunity.fuzzy-finder.fzf-lua" },
+  { import = "astrocommunity.fuzzy-finder.snacks-picker" },
 }
