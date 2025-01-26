@@ -140,8 +140,8 @@ local snacks_picker_spec = {
   },
 }
 
-if type(plugin_specs) ~= "string" and picker_utils.picker == "snacks" then
-  table.insert(plugin_specs, snacks_picker_spec)
-end
+if type(plugin_specs) == "string" then return plugin_specs end
+
+if picker_utils.picker == "snacks" then table.insert(plugin_specs, snacks_picker_spec) end
 
 return plugin_specs

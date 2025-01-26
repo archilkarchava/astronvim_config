@@ -1,6 +1,6 @@
 local M = {}
 
----@type "native" | "fzf" | "mini.pick" | "snacks" | "telescope" | string
+---@type "fzf" | "mini.pick" | "snacks" | "telescope" | string
 M.picker = "snacks"
 
 function M.grep_last_search(opts)

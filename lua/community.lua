@@ -3,8 +3,10 @@
 -- We import this file in `lazy_setup.lua` before the `plugins/` folder.
 -- This guarantees that the specs are processed before any user plugins.
 
+local picker_utils = require "util.picker"
+
 ---@type LazySpec
-return {
+local plugin_specs = {
   "AstroNvim/astrocommunity",
   { import = "astrocommunity.recipes.vscode" },
   { import = "astrocommunity.recipes.neovide" },
@@ -76,6 +78,17 @@ return {
   { import = "astrocommunity.editing-support.nvim-treesitter-context" },
   { import = "astrocommunity.utility.lua-json5" },
   { import = "astrocommunity.utility.noice-nvim" },
-  -- { import = "astrocommunity.fuzzy-finder.fzf-lua" },
-  { import = "astrocommunity.fuzzy-finder.snacks-picker" },
 }
+
+if type(plugin_specs) == "string" then return plugin_specs end
+
+local snacks_picker_spec = { import = "astrocommunity.fuzzy-finder.snacks-picker" }
+local fzf_picker_spec = { import = "astrocommunity.fuzzy-finder.fzf-lua" }
+
+if picker_utils.picker == "snacks" then
+  table.insert(plugin_specs, snacks_picker_spec)
+elseif picker_utils.picker == "fzf" then
+  table.insert(plugin_specs, fzf_picker_spec)
+end
+
+return plugin_specs
