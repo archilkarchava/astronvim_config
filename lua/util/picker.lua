@@ -1,5 +1,3 @@
-local builtins = require "telescope.builtin"
-
 local M = {}
 
 ---@type "native" | "fzf" | "mini.pick" | "snacks" | "telescope" | string
@@ -16,7 +14,7 @@ function M.grep_last_search(opts)
   opts.search = word
   opts.prompt_title = opts.prompt_title or ("Last Search Grep (" .. word:gsub("\n", "\\n") .. ")")
 
-  builtins.grep_string(opts)
+  require("telescope.builtin").grep_string(opts)
 end
 
 return M

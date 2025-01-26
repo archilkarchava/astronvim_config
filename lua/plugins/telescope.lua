@@ -4,7 +4,7 @@ local picker_utils = require "util.picker"
 return {
   {
     "nvim-telescope/telescope.nvim",
-    enabled = true,
+    enabled = picker_utils.picker == "telescope",
     branch = "master",
     opts = function(_, opts)
       local actions = require "telescope.actions"

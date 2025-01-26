@@ -119,7 +119,6 @@
   "suda.vim": { "branch": "master", "commit": "9adda7d195222d4e2854efb2a88005a120296c47" },
   "supermaven-nvim": { "branch": "main", "commit": "07d20fce48a5629686aefb0a7cd4b25e33947d50" },
   "targets.vim": { "branch": "master", "commit": "6325416da8f89992b005db3e4517aaef0242602e" },
-  "telescope-fzf-native.nvim": { "branch": "main", "commit": "dae2eac9d91464448b584c7949a31df8faefec56" },
   "telescope-undo.nvim": { "branch": "main", "commit": "2971cc9f193ec09e0c5de3563f99cbea16b63f10" },
   "telescope-zoxide": { "branch": "main", "commit": "54bfe630bad08dc9891ec78c7cf8db38dd725c97" },
   "telescope.nvim": { "branch": "master", "commit": "415af52339215926d705cccc08145f3782c4d132" },
