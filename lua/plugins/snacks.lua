@@ -97,8 +97,10 @@ local plugin_specs = {
           if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
           local maps = opts.mappings
 
-          local find_notifications =
-            { function() require("snacks").picker.notifications() end, desc = "Find notifications" }
+          local find_notifications = {
+            function() require("snacks").picker.notifications { confirm = "" } end,
+            desc = "Find notifications",
+          }
           local show_notification_history =
             { function() require("snacks").notifier.show_history() end, desc = "Notification history" }
           maps.n["<Leader>fn"] = picker_utils.picker == "snacks" and find_notifications or show_notification_history
