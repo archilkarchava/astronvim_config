@@ -60,7 +60,6 @@ local plugin_specs = {
     },
     opts = {
       bigfile = { enabled = false },
-      notifier = { enabled = false },
       quickfile = { enabled = true },
       statuscolumn = { enabled = false },
       words = { enabled = false },
@@ -85,6 +84,31 @@ local plugin_specs = {
         end,
       })
     end,
+  },
+  {
+    "snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    specs = {
+      { "nvim-notify", enabled = false },
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
+          local maps = opts.mappings
+
+          local find_notifications =
+            { function() require("snacks").picker.notifications() end, desc = "Find notifications" }
+          local show_notification_history =
+            { function() require("snacks").notifier.show_history() end, desc = "Notification history" }
+          maps.n["<Leader>fn"] = picker_utils.picker == "snacks" and find_notifications or show_notification_history
+          if picker_utils.picker == "snacks" then maps.n["<Leader>fN"] = show_notification_history end
+        end,
+      },
+    },
+    opts = {
+      notifier = {},
+    },
   },
 }
 
@@ -111,6 +135,7 @@ local snacks_picker_spec = {
     {
       "AstroNvim/astrocore",
       opts = function(_, opts)
+        if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
         local maps = opts.mappings
 
         maps.n["<Leader>fp"] = { function() require("snacks").picker.projects() end, desc = "Find projects" }
