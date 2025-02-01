@@ -142,6 +142,7 @@ local snacks_picker_spec = {
 
         maps.n["<Leader>fp"] = { function() require("snacks").picker.projects() end, desc = "Find projects" }
         maps.n["<Leader>fz"] = { function() require("snacks").picker.zoxide() end, desc = "Find zoxide projects" }
+        maps.n["<Leader>fe"] = { function() require("snacks").explorer() end, desc = "Explorer (Snacks)" }
 
         for _, mode in ipairs { "n", "v", "s", "x", "o", "i", "l", "c", "t" } do
           maps[mode]["<D-p>"] = { function() require("snacks").picker.smart() end, desc = "Find files" }
