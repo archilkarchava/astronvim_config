@@ -141,6 +141,7 @@ local snacks_picker_spec = {
         local maps = opts.mappings
 
         maps.n["<Leader>fp"] = { function() require("snacks").picker.projects() end, desc = "Find projects" }
+        maps.n["<Leader>fu"] = { function() require("snacks").picker.undo() end, desc = "Undotree (Snacks)" }
         maps.n["<Leader>fz"] = { function() require("snacks").picker.zoxide() end, desc = "Find zoxide projects" }
         maps.n["<Leader>fe"] = { function() require("snacks").explorer() end, desc = "Explorer (Snacks)" }
 
