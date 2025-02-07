@@ -546,6 +546,56 @@ return {
           maps.n[prefix .. "P"] = toggle_chat_mapping
           maps.v[prefix .. "P"] = { "<esc>" .. toggle_chat_mapping[1], desc = toggle_chat_mapping.desc }
           maps.n[prefix .. "C"] = { "<cmd>CopilotChatClearDiagnostics<cr>", desc = "Clear Chat Diagnostics" }
+          local active_picker = require("util.picker").picker
+          -- Helper function to create mappings
+          local function create_mapping(action_type, selection_type)
+            return function()
+              local actions = require "CopilotChat.actions"
+              local items = actions[action_type] { selection = require("CopilotChat.select")[selection_type] }
+              if not items then
+                vim.notify(
+                  "No " .. action_type:gsub("_", " ") .. " found for the current selection",
+                  vim.log.levels.WARN
+                )
+                return
+              end
+
+              -- Determine the active picker
+              if not active_picker then
+                vim.notify(
+                  "No valid picker is enabled. Please enable one of telescope, fzf-lua, or snacks.",
+                  vim.log.levels.ERROR
+                )
+                return
+              end
+
+              -- Attempt to load the picker module
+              local ok, picker_module = pcall(require, "CopilotChat.integrations." .. active_picker)
+              if not ok then
+                vim.notify(
+                  ("Integration module '%s' for picker '%s' is not available. Ensure it is installed and enabled."):format(
+                    active_picker,
+                    active_picker
+                  ),
+                  vim.log.levels.WARN
+                )
+                return
+              end
+
+              -- Use the selected picker module
+              picker_module.pick(items)
+            end
+          end
+
+          maps.n[prefix .. "p"] = {
+            create_mapping("prompt_actions", "buffer"),
+            desc = "Prompt actions",
+          }
+
+          maps.v[prefix .. "p"] = {
+            create_mapping("prompt_actions", "visual"),
+            desc = "Prompt actions",
+          }
         end,
       },
     },
