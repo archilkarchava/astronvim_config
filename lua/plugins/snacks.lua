@@ -122,6 +122,9 @@ local snacks_picker_spec = {
       sources = {
         zoxide = { confirm = load_session },
         projects = { confirm = load_session },
+        explorer = {
+          layout = { layout = { position = "right" } },
+        },
       },
       win = {
         input = {
