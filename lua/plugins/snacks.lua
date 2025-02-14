@@ -63,7 +63,9 @@ local plugin_specs = {
       quickfile = { enabled = true },
       statuscolumn = { enabled = false },
       words = { enabled = false },
-      image = {},
+      image = {
+        markdown = { enabled = false },
+      },
       scroll = {
         enabled = false,
         filter = function(buf)
