@@ -1421,7 +1421,7 @@ return {
     opts_extend = { "routes" },
     opts = {
       -- cmdline = { enabled = false },
-      messages = { enabled = false },
+      -- messages = { enabled = false },
       lsp = {
         hover = { enabled = true, silent = true },
         progress = { enabled = false },
