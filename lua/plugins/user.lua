@@ -1571,10 +1571,10 @@ return {
             end
           end
 
-          maps.t["<C-PageUp>"] = { term_resize "<C-PageUp>", desc = "Resize split up" }
-          maps.t["<C-PageDown>"] = { term_resize "<C-PageDown>", desc = "Resize split down" }
-          maps.t["<C-Home>"] = { term_resize "<C-Home>", desc = "Resize split left" }
-          maps.t["<C-End>"] = { term_resize "<C-End>", desc = "Resize split right" }
+          maps.t["<M-PageUp>"] = { term_resize "<M-PageUp>", desc = "Resize split up" }
+          maps.t["<M-PageDown>"] = { term_resize "<M-PageDown>", desc = "Resize split down" }
+          maps.t["<M-Home>"] = { term_resize "<M-Home>", desc = "Resize split left" }
+          maps.t["<M-End>"] = { term_resize "<M-End>", desc = "Resize split right" }
           maps.t["<M-Left>"] = { "<M-b>", desc = "Go to previous word" }
           maps.t["<M-Right>"] = { "<M-f>", desc = "Go to next word" }
           maps.t["<D-Esc>"] = { [[<C-\><C-n>]], desc = "Switch to normal mode" }

@@ -80,10 +80,10 @@ return {
     end
     maps.n["<C-c>"] = { "ciw", desc = "Change inner word", noremap = true }
 
-    remap_key_if_exists(maps, "<C-PageUp>", "<C-Up>")
-    remap_key_if_exists(maps, "<C-PageDown>", "<C-Down>")
-    remap_key_if_exists(maps, "<C-Home>", "<C-Left>")
-    remap_key_if_exists(maps, "<C-End>", "<C-Right>")
+    remap_key_if_exists(maps, "<M-PageUp>", "<C-Up>")
+    remap_key_if_exists(maps, "<M-PageDown>", "<C-Down>")
+    remap_key_if_exists(maps, "<M-Home>", "<C-Left>")
+    remap_key_if_exists(maps, "<M-End>", "<C-Right>")
 
     ---@param enabled boolean
     local function switch_bufline_auto_sort_state(enabled)
