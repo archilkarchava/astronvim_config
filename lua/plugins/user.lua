@@ -287,6 +287,10 @@ return {
             maps[mode]["<D-M-j>"] = add_cursor_below
             maps[mode][chord_prefix .. "<D-M-k>"] = skip_cursor_above
             maps[mode][chord_prefix .. "<D-M-j>"] = skip_cursor_below
+            maps[mode]["<D-M-Up>"] = add_cursor_above
+            maps[mode]["<D-M-Down>"] = add_cursor_below
+            maps[mode][chord_prefix .. "<D-M-Up>"] = skip_cursor_above
+            maps[mode][chord_prefix .. "<D-M-Down>"] = skip_cursor_below
 
             -- Add a cursor and jump to the next word under cursor.
             maps[mode][main_map] = {
