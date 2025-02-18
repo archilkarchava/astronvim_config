@@ -438,6 +438,7 @@ return {
           highlights = {
             init = {
               NvimSurroundHighlight = { link = "IncSearch" },
+              FakeVisual = { bg = "#45475b" },
             },
           },
         },
