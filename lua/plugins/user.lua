@@ -490,7 +490,6 @@ return {
   },
   {
     "echasnovski/mini.bracketed",
-    cond = true,
     optional = true,
     opts = {
       treesitter = { suffix = "", options = {} },
