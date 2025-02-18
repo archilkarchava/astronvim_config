@@ -48,14 +48,14 @@ return {
         maps.x["<C-/>"] = "<C-/>"
       end
 
-      for _, mode in ipairs { "n", "x", } do
+      for _, mode in ipairs { "n", "x" } do
         maps[mode][ctrl_cmd_lhs "k" .. ctrl_cmd_lhs "c"] = function() vsc.action "editor.action.addCommentLine" end
         maps[mode][ctrl_cmd_lhs "k" .. ctrl_cmd_lhs "u"] = function() vsc.action "editor.action.removeCommentLine" end
 
         maps[mode]["<M-A>"] = function() vsc.action "editor.action.blockComment" end
       end
 
-      for _, mode in ipairs { "n", "v", } do
+      for _, mode in ipairs { "n", "v" } do
         maps[mode]["<C-h>"] = function() vsc.action "workbench.action.navigateLeft" end
         maps[mode]["<C-k>"] = function() vsc.action "workbench.action.navigateUp" end
         maps[mode]["<C-l>"] = function() vsc.action "workbench.action.navigateRight" end
@@ -118,8 +118,7 @@ return {
 
       for _, mode in ipairs { "n", "x" } do
         maps[mode][ctrl_cmd_lhs "k" .. ctrl_cmd_lhs "r"] = function()
-          vsc.action("git.revertSelectedRanges",
-            { count = 1 })
+          vsc.action("git.revertSelectedRanges", { count = 1 })
         end
         maps[mode]["<Leader>gr"] = function() vsc.action("git.revertSelectedRanges", { count = 1 }) end
         maps[mode]["<Leader>gs"] = function() vsc.action("git.stageSelectedRanges", { count = 1 }) end
@@ -171,7 +170,7 @@ return {
       ---@param direction "next"|"previous"
       local function go_to_breakpoint(direction)
         local vscode_command = direction == "next" and "editor.debug.action.goToNextBreakpoint"
-            or "editor.debug.action.goToPreviousBreakpoint"
+          or "editor.debug.action.goToPreviousBreakpoint"
         vsc.action(vscode_command, {
           callback = function()
             vsc.action("workbench.action.focusActiveEditorGroup", {
@@ -364,7 +363,8 @@ return {
       -- Formatting
       for _, mode in ipairs { "n", "x" } do
         maps[mode]["<M-F>"] = "<Cmd>call VSCodeCall('editor.action.formatDocument')<CR>"
-        maps[mode][ctrl_cmd_lhs "k" .. ctrl_cmd_lhs "f"] = "<Cmd>call VSCodeCall('editor.action.formatSelection', 1)<CR>"
+        maps[mode][ctrl_cmd_lhs "k" .. ctrl_cmd_lhs "f"] =
+          "<Cmd>call VSCodeCall('editor.action.formatSelection', 1)<CR>"
 
         maps[mode]["<M-l>"] = function() vsc.action "editor.action.indentLines" end
         maps[mode]["<M-h>"] = function() vsc.action "editor.action.outdentLines" end
@@ -388,7 +388,7 @@ return {
       maps.n["<M-8>"] = function() vsc.action("vscode-harpoon.gotoEditor8", { count = 1 }) end
       maps.n["<M-9>"] = function() vsc.action("vscode-harpoon.gotoEditor9", { count = 1 }) end
 
-      maps.n["<Leader>W"] = function() vsc.action("workbench.action.files.saveWithoutFormatting") end
+      maps.n["<Leader>W"] = function() vsc.action "workbench.action.files.saveWithoutFormatting" end
 
       -- Map <Esc> to jk to use with cmdline `norm` commands in VS Code
       maps.i["jk"] = "<Esc>"
@@ -406,14 +406,14 @@ return {
     cond = true,
     optional = true,
     opts = {
-      buffer     = { suffix = "" },
-      conflict   = { suffix = "" },
+      buffer = { suffix = "" },
+      conflict = { suffix = "" },
       diagnostic = { suffix = "" },
-      file       = { suffix = "" },
-      oldfile    = { suffix = "" },
-      quickfix   = { suffix = "" },
-      undo       = { suffix = "" },
-      window     = { suffix = "" },
+      file = { suffix = "" },
+      oldfile = { suffix = "" },
+      quickfix = { suffix = "" },
+      undo = { suffix = "" },
+      window = { suffix = "" },
     },
     dependencies = {
       {
@@ -423,9 +423,9 @@ return {
           local maps = assert(opts.mappings)
           maps.n["<M-O>"] = function() pcall(require("mini.bracketed").jump, "backward", { wrap = false }) end
           maps.n["<M-I>"] = function() pcall(require("mini.bracketed").jump, "forward", { wrap = false }) end
-        end
-      }
-    }
+        end,
+      },
+    },
   },
   {
     "nvim-surround",
@@ -443,7 +443,7 @@ return {
           },
         },
       },
-    }
+    },
   },
   { "nvim-treesitter/nvim-treesitter", opts = { highlight = { enable = true } } },
 }
