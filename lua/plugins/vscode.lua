@@ -14,7 +14,7 @@ return {
       ---@param key_bind string
       ---@return string
       local function ctrl_cmd_lhs(key_bind)
-        local default_primary_mod_key = platform.is_macos() and "D" or "C"
+        local default_primary_mod_key = is_macos and "D" or "C"
         return "<" .. default_primary_mod_key .. "-" .. key_bind .. ">"
       end
 
@@ -43,7 +43,7 @@ return {
       for _, mode in ipairs { "n", "x", "o" } do
         maps[mode]["gc"] = "<Plug>VSCodeCommentary"
       end
-      if platform.is_macos() then
+      if is_macos then
         maps.n["<C-/>"] = "<C-/>"
         maps.x["<C-/>"] = "<C-/>"
       end
