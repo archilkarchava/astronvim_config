@@ -1892,6 +1892,18 @@ return {
     end,
   },
   {
+    "overseer.nvim",
+    optional = false,
+    opts = function(_, opts)
+      opts.strategy = { "terminal" }
+      local config = require "overseer.config"
+      local updated_default_alias = config.component_aliases.default
+      table.insert(updated_default_alias, { "open_output", on_start = "never", on_complete = "failure" })
+      if not opts.component_aliases then opts.component_aliases = {} end
+      opts.component_aliases.default = updated_default_alias
+    end,
+  },
+  {
     "better-escape.nvim",
     enabled = false,
   },
