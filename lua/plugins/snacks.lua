@@ -1,6 +1,8 @@
 -- if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
 
 local picker_utils = require "util.picker"
+local astrocore = require "astrocore"
+local garbage_day_plugin_name = "garbage-day.nvim"
 
 local function notify_dir_changed(dir) vim.notify("Directory changed to " .. dir) end
 
@@ -20,8 +22,14 @@ local function load_session(picker)
     vim.schedule(function()
       notify_dir_changed(dir)
       resession.remove_hook("post_load", cb)
+      if astrocore.is_available(garbage_day_plugin_name) then
+        astrocore.on_load(garbage_day_plugin_name, function()
+          local garbage_day_utils = require "garbage-day.utils"
+          garbage_day_utils.stop_lsp()
+          garbage_day_utils.start_lsp()
+        end)
+      end
     end)
-    vim.defer_fn(vim.cmd.LspRestart, 700)
   end
   resession.add_hook("post_load", cb)
   vim.defer_fn(function()

@@ -371,8 +371,9 @@ return {
             n = {
               ["<Leader>lc"] = {
                 function()
-                  require("garbage-day.utils").stop_lsp()
-                  require("garbage-day.utils").start_lsp()
+                  local utils = require "garbage-day.utils"
+                  utils.stop_lsp()
+                  utils.start_lsp()
                 end,
                 desc = "Garbage collect LSP clients",
                 remap = true,
