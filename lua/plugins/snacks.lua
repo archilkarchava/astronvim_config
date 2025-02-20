@@ -99,7 +99,7 @@ local plugin_specs = {
           local maps = opts.mappings
 
           local find_notifications = {
-            function() require("snacks").picker.notifications { confirm = "" } end,
+            function() require("snacks").picker.notifications() end,
             desc = "Find notifications",
           }
           local show_notification_history =
@@ -111,6 +111,11 @@ local plugin_specs = {
     },
     opts = {
       notifier = {},
+      picker = {
+        sources = {
+          notifications = { confirm = "focus_preview" },
+        },
+      },
     },
   },
 }
