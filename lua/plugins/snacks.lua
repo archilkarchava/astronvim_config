@@ -18,10 +18,10 @@ local function load_session(picker)
   local function cb()
     session_loaded = true
     vim.schedule(function()
-      vim.cmd.LspRestart()
       notify_dir_changed(dir)
       resession.remove_hook("post_load", cb)
     end)
+    vim.defer_fn(vim.cmd.LspRestart, 700)
   end
   resession.add_hook("post_load", cb)
   vim.defer_fn(function()
