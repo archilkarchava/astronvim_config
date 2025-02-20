@@ -354,6 +354,7 @@ return {
     "zeioth/garbage-day.nvim",
     optional = true,
     opts = {
+      grace_period = math.huge,
       excluded_lsp_clients = {
         "null-ls",
         "jdtls",
