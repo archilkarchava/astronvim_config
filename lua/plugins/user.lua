@@ -1426,7 +1426,7 @@ return {
       -- cmdline = { enabled = false },
       -- messages = { enabled = false },
       lsp = {
-        hover = { enabled = true, silent = true },
+        hover = { enabled = false, silent = true },
         progress = { enabled = false },
         signature = { enabled = true },
       },
