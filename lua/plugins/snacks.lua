@@ -135,7 +135,7 @@ local snacks_picker_spec = {
     picker = {
       sources = {
         zoxide = { confirm = load_session },
-        projects = { confirm = load_session },
+        projects = { confirm = load_session, dev = { "~/projects/sandbox", vim.env.ECOM_WORK_DIR, "~/projects/insta" } },
         explorer = {
           layout = { layout = { position = "right" } },
         },
