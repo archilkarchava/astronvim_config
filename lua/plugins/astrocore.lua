@@ -148,7 +148,9 @@ return {
       maps[mode]["<M-S-[>"] = navigate_to_prev_buffer_rhs
       maps[mode]["<M-S-]>"] = navigate_to_next_buffer_rhs
       maps[mode]["<C-S-PageUp>"] = move_buffer_tab_left_rhs
+      maps[mode]["<C-S-Up>"] = move_buffer_tab_left_rhs
       maps[mode]["<C-S-PageDown>"] = move_buffer_tab_right_rhs
+      maps[mode]["<C-S-Down>"] = move_buffer_tab_right_rhs
 
       -- Revert changes
       maps[mode]["<D-k><D-R>"] = { "<cmd>edit!<cr>", desc = "Revert buffer" }
