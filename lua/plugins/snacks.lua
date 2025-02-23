@@ -27,6 +27,7 @@ local function load_session(picker)
           local garbage_day_utils = require "garbage-day.utils"
           garbage_day_utils.stop_lsp()
           garbage_day_utils.start_lsp()
+          vim.defer_fn(function() vim.cmd.edit() end, 400)
         end)
       end
     end)
@@ -43,7 +44,7 @@ end
 local plugin_specs = {
   {
     "folke/snacks.nvim",
-    priority = 1000,
+    priority = 10000,
     lazy = false,
     specs = {
       {
@@ -70,7 +71,6 @@ local plugin_specs = {
       bigfile = { enabled = false },
       quickfile = { enabled = true },
       statuscolumn = { enabled = false },
-      words = { enabled = false },
       image = {},
       scroll = {
         enabled = false,
@@ -96,7 +96,7 @@ local plugin_specs = {
   },
   {
     "snacks.nvim",
-    priority = 1000,
+    priority = 10000,
     lazy = false,
     specs = {
       { "nvim-notify", enabled = false },
