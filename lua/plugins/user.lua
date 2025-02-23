@@ -1901,6 +1901,12 @@ return {
       table.insert(updated_default_alias, { "open_output", on_start = "never", on_complete = "failure" })
       if not opts.component_aliases then opts.component_aliases = {} end
       opts.component_aliases.default = updated_default_alias
+      opts.component_aliases.default_neotest = {
+        "on_output_summarize",
+        "on_exit_set_status",
+        "on_complete_notify",
+        "on_complete_dispose",
+      }
     end,
   },
   {
