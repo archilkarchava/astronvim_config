@@ -3,6 +3,10 @@
 -- You can also add or configure plugins by creating files in this `plugins/` folder
 -- Here are some examples:
 
+local util_keymaps = require "util.keymaps"
+local normalize_keymap = util_keymaps.normalize_keymap
+local chord_prefix = util_keymaps.chord_prefix()
+
 ---@type LazySpec
 return {
   {
@@ -25,8 +29,6 @@ return {
     optional = true,
     opts = function(_, opts)
       local cmp = require "cmp"
-      local platform = require "util.platform"
-      local is_macos = platform.is_macos()
       local toggle_cmp = cmp.mapping {
         i = function()
           if cmp.visible() then
@@ -36,8 +38,7 @@ return {
           end
         end,
       }
-      opts.mapping["<C-i>"] = toggle_cmp
-      if is_macos then opts.mapping["<D-i>"] = toggle_cmp end
+      opts.mapping[normalize_keymap "<D-i>"] = toggle_cmp
       local orig_format = vim.tbl_get(opts, "formatting", "format") or function() end
       opts.formatting = opts.formatting or {}
       opts.formatting.format = function(entry, item)
@@ -49,11 +50,7 @@ return {
   {
     "blink.cmp",
     optional = true,
-    opts = function(_, opts)
-      local platform = require "util.platform"
-      local is_macos = platform.is_macos()
-      opts.keymap[is_macos and "<D-i>" or "<C-i>"] = { "show", "hide", "fallback" }
-    end,
+    opts = function(_, opts) opts.keymap[normalize_keymap "<D-i>"] = { "show", "hide", "fallback" } end,
   },
   {
     "chrisgrieser/nvim-various-textobjs",
@@ -275,22 +272,21 @@ return {
             end
           end
 
-          local main_map = vim.g.vscode and "<D-d>" or "<D-s>"
-          local chord_prefix = vim.g.vscode and "<D-k>" or "<D-x>"
+          local main_map = normalize_keymap "<D-d>"
           for _, mode in ipairs { "n", "v" } do
             -- Add cursors above/below the main cursor.
             local add_cursor_above = { with_count(function() mc.lineAddCursor(-1) end), desc = "Add cursor above" }
             local skip_cursor_above = { with_count(function() mc.lineSkipCursor(-1) end), desc = "Skip cursor above" }
             local add_cursor_below = { with_count(function() mc.lineAddCursor(1) end), desc = "Add cursor below" }
             local skip_cursor_below = { with_count(function() mc.lineSkipCursor(1) end), desc = "Skip cursor below" }
-            maps[mode]["<D-M-k>"] = add_cursor_above
-            maps[mode]["<D-M-j>"] = add_cursor_below
-            maps[mode][chord_prefix .. "<D-M-k>"] = skip_cursor_above
-            maps[mode][chord_prefix .. "<D-M-j>"] = skip_cursor_below
-            maps[mode]["<D-M-Up>"] = add_cursor_above
-            maps[mode]["<D-M-Down>"] = add_cursor_below
-            maps[mode][chord_prefix .. "<D-M-Up>"] = skip_cursor_above
-            maps[mode][chord_prefix .. "<D-M-Down>"] = skip_cursor_below
+            maps[mode][normalize_keymap "<D-M-k>"] = add_cursor_above
+            maps[mode][normalize_keymap "<D-M-j>"] = add_cursor_below
+            maps[mode][chord_prefix .. normalize_keymap "<D-M-k>"] = skip_cursor_above
+            maps[mode][chord_prefix .. normalize_keymap "<D-M-j>"] = skip_cursor_below
+            maps[mode][normalize_keymap "<D-M-Up>"] = add_cursor_above
+            maps[mode][normalize_keymap "<D-M-Down>"] = add_cursor_below
+            maps[mode][chord_prefix .. normalize_keymap "<D-M-Up>"] = skip_cursor_above
+            maps[mode][chord_prefix .. normalize_keymap "<D-M-Down>"] = skip_cursor_below
 
             -- Add a cursor and jump to the next word under cursor.
             maps[mode][main_map] = {
@@ -308,7 +304,7 @@ return {
             maps[mode][chord_prefix .. main_map:upper()] =
               { with_count(function() mc.matchSkipCursor(-1) end), desc = "Skip cursor and jump to previous word" }
 
-            maps[mode]["<D-L>"] = { mc.matchAllAddCursors, desc = "Add cursors to all matches" }
+            maps[mode][normalize_keymap "<D-L>"] = { mc.matchAllAddCursors, desc = "Add cursors to all matches" }
 
             -- Rotate the main cursor.
             maps[mode]["<left>"] = {
@@ -341,12 +337,12 @@ return {
             }
 
             -- Delete the main cursor.
-            maps[mode][chord_prefix .. "<D-x>"] = { mc.deleteCursor, desc = "Delete cursor" }
+            maps[mode][chord_prefix .. normalize_keymap "<D-x>"] = { mc.deleteCursor, desc = "Delete cursor" }
 
-            maps[mode][chord_prefix .. "<D-z>"] = { mc.toggleCursor, desc = "Toggle cursor" }
+            maps[mode][chord_prefix .. normalize_keymap "<D-z>"] = { mc.toggleCursor, desc = "Toggle cursor" }
 
             -- clone every cursor and disable the originals
-            maps[mode][chord_prefix .. "<D-Z>"] = { mc.duplicateCursors, desc = "Duplicate cursors" }
+            maps[mode][chord_prefix .. normalize_keymap "<D-Z>"] = { mc.duplicateCursors, desc = "Duplicate cursors" }
           end
 
           -- Jumplist support
@@ -367,7 +363,7 @@ return {
           end
 
           -- Align cursor columns.
-          maps.n[chord_prefix .. "<D-a>"] = { mc.alignCursors, desc = "Align cursors" }
+          maps.n[chord_prefix .. normalize_keymap "<D-a>"] = { mc.alignCursors, desc = "Align cursors" }
 
           -- Split visual selections by regex.
           maps.v[chord_prefix] = { mc.splitCursors, desc = "Split selections" }
@@ -720,8 +716,8 @@ return {
       opts.keymaps["<C-s>"] = false
       opts.keymaps["<C-\\>"] = open_horizontal_split_rhs
       opts.keymaps["<C-S-\\>"] = open_vertical_split_rhs
-      opts.keymaps["<D-\\>"] = open_horizontal_split_rhs
-      opts.keymaps["<D-S-\\>"] = open_vertical_split_rhs
+      opts.keymaps[normalize_keymap "<D-\\>"] = open_horizontal_split_rhs
+      opts.keymaps[normalize_keymap "<D-S-\\>"] = open_vertical_split_rhs
     end,
   },
   {
@@ -984,7 +980,7 @@ return {
           }
           maps.n["<Leader>gH"] = { "<cmd>NeogitLogCurrent<cr>", desc = "Git commits (current file neogit)" }
           for _, mode in ipairs { "n", "v", "s", "x", "i" } do
-            maps[mode]["<D-0>"] = {
+            maps[mode][normalize_keymap "<D-0>"] = {
               function()
                 if vim.bo.filetype == "NeogitStatus" then
                   require("neogit.lib.util").safe_win_close(0, true)
@@ -1326,7 +1322,7 @@ return {
             desc = "Explorer (focus current file)",
           }
           for _, mode in ipairs { "n", "x", "o", "i" } do
-            maps[mode]["<D-e>"] = toggle_mini_files_rhs
+            maps[mode][normalize_keymap "<D-e>"] = toggle_mini_files_rhs
           end
 
           if not opts.autocmds then opts.autocmds = {} end
@@ -1343,8 +1339,8 @@ return {
           }
 
           for _, mode in ipairs { "n", "x", "o", "i" } do
-            maps[mode]["<D-k>e"] = focus_current_mini_files_rhs
-            maps[mode]["<D-k><D-e>"] = focus_current_mini_files_rhs
+            maps[mode][normalize_keymap "<D-k>e"] = focus_current_mini_files_rhs
+            maps[mode][normalize_keymap "<D-k><D-e>"] = focus_current_mini_files_rhs
           end
         end,
       },
@@ -1580,7 +1576,7 @@ return {
           maps.t["<M-End>"] = { term_resize "<M-End>", desc = "Resize split right" }
           maps.t["<M-Left>"] = { "<M-b>", desc = "Go to previous word" }
           maps.t["<M-Right>"] = { "<M-f>", desc = "Go to next word" }
-          maps.t["<D-Esc>"] = { [[<C-\><C-n>]], desc = "Switch to normal mode" }
+          maps.t[normalize_keymap "<D-Esc>"] = { [[<C-\><C-n>]], desc = "Switch to normal mode" }
 
           local toggle_term_rhs = { "<Cmd>ToggleTerm<CR>", desc = "Toggle terminal" }
           maps.t['<C-">'] = toggle_term_rhs
