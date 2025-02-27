@@ -161,6 +161,9 @@ return {
       features = {
         large_buf = {
           notify = not vim.g.vscode,
+          size = 1.5 * 1024 * 1024,
+          line_length = 1000,
+          lines = 20000,
         }, -- set global limits for large files for disabling features like treesitter
         autopairs = true, -- enable autopairs at start
         cmp = true, -- enable completion at start
