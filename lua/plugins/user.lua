@@ -68,6 +68,23 @@ return {
           return nil
         end
       end
+      local existing_transform = opts.transform_items or function(_, items) return items end
+      local function remove_duplicate_snippets(_, items)
+        local seen_snippets = {}
+        return vim.tbl_filter(function(item)
+          if item.kind == require("blink.cmp.types").CompletionItemKind.Snippet then
+            if seen_snippets[item.label] then
+              return false
+            else
+              seen_snippets[item.label] = true
+            end
+          end
+          return true
+        end, items)
+      end
+      local function transform_items(entry, items)
+        return remove_duplicate_snippets(entry, existing_transform(entry, items))
+      end
       return astrocore.extend_tbl(opts, {
         enabled = function()
           return not vim.tbl_contains({ "copilot-chat" }, vim.bo.filetype)
@@ -80,6 +97,9 @@ return {
         completion = { list = { selection = { preselect = true } } },
         fuzzy = {
           sorts = vim.list_extend({ deprioritize_emmet }, orig_sorts),
+        },
+        sources = {
+          transform_items = transform_items,
         },
       })
     end,
