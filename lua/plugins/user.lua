@@ -50,17 +50,39 @@ return {
   {
     "blink.cmp",
     optional = true,
-    opts = {
-      enabled = function()
-        return not vim.tbl_contains({ "copilot-chat" }, vim.bo.filetype)
-          and vim.bo.buftype ~= "prompt"
-          and vim.b.completion ~= false
-      end,
-      keymap = {
-        [normalize_keymap "<D-i>"] = { "show", "hide", "fallback" },
-      },
-      completion = { list = { selection = { preselect = true } } },
-    },
+    opts = function(_, opts)
+      local astrocore = require "astrocore"
+      local blink_default_config = require "blink.cmp.config"
+      if not opts.fuzzy then opts.fuzzy = {} end
+      local orig_sorts = opts.fuzzy.sorts or blink_default_config.fuzzy.sorts
+      local function deprioritize_emmet(a, b)
+        if a.source_name ~= "LSP" or b.source_name ~= "LSP" then return end
+
+        if not a.client_name or not b.client_name then return end
+
+        if a.client_name == "emmet_language_server" and b.client_name ~= "emmet_language_server" then
+          return false
+        elseif a.client_name ~= "emmet_language_server" and b.client_name == "emmet_language_server" then
+          return true
+        else
+          return nil
+        end
+      end
+      return astrocore.extend_tbl(opts, {
+        enabled = function()
+          return not vim.tbl_contains({ "copilot-chat" }, vim.bo.filetype)
+            and vim.bo.buftype ~= "prompt"
+            and vim.b.completion ~= false
+        end,
+        keymap = {
+          [normalize_keymap "<D-i>"] = { "show", "hide", "fallback" },
+        },
+        completion = { list = { selection = { preselect = true } } },
+        fuzzy = {
+          sorts = vim.list_extend({ deprioritize_emmet }, orig_sorts),
+        },
+      })
+    end,
     specs = {
       { "magazine.nvim", enabled = false },
       { "cmp-cmdline", enabled = false },
