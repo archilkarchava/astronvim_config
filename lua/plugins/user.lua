@@ -1378,8 +1378,8 @@ return {
           }
 
           for _, mode in ipairs { "n", "x", "o", "i" } do
-            maps[mode][normalize_keymap "<D-k>e"] = focus_current_mini_files_rhs
-            maps[mode][normalize_keymap "<D-k><D-e>"] = focus_current_mini_files_rhs
+            maps[mode][chord_prefix .. "e"] = focus_current_mini_files_rhs
+            maps[mode][chord_prefix .. "<D-e>"] = focus_current_mini_files_rhs
           end
         end,
       },
