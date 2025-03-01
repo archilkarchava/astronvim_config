@@ -119,18 +119,20 @@ local plugin_specs = {
       { "nvim-notify", enabled = false },
       {
         "AstroNvim/astrocore",
+        ---@param opts AstroCoreOpts
         opts = function(_, opts)
           if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
-          local maps = opts.mappings
+          local maps = assert(opts.mappings)
 
           local find_notifications = {
-            function() require("snacks").picker.notifications() end,
+            function() Snacks.picker.notifications() end,
             desc = "Find notifications",
           }
           local show_notification_history =
-            { function() require("snacks").notifier.show_history() end, desc = "Notification history" }
+            { function() Snacks.notifier.show_history() end, desc = "Notification history" }
           maps.n["<Leader>fn"] = picker_utils.picker == "snacks" and find_notifications or show_notification_history
           if picker_utils.picker == "snacks" then maps.n["<Leader>fN"] = show_notification_history end
+          maps.n["<Leader>uD"] = { function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications" }
         end,
       },
     },
