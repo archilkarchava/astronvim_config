@@ -555,24 +555,5 @@ return {
         end,
       },
     },
-    specs = {
-      {
-        "noice.nvim",
-        optional = true,
-        opts = function(_, opts)
-          opts.routes = opts.routes or {}
-          vim.list_extend(opts.routes, {
-            {
-              filter = {
-                event = "msg_show",
-                kind = "echomsg",
-                find = "Models fetched",
-              },
-              opts = { skip = true },
-            },
-          })
-        end,
-      },
-    },
   },
 }
