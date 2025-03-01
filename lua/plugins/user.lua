@@ -1837,6 +1837,8 @@ return {
       if not terminal.is_kitty() then return end
       local initial_kitty_colors = nil
       local current_nvim_terminal_colors = {}
+      local initial_colors_name = vim.g.colors_name
+      local initial_background = vim.go.background
 
       --- Converts a decimal color value to a hexadecimal color string.
       ---@param d number? The decimal color value.
@@ -1905,7 +1907,12 @@ return {
           event = { "VimLeavePre", "VimSuspend" },
           desc = "Reset Kitty to default when exiting or suspending Neovim",
           callback = function()
-            if initial_kitty_colors == nil then return end
+            if
+              initial_kitty_colors == nil
+              or (initial_colors_name == vim.g.colors_name and initial_background == vim.go.background)
+            then
+              return
+            end
             terminal.kitty_set_colors(initial_kitty_colors):wait()
           end,
         },
