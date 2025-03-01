@@ -86,15 +86,6 @@ return {
     specs = {
       { "magazine.nvim", enabled = false },
       { "cmp-cmdline", enabled = false },
-      {
-        "catppuccin",
-        optional = true,
-        opts = {
-          integrations = {
-            blink_cmp = true,
-          },
-        },
-      },
     },
   },
   {
