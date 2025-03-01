@@ -825,10 +825,12 @@ return {
           local chainsaw = require "chainsaw"
           for _, mode in ipairs { "n", "x" } do
             maps[mode][prefix] = { desc = require("astroui").get_icon("Log", 1, true) .. "Log" }
-            maps[mode][prefix .. "v"] = {
+            local variable_log_rhs = {
               function() chainsaw.variableLog() end,
               desc = "Variable log",
             }
+            maps[mode]["<C-M-l>"] = variable_log_rhs
+            maps[mode][prefix .. "v"] = variable_log_rhs
             maps[mode][prefix .. "o"] = {
               function() chainsaw.objectLog() end,
               desc = "Object log",
