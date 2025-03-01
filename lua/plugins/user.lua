@@ -106,6 +106,24 @@ return {
     specs = {
       { "magazine.nvim", enabled = false },
       { "cmp-cmdline", enabled = false },
+      {
+        "noice.nvim",
+        optional = true,
+        opts = {
+          routes = {
+            {
+              filter = {
+                event = "msg_show",
+                any = {
+                  { find = "Error detected while processing WinScrolled Autocommands for" },
+                  { find = "blink.cmp/lua/blink/cmp/lib/window/init.lua:314: Invalid window id" },
+                },
+              },
+              opts = { skip = true },
+            },
+          },
+        },
+      },
     },
   },
   {
