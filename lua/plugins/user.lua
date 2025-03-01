@@ -822,50 +822,51 @@ return {
         opts = function(_, opts)
           local maps = assert(opts.mappings)
           local prefix = "<Leader>L"
+          local chainsaw = require "chainsaw"
           for _, mode in ipairs { "n", "x" } do
             maps[mode][prefix] = { desc = require("astroui").get_icon("Log", 1, true) .. "Log" }
             maps[mode][prefix .. "v"] = {
-              function() require("chainsaw").variableLog() end,
+              function() chainsaw.variableLog() end,
               desc = "Variable log",
             }
             maps[mode][prefix .. "o"] = {
-              function() require("chainsaw").objectLog() end,
+              function() chainsaw.objectLog() end,
               desc = "Object log",
             }
             maps[mode][prefix .. "t"] = {
-              function() require("chainsaw").typeLog() end,
+              function() chainsaw.typeLog() end,
               desc = "Type log",
             }
             maps[mode][prefix .. "a"] = {
-              function() require("chainsaw").assertLog() end,
+              function() chainsaw.assertLog() end,
               desc = "Assert log",
             }
             maps[mode][prefix .. "e"] = {
-              function() require("chainsaw").emojiLog() end,
+              function() chainsaw.emojiLog() end,
               desc = "Emoji log",
             }
             maps[mode][prefix .. "m"] = {
-              function() require("chainsaw").messageLog() end,
+              function() chainsaw.messageLog() end,
               desc = "Message log",
             }
             maps[mode][prefix .. "T"] = {
-              function() require("chainsaw").timeLog() end,
+              function() chainsaw.timeLog() end,
               desc = "Time log",
             }
             maps[mode][prefix .. "d"] = {
-              function() require("chainsaw").debugLog() end,
+              function() chainsaw.debugLog() end,
               desc = "Debug log",
             }
             maps[mode][prefix .. "s"] = {
-              function() require("chainsaw").stacktraceLog() end,
+              function() chainsaw.stacktraceLog() end,
               desc = "Stacktrace log",
             }
             maps[mode][prefix .. "c"] = {
-              function() require("chainsaw").clearLog() end,
+              function() chainsaw.clearLog() end,
               desc = "Clear log",
             }
             maps[mode][prefix .. "r"] = {
-              function() require("chainsaw").removeLogs() end,
+              function() chainsaw.removeLogs() end,
               desc = "Remove all log statements created by Chainsaw",
             }
           end
