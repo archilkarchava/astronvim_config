@@ -487,6 +487,13 @@ return {
           {
             "saghen/blink.compat",
             lazy = true,
+            opts = function()
+              -- monkeypatch cmp.ConfirmBehavior for Avante
+              require("cmp").ConfirmBehavior = {
+                Insert = "insert",
+                Replace = "replace",
+              }
+            end,
           },
         },
         opts = function(_, opts)
