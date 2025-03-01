@@ -68,7 +68,6 @@ local plugin_specs = {
       },
     },
     opts = {
-      bigfile = { enabled = false },
       quickfile = { enabled = true },
       statuscolumn = { enabled = false },
       image = {},
@@ -93,6 +92,24 @@ local plugin_specs = {
         end,
       })
     end,
+  },
+  {
+    "snacks.nvim",
+    optional = true,
+    specs = {
+      {
+        "AstroNvim/astrocore",
+        ---@type AstroCoreOpts
+        opts = { features = { large_buf = false } },
+      },
+    },
+    opts = {
+      bigfile = {
+        notify = not vim.g.vscode,
+        size = 1.5 * 1024 * 1024,
+        line_length = 1000,
+      },
+    },
   },
   {
     "snacks.nvim",
