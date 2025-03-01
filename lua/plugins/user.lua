@@ -1916,6 +1916,7 @@ return {
   },
   {
     "nvim-notify",
+    optional = true,
     config = function(_, opts)
       require("notify").setup(opts)
 
