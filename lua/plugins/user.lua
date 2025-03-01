@@ -988,6 +988,13 @@ return {
     },
   },
   {
+    "package-info.nvim",
+    enabled = false,
+    opts = {
+      autostart = false,
+    },
+  },
+  {
     "booperlv/nvim-gomove",
     cond = true,
     dependencies = {
