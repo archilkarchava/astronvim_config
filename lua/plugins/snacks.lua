@@ -149,8 +149,9 @@ local plugin_specs = {
       local patch_func = astrocore.patch_func
       Snacks.notifier.notify = patch_func(Snacks.notifier.notify, function(orig, msg, level, o)
         local notif_id = orig(msg, level, o)
+        local title = o and o.title or ""
         if
-          not (o.title == "AstroNvim" and msg == "Notifications off") and not astrocore.config.features.notifications
+          not (title == "AstroNvim" and msg == "Notifications off") and not astrocore.config.features.notifications
         then
           Snacks.notifier.hide(notif_id)
         end
