@@ -50,7 +50,30 @@ return {
   {
     "blink.cmp",
     optional = true,
-    opts = function(_, opts) opts.keymap[normalize_keymap "<D-i>"] = { "show", "hide", "fallback" } end,
+    opts = {
+      enabled = function()
+        return not vim.tbl_contains({ "copilot-chat" }, vim.bo.filetype)
+          and vim.bo.buftype ~= "prompt"
+          and vim.b.completion ~= false
+      end,
+      keymap = {
+        [normalize_keymap "<D-i>"] = { "show", "hide", "fallback" },
+      },
+      completion = { list = { selection = { preselect = true } } },
+    },
+    specs = {
+      { "magazine.nvim", enabled = false },
+      { "cmp-cmdline", enabled = false },
+      {
+        "catppuccin",
+        optional = true,
+        opts = {
+          integrations = {
+            blink_cmp = true,
+          },
+        },
+      },
+    },
   },
   {
     "chrisgrieser/nvim-various-textobjs",
