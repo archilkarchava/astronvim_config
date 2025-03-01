@@ -197,8 +197,6 @@ return {
       maps.x[ctrl_cmd_lhs "]"] = function() vsc.action "editor.action.indentLines" end
       maps.n[ctrl_cmd_lhs "["] = function() vsc.action "editor.action.outdentLines" end
       maps.x[ctrl_cmd_lhs "["] = function() vsc.action "editor.action.outdentLines" end
-      maps.n["<C-M-l>"] = function() vsc.action "turboConsoleLog.displayLogMessage" end
-      maps.x["<C-M-l>"] = function() vsc.action "turboConsoleLog.displayLogMessage" end
       maps.n["<Leader>un"] = function() vsc.action "notifications.hideToasts" end
       maps.x["<Leader>un"] = function() vsc.action "notifications.hideToasts" end
       maps.n["<Leader>*"] = function()
