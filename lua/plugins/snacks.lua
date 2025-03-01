@@ -144,6 +144,18 @@ local plugin_specs = {
         },
       },
     },
+    config = function(_, opts)
+      require("snacks").setup(opts)
+      local patch_func = astrocore.patch_func
+      Snacks.notifier.notify = patch_func(Snacks.notifier.notify, function(orig, msg, level, o)
+        local notif_id = orig(msg, level, o)
+        if
+          not (o.title == "AstroNvim" and msg == "Notifications off") and not astrocore.config.features.notifications
+        then
+          Snacks.notifier.hide(notif_id)
+        end
+      end)
+    end,
   },
 }
 
