@@ -1929,6 +1929,16 @@ return {
     end,
   },
   {
+    "williamboman/mason-lspconfig.nvim",
+    optional = true,
+    opts = function(_, opts)
+      opts.ensure_installed = require("astrocore").list_insert_unique(
+        vim.tbl_filter(function(server) return server ~= "emmet_ls" end, opts.ensure_installed),
+        { "emmet_language_server" }
+      )
+    end,
+  },
+  {
     "better-escape.nvim",
     enabled = false,
   },
