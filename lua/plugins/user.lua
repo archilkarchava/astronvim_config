@@ -974,10 +974,64 @@ return {
     optional = true,
   },
   {
-    "akinsho/git-conflict.nvim",
+    "rhysd/conflict-marker.vim",
     event = "User AstroGitFile",
-    version = "*",
-    opts = {},
+    cmd = { "ConflictMarkerOurselves", "ConflictMarkerThemselves", "ConflictMarkerBoth", "ConflictMarkerNone" },
+    init = function()
+      -- Clear default conflict marker highlight group
+      vim.g.conflict_marker_highlight_group = ""
+
+      -- Include text after begin and end markers
+      vim.g.conflict_marker_begin = "^<<<<<<<\\+ .*$"
+      vim.g.conflict_marker_common_ancestors = "^|||||||\\+ .*$"
+      vim.g.conflict_marker_end = "^>>>>>>>\\+ .*$"
+    end,
+    specs = {
+      {
+        "AstroNvim/astrocore",
+        optional = true,
+        ---@param opts AstroCoreOpts
+        opts = function(_, opts)
+          local shade_color = require("util.highlight").shade_color
+          local function generate_conflict_marker_highlights(is_light_bg)
+            local ConflictMarkerOursBg = is_light_bg and "#f2d2cf" or "#562C30"
+            local ConflictMarkerTheirsBg = is_light_bg and "#d4e4c9" or "#314753"
+            local ConflictMarkerCommonAncestorsHunkBg = is_light_bg and "#c9d4e4" or "#754a81"
+            local shade_direction = is_light_bg and "light" or "dark"
+            local shade_factor = is_light_bg and -30 or 30
+
+            return {
+              ConflictMarkerOurs = { bg = ConflictMarkerOursBg, bold = true },
+              ConflictMarkerTheirs = { bg = ConflictMarkerTheirsBg, bold = true },
+              ConflictMarkerBegin = { bg = shade_color(ConflictMarkerOursBg, shade_factor, shade_direction) },
+              ConflictMarkerEnd = { bg = shade_color(ConflictMarkerTheirsBg, shade_factor, shade_direction) },
+              ConflictMarkerCommonAncestorsHunk = { bg = ConflictMarkerCommonAncestorsHunkBg },
+              ConflictMarkerCommonAncestors = {
+                bg = shade_color(ConflictMarkerCommonAncestorsHunkBg, shade_factor, shade_direction),
+              },
+            }
+          end
+
+          local function set_highlights()
+            local is_light_bg = vim.opt.background:get() == "light"
+            local highlights_to_apply = generate_conflict_marker_highlights(is_light_bg)
+            for name, definition in pairs(highlights_to_apply) do
+              vim.api.nvim_set_hl(0, name, definition)
+            end
+          end
+
+          set_highlights()
+          if not opts.autocmds then opts.autocmds = {} end
+          opts.autocmds.conflict_marker_highlights = {
+            {
+              event = "ColorScheme",
+              desc = "Apply conflict marker highlights",
+              callback = set_highlights,
+            },
+          }
+        end,
+      },
+    },
   },
   {
     "kawre/leetcode.nvim",
