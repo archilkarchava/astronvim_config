@@ -75,6 +75,17 @@ return {
         inlay_hints = false, -- enable/disable inlay hints on start
         semantic_tokens = true, -- enable/disable semantic token highlighting
       },
+      file_operations = {
+        timeout = 10000, -- default timeout in ms for completing LSP operations
+        operations = { -- enable all of the file operations
+          willCreate = true,
+          didCreate = true,
+          willRename = true,
+          didRename = true,
+          willDelete = true,
+          didDelete = true,
+        },
+      },
       -- customize lsp formatting options
       formatting = {
         -- control auto formatting on save
