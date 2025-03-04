@@ -1462,7 +1462,8 @@ return {
               event = "User",
               pattern = "MiniFilesBufferCreate",
               callback = function(args)
-                if minifiles.get_explorer_state() == nil then
+                local explorer_state_ok, explorer_state = pcall(minifiles.get_explorer_state)
+                if explorer_state_ok and explorer_state == nil and vim.api.nvim_buf_is_valid(args.buf) then
                   vim.api.nvim_tabpage_set_var(0, prev_buf_id_tab_var_name, args.buf)
                 end
               end,
