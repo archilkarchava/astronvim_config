@@ -22,15 +22,15 @@ local function load_session(picker)
     vim.schedule(function()
       notify_dir_changed(dir)
       resession.remove_hook("post_load", cb)
-      if astrocore.is_available(garbage_day_plugin_name) then
-        astrocore.on_load(garbage_day_plugin_name, function()
-          local garbage_day_utils = require "garbage-day.utils"
-          garbage_day_utils.stop_lsp()
-          garbage_day_utils.start_lsp()
-          vim.defer_fn(function() vim.cmd.edit() end, 400)
-        end)
-      end
     end)
+    if astrocore.is_available(garbage_day_plugin_name) then
+      astrocore.on_load(garbage_day_plugin_name, function()
+        local garbage_day_utils = require "garbage-day.utils"
+        garbage_day_utils.stop_lsp()
+        vim.defer_fn(function() vim.cmd.edit() end, 100)
+        vim.defer_fn(function() garbage_day_utils.start_lsp() end, 700)
+      end)
+    end
   end
   resession.add_hook("post_load", cb)
   vim.defer_fn(function()
