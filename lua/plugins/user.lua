@@ -1898,8 +1898,8 @@ return {
             if vim.fn.has "nvim-0.11" == 1 and not vim.api.nvim_get_option_info2("background", {}).was_set then
               return
             end
-            local resp = args.data ---@type string
-            local r, g, b = parseosc11(resp)
+            local sequence = type(args.data) == "string" and args.data or args.data.sequence ---@type string
+            local r, g, b = parseosc11(sequence)
             if r and g and b then
               local rr = parsecolor(r)
               local gg = parsecolor(g)
