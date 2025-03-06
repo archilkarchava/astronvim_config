@@ -616,8 +616,8 @@ return {
       },
     },
     opts = {
-      lsp = { auto_setup = false },
       on_vim_enter = false,
+      lsp = { auto_setup = true },
       on_dir_changed = { -- Automatically load exrc files on DirChanged autocmd
         enabled = true,
         -- Wait until CursorHold and use vim.ui.select to confirm files to load, instead of loading unconditionally
