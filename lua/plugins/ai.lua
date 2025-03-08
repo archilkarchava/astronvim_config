@@ -317,7 +317,11 @@ return {
     build = is_windows and "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" or "make",
     opts = {
       ---@type Provider
-      provider = "copilot", -- Recommend using Claude
+      provider = "openrouter-free-gemini", -- Recommend using Claude
+      cursor_applying_provider = "openrouter-free-gemini",
+      -- behaviour = {
+      --   enable_cursor_planning_mode = true,
+      -- },
       file_selector = {
         provider = get_avante_file_selector_provider(),
       },
@@ -340,6 +344,15 @@ return {
       },
       windows = {
         width = 45,
+      },
+      vendors = {
+        ---@type AvanteSupportedProvider
+        ["openrouter-free-gemini"] = {
+          __inherited_from = "openai",
+          endpoint = "https://openrouter.ai/api/v1",
+          api_key_name = "OPENROUTER_API_KEY",
+          model = "google/gemini-2.0-pro-exp-02-05:free",
+        },
       },
     },
     dependencies = {
