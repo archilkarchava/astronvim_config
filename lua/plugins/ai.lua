@@ -626,6 +626,10 @@ return {
         end,
       },
     },
-    config = true,
+    opts = {
+      win = {
+        height = 0.6,
+      },
+    },
   },
 }
