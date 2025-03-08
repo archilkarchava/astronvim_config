@@ -596,7 +596,7 @@ return {
           for _, mode in ipairs { "n", "v", "s", "x", "o", "i", "t" } do
             maps[mode][prefix .. "s"] = { "<cmd>AiderTerminalSend<cr>", desc = "Send to Aider" }
             maps[mode][normalize_keymap "<D-I>"] = { "<cmd>AiderTerminalToggle<cr>", desc = "Open Aider" }
-            maps[mode][prefix .. prefix] = { "<cmd>AiderTerminalToggle<cr>", desc = "Open Aider" }
+            maps[mode][prefix .. prefix] = { "<cmd>AiderQuickSendCommand<cr>", desc = "Send Command To Aider" }
             maps[mode][prefix .. "c"] = { "<cmd>AiderQuickSendCommand<cr>", desc = "Send Command To Aider" }
             maps[mode][prefix .. "b"] = { "<cmd>AiderQuickSendBuffer<cr>", desc = "Send Buffer To Aider" }
             maps[mode][prefix .. "a"] = { "<cmd>AiderQuickAddFile<cr>", desc = "Add File to Aider" }
