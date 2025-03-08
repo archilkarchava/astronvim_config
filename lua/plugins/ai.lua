@@ -1,5 +1,8 @@
 -- if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
 
+local util_keymaps = require "util.keymaps"
+local normalize_keymap = util_keymaps.normalize_keymap
+
 ---@alias SuggestionsProvider "supermaven" | "copilot" | "none"
 
 local suggestion_providers = {
@@ -555,5 +558,61 @@ return {
         end,
       },
     },
+  },
+  {
+    "GeorgesAlkhouri/nvim-aider",
+    cmd = {
+      "AiderTerminalSend",
+      "AiderTerminalToggle",
+      "AiderQuickSendCommand",
+      "AiderQuickSendBuffer",
+      "AiderQuickAddFile",
+      "AiderQuickDropFile",
+      "AiderQuickReadOnlyFile",
+      "AiderHealth",
+    },
+    dependencies = {
+      { "folke/snacks.nvim" },
+      {
+        "AstroNvim/astrocore",
+        ---@param opts AstroCoreOpts
+        opts = function(_, opts)
+          if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
+          local maps = assert(opts.mappings)
+          local prefix = "<D-a>"
+          for _, mode in ipairs { "n", "v", "s", "x", "o", "i", "t" } do
+            maps[mode][prefix .. "s"] = { "<cmd>AiderTerminalSend<cr>", desc = "Send to Aider" }
+            maps[mode][normalize_keymap "<D-I>"] = { "<cmd>AiderTerminalToggle<cr>", desc = "Open Aider" }
+            maps[mode][prefix .. prefix] = { "<cmd>AiderTerminalToggle<cr>", desc = "Open Aider" }
+            maps[mode][prefix .. "c"] = { "<cmd>AiderQuickSendCommand<cr>", desc = "Send Command To Aider" }
+            maps[mode][prefix .. "b"] = { "<cmd>AiderQuickSendBuffer<cr>", desc = "Send Buffer To Aider" }
+            maps[mode][prefix .. "a"] = { "<cmd>AiderQuickAddFile<cr>", desc = "Add File to Aider" }
+            maps[mode][prefix .. "d"] = { "<cmd>AiderQuickDropFile<cr>", desc = "Drop File from Aider" }
+            maps[mode][prefix .. "r"] = { "<cmd>AiderQuickReadOnlyFile<cr>", desc = "Add File as Read-Only" }
+          end
+        end,
+      },
+    },
+    specs = {
+      {
+        "catppuccin",
+        optional = true,
+      },
+      {
+        "neo-tree.nvim",
+        optional = true,
+        opts = function(_, opts)
+          -- Example mapping configuration (already set by default)
+          -- opts.window = {
+          --   mappings = {
+          --     ["+"] = { "nvim_aider_add", desc = "add to aider" },
+          --     ["-"] = { "nvim_aider_drop", desc = "drop from aider" }
+          --   }
+          -- }
+          require("nvim_aider.neo_tree").setup(opts)
+        end,
+      },
+    },
+    config = true,
   },
 }
