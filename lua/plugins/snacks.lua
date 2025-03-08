@@ -184,57 +184,119 @@ local plugin_specs = {
 
 ---@type LazySpec
 local snacks_picker_spec = {
-  "snacks.nvim",
-  opts = {
-    picker = {
-      sources = {
-        zoxide = { confirm = load_session },
-        projects = { confirm = load_session, dev = { "~/projects/sandbox", vim.env.ECOM_WORK_DIR, "~/projects/insta" } },
-        explorer = {
-          layout = { layout = { position = "right" } },
+  {
+    "snacks.nvim",
+    opts = {
+      picker = {
+        sources = {
+          zoxide = { confirm = load_session },
+          projects = {
+            confirm = load_session,
+            dev = { "~/projects/sandbox", vim.env.ECOM_WORK_DIR, "~/projects/insta" },
+          },
+          explorer = {
+            layout = { layout = { position = "right" } },
+          },
         },
-      },
-      win = {
-        input = {
-          keys = {
-            ["<PageUp>"] = { "history_back", mode = { "i", "n" } },
-            ["<PageDown>"] = { "history_forward", mode = { "i", "n" } },
+        win = {
+          input = {
+            keys = {
+              ["<PageUp>"] = { "history_back", mode = { "i", "n" } },
+              ["<PageDown>"] = { "history_forward", mode = { "i", "n" } },
+            },
           },
         },
       },
     },
-  },
-  specs = {
-    {
-      "AstroNvim/astrocore",
-      opts = function(_, opts)
-        if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
-        local maps = opts.mappings
+    specs = {
+      {
+        "AstroNvim/astrocore",
+        ---@param opts AstroCoreOpts
+        opts = function(_, opts)
+          if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
+          local maps = assert(opts.mappings)
 
-        maps.n["<Leader>fp"] = { function() require("snacks").picker.projects() end, desc = "Find projects" }
-        maps.n["<Leader>fu"] = { function() require("snacks").picker.undo() end, desc = "Undotree (Snacks)" }
-        maps.n["<Leader>fz"] = { function() require("snacks").picker.zoxide() end, desc = "Find zoxide projects" }
-        maps.n["<Leader>fe"] = { function() require("snacks").explorer() end, desc = "Explorer (Snacks)" }
+          maps.n["<Leader>fp"] = { function() require("snacks").picker.projects() end, desc = "Find projects" }
+          maps.n["<Leader>fu"] = { function() require("snacks").picker.undo() end, desc = "Undotree (Snacks)" }
+          maps.n["<Leader>fz"] = { function() require("snacks").picker.zoxide() end, desc = "Find zoxide projects" }
+          maps.n["<Leader>fe"] = { function() require("snacks").explorer() end, desc = "Explorer (Snacks)" }
 
-        for _, mode in ipairs { "n", "v", "s", "x", "o", "i", "l", "c", "t" } do
-          maps[mode]["<D-p>"] = { function() require("snacks").picker.smart() end, desc = "Find files" }
-          maps[mode]["<D-P>"] = { function() require("snacks").picker.commands() end, desc = "Find commands" }
-        end
+          for _, mode in ipairs { "n", "v", "s", "x", "o", "i", "l", "c", "t" } do
+            maps[mode]["<D-p>"] = { function() require("snacks").picker.smart() end, desc = "Find files" }
+            maps[mode]["<D-P>"] = { function() require("snacks").picker.commands() end, desc = "Find commands" }
+          end
 
-        for _, mode in ipairs { "n", "v", "s", "x", "o", "i", "l", "c", "t" } do
-          maps[mode]["<M-S-Tab>"] = {
-            function() require("snacks").picker.buffers { current = false } end,
-            desc = "Find buffers (last used)",
-          }
-        end
-      end,
+          for _, mode in ipairs { "n", "v", "s", "x", "o", "i", "l", "c", "t" } do
+            maps[mode]["<M-S-Tab>"] = {
+              function() require("snacks").picker.buffers { current = false } end,
+              desc = "Find buffers (last used)",
+            }
+          end
+        end,
+      },
+      {
+        "nvim-autopairs",
+        optional = true,
+        opts_extend = { "disable_filetype" },
+        opts = {
+          disable_filetype = { "snacks_picker_input" },
+        },
+      },
     },
-    {
-      "nvim-autopairs",
-      optional = true,
-      opts_extend = { "disable_filetype" },
-      opts = {
-        disable_filetype = { "snacks_picker_input" },
+  },
+  {
+    "harpoon",
+    optional = true,
+    specs = {
+      {
+        "AstroNvim/astrocore",
+        ---@param opts AstroCoreOpts
+        opts = function(_, opts)
+          if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
+          local maps = assert(opts.mappings)
+          local harpoon = require "harpoon"
+          -- picker
+          local function generate_harpoon_picker()
+            local file_paths = {}
+            for _, item in ipairs(harpoon:list().items) do
+              table.insert(file_paths, {
+                text = item.value,
+                file = item.value,
+              })
+            end
+            return file_paths
+          end
+          local prefix = "<Leader><Leader>"
+          maps.n[prefix .. "m"] = {
+            function()
+              Snacks.picker {
+                finder = generate_harpoon_picker,
+                win = {
+                  input = {
+                    keys = {
+                      ["<C-x>"] = { "harpoon_delete", mode = { "n", "i" } },
+                    },
+                  },
+                  list = {
+                    keys = {
+                      ["<C-x>"] = { "harpoon_delete", mode = { "n", "i" } },
+                    },
+                  },
+                },
+                actions = {
+                  harpoon_delete = function(picker, item)
+                    local to_remove = item or picker:selected()
+                    table.remove(harpoon:list().items, to_remove.idx)
+                    picker:find {
+                      refresh = true, -- refresh picker after removing values
+                    }
+                  end,
+                },
+              }
+            end,
+            desc = "Show marks in Snacks picker",
+          }
+        end,
       },
     },
   },
