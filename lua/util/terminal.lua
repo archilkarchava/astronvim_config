@@ -148,4 +148,26 @@ function M.get_lazygit_config_file()
   return vim.fs.normalize(vim.g.lazygit_main_config_file) .. "," .. vim.fs.normalize(lg_theme_config_file)
 end
 
+local esc_code = vim.api.nvim_replace_termcodes("<Esc>", true, false, true)
+
+---Handles double escape key press detection for terminal mode.
+---Manages a timer to distinguish between single and double escape presses.
+---@class Term
+---@field esc_timer_active? boolean Flag tracking if escape timer is active
+---@param term Term Table containing the terminal state
+---@param timeout? number Optional timeout in milliseconds for double escape detection (default: 200)
+function M.double_escape(term, timeout)
+  timeout = timeout or 200
+  if term.esc_timer_active then
+    term.esc_timer_active = false
+    vim.cmd "stopinsert"
+  else
+    term.esc_timer_active = true
+    vim.defer_fn(function()
+      term.esc_timer_active = false
+      vim.api.nvim_feedkeys(esc_code, "n", false)
+    end, timeout)
+  end
+end
+
 return M

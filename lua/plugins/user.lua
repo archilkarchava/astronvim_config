@@ -1649,6 +1649,7 @@ return {
     "toggleterm.nvim",
     optional = true,
     opts = function(_, opts)
+      local util_terminal = require "util.terminal"
       local on_create = opts.on_create or function() end
       opts.on_create = function(term)
         on_create(term)
@@ -1659,6 +1660,12 @@ return {
           vim.keymap.set(toggle_modes, "<C-S-'>", toggle, toggle_opts)
           vim.keymap.set(toggle_modes, '<C-">', toggle, toggle_opts)
         end
+        vim.keymap.set(
+          "t",
+          "<Esc>",
+          function() util_terminal.double_escape(term) end,
+          { desc = "Double escape to normal mode" }
+        )
       end
     end,
     specs = {

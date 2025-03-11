@@ -118,6 +118,24 @@ local plugin_specs = {
   {
     "snacks.nvim",
     optional = true,
+    opts = {
+      styles = {
+        {
+          keys = {
+            term_normal = {
+              "<Esc>",
+              function(self) return require("util.terminal").double_escape(self) end,
+              mode = "t",
+              desc = "Double escape to normal mode",
+            },
+          },
+        },
+      },
+    },
+  },
+  {
+    "snacks.nvim",
+    optional = true,
     specs = {
       {
         "AstroNvim/astrocore",
