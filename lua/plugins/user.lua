@@ -1573,14 +1573,6 @@ return {
             event = "msg_show",
             any = {
               { find = "%d+L, %d+B" },
-            },
-          },
-          opts = { skip = true },
-        },
-        {
-          filter = {
-            event = "msg_show",
-            any = {
               { find = "; after #%d+" },
               { find = "; before #%d+" },
               { find = "%d+ more lines" },
