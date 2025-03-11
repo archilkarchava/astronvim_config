@@ -627,11 +627,6 @@ return {
       },
     },
     opts = {
-      args = {
-        "--no-auto-commits",
-        "--pretty",
-        "--no-stream",
-      },
       win = {
         height = 0.6,
       },
