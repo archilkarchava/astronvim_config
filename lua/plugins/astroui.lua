@@ -9,7 +9,6 @@ return {
   ---@type AstroUIOpts
   opts = {
     -- change colorscheme
-    colorscheme = vim.g.vscode and "default" or "catppuccin",
     lazygit = false,
     -- AstroUI allows you to easily modify highlight groups easily for any and all colorschemes
     -- highlights = {

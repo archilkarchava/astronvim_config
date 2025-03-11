@@ -16,6 +16,15 @@ return {
       flavour = "mocha",
       term_colors = true,
     },
+    specs = {
+      {
+        "AstroNvim/astroui",
+        ---@type AstroUIOpts
+        opts = {
+          colorscheme = "catppuccin",
+        },
+      },
+    },
   },
   {
     "which-key.nvim",
