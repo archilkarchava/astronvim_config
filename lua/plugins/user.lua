@@ -1989,12 +1989,7 @@ return {
           event = { "VimLeavePre", "VimSuspend" },
           desc = "Reset Kitty to default when exiting or suspending Neovim",
           callback = function()
-            if
-              initial_kitty_colors == nil
-              or (initial_colors_name == vim.g.colors_name and initial_background == vim.go.background)
-            then
-              return
-            end
+            if initial_kitty_colors == nil then return end
             terminal.kitty_set_colors(initial_kitty_colors):wait()
           end,
         },
