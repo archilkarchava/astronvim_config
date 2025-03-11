@@ -1593,6 +1593,7 @@ return {
               { find = "offset_encoding is required" },
               { find = "position_encoding param is required" },
               { find = "Cursor position outside buffer" },
+              { find = "%[null%-ls%] failed to run generator: vim/shared.lua:0: s: expected string, got nil" },
             },
           },
           opts = { skip = true },
