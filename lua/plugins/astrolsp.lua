@@ -103,7 +103,7 @@ return {
           -- "lua_ls",
           "jsonls",
         },
-        timeout_ms = 1000, -- default format timeout
+        timeout_ms = 10000,
         -- filter = function(client) -- fully override the default formatting function
         --   return true
         -- end
