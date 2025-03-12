@@ -76,8 +76,8 @@ return {
         semantic_tokens = true, -- enable/disable semantic token highlighting
       },
       file_operations = {
-        timeout = 10000, -- default timeout in ms for completing LSP operations
-        operations = { -- enable all of the file operations
+        timeout = 20000,
+        operations = {
           willCreate = true,
           didCreate = true,
           willRename = true,
