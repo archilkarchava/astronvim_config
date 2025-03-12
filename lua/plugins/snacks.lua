@@ -56,7 +56,8 @@ local plugin_specs = {
           },
         },
       },
-      {
+      -- Replaced with AstroLsp's file operations
+      --[[ {
         "mini.files",
         optional = true,
         dependencies = {
@@ -76,7 +77,7 @@ local plugin_specs = {
             },
           },
         },
-      },
+      }, ]]
     },
     opts = {
       quickfile = { enabled = true },
