@@ -230,6 +230,23 @@ return {
             provideFormatter = false,
           },
         },
+        jsonls = {
+          settings = {
+            json = {
+              format = {
+                enable = false,
+              },
+              schemas = {
+                {
+                  fileMatch = { "*.jsonc" },
+                  schema = {
+                    allowTrailingCommas = true,
+                  },
+                },
+              },
+            },
+          },
+        },
       },
       -- customize how language servers are attached
       handlers = {
