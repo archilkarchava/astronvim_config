@@ -984,7 +984,7 @@ return {
   },
   {
     "rhysd/conflict-marker.vim",
-    event = "User AstroGitFile",
+    event = "VeryLazy",
     cmd = { "ConflictMarkerOurselves", "ConflictMarkerThemselves", "ConflictMarkerBoth", "ConflictMarkerNone" },
     init = function()
       -- Clear default conflict marker highlight group
