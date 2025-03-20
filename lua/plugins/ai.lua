@@ -317,9 +317,8 @@ return {
     event = "User AstroFile",
     build = is_windows and "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" or "make",
     opts = {
-      ---@type Provider
-      provider = "openrouter-free-gemini", -- Recommend using Claude
-      cursor_applying_provider = "openrouter-free-gemini",
+      provider = "openrouter-gemini-2.0-pro-exp-02-05:free", -- Recommend using Claude
+      cursor_applying_provider = "openrouter-gemini-2.0-pro-exp-02-05:free",
       -- behaviour = {
       --   enable_cursor_planning_mode = true,
       -- },
@@ -348,11 +347,32 @@ return {
       },
       vendors = {
         ---@type AvanteSupportedProvider
-        ["openrouter-free-gemini"] = {
+        ["openrouter-gemini-2.0-pro-exp-02-05:free"] = {
           __inherited_from = "openai",
           endpoint = "https://openrouter.ai/api/v1",
           api_key_name = "OPENROUTER_API_KEY",
           model = "google/gemini-2.0-pro-exp-02-05:free",
+        },
+        ---@type AvanteSupportedProvider
+        ["openrouter-gemini/gemma-3-27b-it:free"] = {
+          __inherited_from = "openai",
+          endpoint = "https://openrouter.ai/api/v1",
+          api_key_name = "OPENROUTER_API_KEY",
+          model = "google/gemma-3-27b-it:free",
+        },
+        ---@type AvanteSupportedProvider
+        ["openrouter-deepseek/deepseek-r1:free"] = {
+          __inherited_from = "openai",
+          endpoint = "https://openrouter.ai/api/v1",
+          api_key_name = "OPENROUTER_API_KEY",
+          model = "deepseek/deepseek-r1:free",
+        },
+        ---@type AvanteSupportedProvider
+        ["openrouter-deepseek/deepseek-chat:free"] = {
+          __inherited_from = "openai",
+          endpoint = "https://openrouter.ai/api/v1",
+          api_key_name = "OPENROUTER_API_KEY",
+          model = "deepseek/deepseek-chat:free",
         },
       },
     },
