@@ -152,6 +152,7 @@ local function get_avante_file_selector_provider() return require("util.picker")
 return {
   {
     "zbirenbaum/copilot.lua",
+    commit = "330ffb9630509cd0cd56815c6e667bc497ec82f4",
     opts = {
       suggestion = {
         keymap = {
