@@ -322,9 +322,9 @@ return {
     opts = {
       provider = "openrouter-gemini-2.0-pro-exp-02-05:free", -- Recommend using Claude
       cursor_applying_provider = "openrouter-gemini-2.0-pro-exp-02-05:free",
-      -- behaviour = {
-      --   enable_cursor_planning_mode = true,
-      -- },
+      behaviour = {
+        enable_cursor_planning_mode = true,
+      },
       file_selector = {
         provider = get_avante_file_selector_provider(),
       },
