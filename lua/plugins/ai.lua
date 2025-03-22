@@ -153,6 +153,9 @@ return {
   {
     "zbirenbaum/copilot.lua",
     opts = {
+      logger = {
+        print_log_level = vim.log.levels.ERROR,
+      },
       suggestion = {
         keymap = {
           accept = false,
