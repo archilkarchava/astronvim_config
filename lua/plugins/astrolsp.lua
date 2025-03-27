@@ -131,9 +131,9 @@ return {
               },
               updateImportsOnFileMove = { enabled = "always" },
               tsserver = {
-                useSeparateSyntaxServer = false,
-                useSyntaxServer = "never",
-                maxTsServerMemory = 8192,
+                useSeparateSyntaxServer = true,
+                useSyntaxServer = "auto",
+                maxTsServerMemory = 6144,
               },
             },
             javascript = {
