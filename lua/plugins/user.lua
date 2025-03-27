@@ -531,6 +531,12 @@ return {
     end,
   },
   {
+    "nvim-treesitter-context",
+    opts = {
+      enable = false,
+    },
+  },
+  {
     "echasnovski/mini.ai",
     cond = true,
     optional = true,
