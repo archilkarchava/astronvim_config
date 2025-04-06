@@ -325,6 +325,27 @@ return {
       maps.n["<Leader>Ma"] = "<Cmd>call VSCodeNotify('workbench.action.tasks.runTask')<CR>"
       maps.n["<Leader>Mr"] = "<Cmd>call VSCodeNotify('workbench.action.tasks.runTask')<CR>"
       maps.n["<Leader>uc"] = "<Cmd>call VSCodeNotify('workbench.action.toggleCenteredLayout')<CR>"
+      maps.n["<Leader>uT"] = function()
+        vsc.action("runCommands", {
+          args = {
+            commands = {
+              "editor.action.toggleStickyScroll",
+              "workbench.action.terminal.toggleStickyScroll",
+              "notebook.action.toggleNotebookStickyScroll",
+              "tree.toggleStickyScroll",
+            },
+          },
+        })
+      end
+      for _, mode in ipairs { "n", "x", "o" } do
+        maps[mode]["[;"] = function()
+          vsc.action("editor.action.focusStickyScroll", {
+            callback = function(err)
+              if not err then vsc.action "editor.action.goToFocusedStickyScrollLine" end
+            end,
+          })
+        end
+      end
       -- maps.n["<Leader>cc"] = function()
       --   vsc.action("codeium.toggleEnable", {
       --     callback = function(err)
