@@ -320,11 +320,11 @@ return {
     event = "User AstroFile",
     build = is_windows and "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" or "make",
     opts = {
-      provider = "openrouter-gemini-2.0-pro-exp-02-05:free", -- Recommend using Claude
-      cursor_applying_provider = "openrouter-gemini-2.0-pro-exp-02-05:free",
-      behaviour = {
-        enable_cursor_planning_mode = true,
-      },
+      provider = "openrouter-openrouter/quasar-alpha", -- Recommend using Claude
+      cursor_applying_provider = "openrouter-openrouter/quasar-alpha",
+      -- behaviour = {
+      --   enable_cursor_planning_mode = true,
+      -- },
       file_selector = {
         provider = get_avante_file_selector_provider(),
       },
@@ -350,11 +350,11 @@ return {
       },
       vendors = {
         ---@type AvanteSupportedProvider
-        ["openrouter-gemini-2.0-pro-exp-02-05:free"] = {
+        ["openrouter-gemini-2.5-pro-exp-03-25:free"] = {
           __inherited_from = "openai",
           endpoint = "https://openrouter.ai/api/v1",
           api_key_name = "OPENROUTER_API_KEY",
-          model = "google/gemini-2.0-pro-exp-02-05:free",
+          model = "google/gemini-2.5-pro-exp-03-25:free",
         },
         ---@type AvanteSupportedProvider
         ["openrouter-gemini/gemma-3-27b-it:free"] = {
@@ -371,11 +371,17 @@ return {
           model = "deepseek/deepseek-r1:free",
         },
         ---@type AvanteSupportedProvider
-        ["openrouter-deepseek/deepseek-chat:free"] = {
+        ["openrouter-deepseek/deepseek-chat-v3-0324:free"] = {
           __inherited_from = "openai",
           endpoint = "https://openrouter.ai/api/v1",
           api_key_name = "OPENROUTER_API_KEY",
-          model = "deepseek/deepseek-chat:free",
+          model = "deepseek/deepseek-chat-v3-0324:free",
+        },
+        ["openrouter-openrouter/quasar-alpha"] = {
+          __inherited_from = "openai",
+          endpoint = "https://openrouter.ai/api/v1",
+          api_key_name = "OPENROUTER_API_KEY",
+          model = "openrouter/quasar-alpha",
         },
       },
     },
