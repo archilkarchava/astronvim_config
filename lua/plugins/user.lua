@@ -139,40 +139,73 @@ return {
     "chrisgrieser/nvim-various-textobjs",
     cond = true,
     event = "VeryLazy",
-    dependencies = {
+    keys = {
       {
-        "AstroNvim/astrocore",
-        ---@param opts AstroCoreOpts
-        opts = function(_, opts)
-          local maps = assert(opts.mappings)
-          for _, mode in ipairs { "o", "x" } do
-            maps[mode]["ii"] =
-              { function() require("various-textobjs").indentation("inner", "inner") end, desc = "Inside indent" }
-            maps[mode]["iI"] =
-              { function() require("various-textobjs").indentation("inner", "inner") end, desc = "Inside indent" }
-            maps[mode]["ai"] =
-              { function() require("various-textobjs").indentation("outer", "inner") end, desc = "around indent" }
-            maps[mode]["aI"] =
-              { function() require("various-textobjs").indentation("outer", "outer") end, desc = "Around indent" }
-            maps[mode]["ie"] = { function() require("various-textobjs").entireBuffer() end, desc = "Entire buffer" }
-            maps[mode]["ae"] = { function() require("various-textobjs").entireBuffer() end, desc = "Entire buffer" }
-            maps[mode]["<Leader>r"] =
-              { function() require("various-textobjs").restOfParagraph() end, desc = "Rest of paragraph" }
-            maps[mode]["R"] =
-              { function() require("various-textobjs").restOfIndentation() end, desc = "Rest of indentation" }
-            maps[mode]["|"] = { function() require("various-textobjs").column() end, desc = "Column" }
-            maps[mode]["iK"] = { function() require("various-textobjs").key "inner" end, desc = "Inside key" }
-            maps[mode]["aK"] = { function() require("various-textobjs").key "outer" end, desc = "Around key" }
-            maps[mode]["iv"] = { function() require("various-textobjs").value "inner" end, desc = "Inside value" }
-            maps[mode]["av"] = { function() require("various-textobjs").value "outer" end, desc = "Around value" }
-            maps[mode]["im"] =
-              { function() require("various-textobjs").chainMember "inner" end, desc = "Inside chain member" }
-            maps[mode]["am"] =
-              { function() require("various-textobjs").chainMember "outer" end, desc = "Around chain member" }
-            maps[mode]["iS"] = { function() require("various-textobjs").subword "inner" end, desc = "Inside subword" }
-            maps[mode]["aS"] = { function() require("various-textobjs").subword "outer" end, desc = "Around subword" }
-          end
-        end,
+        "ii",
+        function() require("various-textobjs").indentation("inner", "inner") end,
+        mode = { "o", "x" },
+        desc = "Inside indent",
+      },
+      {
+        "iI",
+        function() require("various-textobjs").indentation("inner", "inner") end,
+        mode = { "o", "x" },
+        desc = "Inside indent",
+      },
+      {
+        "ai",
+        function() require("various-textobjs").indentation("outer", "inner") end,
+        mode = { "o", "x" },
+        desc = "Around indent",
+      },
+      {
+        "aI",
+        function() require("various-textobjs").indentation("outer", "outer") end,
+        mode = { "o", "x" },
+        desc = "Around indent",
+      },
+      { "ie", function() require("various-textobjs").entireBuffer() end, mode = { "o", "x" }, desc = "Entire buffer" },
+      { "ae", function() require("various-textobjs").entireBuffer() end, mode = { "o", "x" }, desc = "Entire buffer" },
+      {
+        "<Leader>r",
+        function() require("various-textobjs").restOfParagraph() end,
+        mode = { "o", "x" },
+        desc = "Rest of paragraph",
+      },
+      {
+        "R",
+        function() require("various-textobjs").restOfIndentation() end,
+        mode = { "o", "x" },
+        desc = "Rest of indentation",
+      },
+      { "|", function() require("various-textobjs").column() end, mode = { "o", "x" }, desc = "Column" },
+      { "iK", function() require("various-textobjs").key "inner" end, mode = { "o", "x" }, desc = "Inside key" },
+      { "aK", function() require("various-textobjs").key "outer" end, mode = { "o", "x" }, desc = "Around key" },
+      { "iv", function() require("various-textobjs").value "inner" end, mode = { "o", "x" }, desc = "Inside value" },
+      { "av", function() require("various-textobjs").value "outer" end, mode = { "o", "x" }, desc = "Around value" },
+      {
+        "im",
+        function() require("various-textobjs").chainMember "inner" end,
+        mode = { "o", "x" },
+        desc = "Inside chain member",
+      },
+      {
+        "am",
+        function() require("various-textobjs").chainMember "outer" end,
+        mode = { "o", "x" },
+        desc = "Around chain member",
+      },
+      {
+        "iS",
+        function() require("various-textobjs").subword "inner" end,
+        mode = { "o", "x" },
+        desc = "Inside subword",
+      },
+      {
+        "aS",
+        function() require("various-textobjs").subword "outer" end,
+        mode = { "o", "x" },
+        desc = "Around subword",
       },
     },
   },
@@ -186,6 +219,7 @@ return {
         "AstroNvim/astrocore",
         ---@param opts AstroCoreOpts
         opts = function(_, opts)
+          if not opts.mappings then opts.mappings = require("astrocore").empty_map_table() end
           local maps = assert(opts.mappings)
           for _, mode in ipairs { "n", "x", "o" } do
             maps[mode]["s"] = { "<Plug>(leap)", desc = "Leap" }
@@ -534,6 +568,14 @@ return {
     "nvim-treesitter-context",
     opts = {
       enable = false,
+    },
+    keys = {
+      {
+        "[;",
+        function() require("treesitter-context").go_to_context(vim.v.count1) end,
+        mode = { "n", "x", "o" },
+        desc = "Go to context",
+      },
     },
   },
   {
