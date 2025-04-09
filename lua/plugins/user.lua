@@ -1944,33 +1944,33 @@ return {
 
         return nil, nil, nil
       end
-      autocmds.background_temrinal_toggle = {
-        {
-          event = "TermResponse",
-          desc = "Update the value of 'background' automatically based on the terminal emulator's background color",
-          nested = true,
-          callback = function(args)
-            -- This logic already exists in nvim-0.11, but it runs only if the background option wasn't set manually.
-            -- We want to run it unconditionally, so we check if the background option was set manually to not run it twice.
-            if vim.fn.has "nvim-0.11" == 1 and not vim.api.nvim_get_option_info2("background", {}).was_set then
-              return
-            end
-            local sequence = type(args.data) == "string" and args.data or args.data.sequence ---@type string
-            local r, g, b = parseosc11(sequence)
-            if r and g and b then
-              local rr = parsecolor(r)
-              local gg = parsecolor(g)
-              local bb = parsecolor(b)
-
-              if rr and gg and bb then
-                local luminance = (0.299 * rr) + (0.587 * gg) + (0.114 * bb)
-                local bg = luminance < 0.5 and "dark" or "light"
-                vim.go.background = bg
-              end
-            end
-          end,
-        },
-      }
+      -- autocmds.background_temrinal_toggle = {
+      --   {
+      --     event = "TermResponse",
+      --     desc = "Update the value of 'background' automatically based on the terminal emulator's background color",
+      --     nested = true,
+      --     callback = function(args)
+      --       -- This logic already exists in nvim-0.11, but it runs only if the background option wasn't set manually.
+      --       -- We want to run it unconditionally, so we check if the background option was set manually to not run it twice.
+      --       if vim.fn.has "nvim-0.11" == 1 and not vim.api.nvim_get_option_info2("background", {}).was_set then
+      --         return
+      --       end
+      --       local sequence = type(args.data) == "string" and args.data or args.data.sequence ---@type string
+      --       local r, g, b = parseosc11(sequence)
+      --       if r and g and b then
+      --         local rr = parsecolor(r)
+      --         local gg = parsecolor(g)
+      --         local bb = parsecolor(b)
+      --
+      --         if rr and gg and bb then
+      --           local luminance = (0.299 * rr) + (0.587 * gg) + (0.114 * bb)
+      --           local bg = luminance < 0.5 and "dark" or "light"
+      --           vim.go.background = bg
+      --         end
+      --       end
+      --     end,
+      --   },
+      -- }
       if not terminal.is_kitty() then return end
       local initial_kitty_colors = nil
       local current_nvim_terminal_colors = {}
