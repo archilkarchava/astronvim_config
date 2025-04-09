@@ -623,6 +623,7 @@ return {
             maps[mode][prefix .. "a"] = { "<cmd>Aider add<cr>", desc = "Add File to Aider" }
             maps[mode][prefix .. "d"] = { "<cmd>Aider drop<cr>", desc = "Drop File from Aider" }
             maps[mode][prefix .. "r"] = { "<cmd>Aider add readonly<cr>", desc = "Add File as Read-Only" }
+            maps[mode][prefix .. "h"] = { "<cmd>Aider health<cr>", desc = "Aider Health" }
           end
         end,
       },
