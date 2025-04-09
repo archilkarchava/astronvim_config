@@ -2020,12 +2020,12 @@ return {
       if vim.fn.has "nvim-0.11" == 1 then
         opts.options.opt.guicursor = opts.options.opt.guicursor .. ",t:block-blinkon500-blinkoff500-TermCursor"
       end
+      initial_kitty_colors = terminal.kitty_get_all_colors_list()
       autocmds.kitty_colors_toggle = {
         {
           event = "VimEnter",
           desc = "Set initial Kitty colors on VimEnter",
           callback = function()
-            initial_kitty_colors = terminal.kitty_get_all_colors_list()
             current_nvim_terminal_colors = get_nvim_terminal_colors()
             set_kitty_colors()
           end,
