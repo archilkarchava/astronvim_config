@@ -604,16 +604,7 @@ return {
   },
   {
     "GeorgesAlkhouri/nvim-aider",
-    cmd = {
-      "AiderTerminalSend",
-      "AiderTerminalToggle",
-      "AiderQuickSendCommand",
-      "AiderQuickSendBuffer",
-      "AiderQuickAddFile",
-      "AiderQuickDropFile",
-      "AiderQuickReadOnlyFile",
-      "AiderHealth",
-    },
+    cmd = { "Aider" },
     dependencies = {
       { "folke/snacks.nvim" },
       {
@@ -624,14 +615,14 @@ return {
           local maps = assert(opts.mappings)
           local prefix = "<D-a>"
           for _, mode in ipairs { "n", "v", "s", "x", "o", "i", "t" } do
-            maps[mode][prefix .. "s"] = { "<cmd>AiderTerminalSend<cr>", desc = "Send to Aider" }
-            maps[mode][normalize_keymap "<D-I>"] = { "<cmd>AiderTerminalToggle<cr>", desc = "Open Aider" }
-            maps[mode][prefix .. prefix] = { "<cmd>AiderQuickSendCommand<cr>", desc = "Send Command To Aider" }
-            maps[mode][prefix .. "c"] = { "<cmd>AiderQuickSendCommand<cr>", desc = "Send Command To Aider" }
-            maps[mode][prefix .. "b"] = { "<cmd>AiderQuickSendBuffer<cr>", desc = "Send Buffer To Aider" }
-            maps[mode][prefix .. "a"] = { "<cmd>AiderQuickAddFile<cr>", desc = "Add File to Aider" }
-            maps[mode][prefix .. "d"] = { "<cmd>AiderQuickDropFile<cr>", desc = "Drop File from Aider" }
-            maps[mode][prefix .. "r"] = { "<cmd>AiderQuickReadOnlyFile<cr>", desc = "Add File as Read-Only" }
+            maps[mode][prefix .. "s"] = { "<cmd>Aider send<cr>", desc = "Send to Aider" }
+            maps[mode][normalize_keymap "<D-I>"] = { "<cmd>Aider toggle<cr>", desc = "Open Aider" }
+            maps[mode][prefix .. prefix] = { "<cmd>Aider command<cr>", desc = "Send Command To Aider" }
+            maps[mode][prefix .. "c"] = { "<cmd>Aider command<cr>", desc = "Send Command To Aider" }
+            maps[mode][prefix .. "b"] = { "<cmd>Aider buffer<cr>", desc = "Send Buffer To Aider" }
+            maps[mode][prefix .. "a"] = { "<cmd>Aider add<cr>", desc = "Add File to Aider" }
+            maps[mode][prefix .. "d"] = { "<cmd>Aider drop<cr>", desc = "Drop File from Aider" }
+            maps[mode][prefix .. "r"] = { "<cmd>Aider add readonly<cr>", desc = "Add File as Read-Only" }
           end
         end,
       },
