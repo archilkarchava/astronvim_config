@@ -376,7 +376,7 @@ return {
       maps.x[ctrl_cmd_lhs "."] = function() vsc.action_insert_selection("editor.action.quickFix", { count = 1 }) end
       maps.n["<C-S-R>"] = function() vsc.action("editor.action.refactor", { count = 1 }) end
       maps.x["<C-S-R>"] = function() vsc.action_insert_selection("editor.action.refactor", { count = 1 }) end
-      maps.x["<M-S>"] = function() vsc.action_insert_selection("editor.action.surroundWithSnippet", { count = 1 }) end
+      maps.x["<M-S-s>"] = function() vsc.action_insert_selection("editor.action.surroundWithSnippet", { count = 1 }) end
       maps.x["<M-T>"] = function() vsc.action_insert_selection("surround.with", { count = 1 }) end
 
       -- Formatting
