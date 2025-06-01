@@ -320,8 +320,8 @@ return {
     event = "User AstroFile",
     build = is_windows and "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" or "make",
     opts = {
-      provider = "openrouter-openrouter/quasar-alpha", -- Recommend using Claude
-      cursor_applying_provider = "openrouter-openrouter/quasar-alpha",
+      provider = "gemini",
+      cursor_applying_provider = nil,
       -- behaviour = {
       --   enable_cursor_planning_mode = true,
       -- },
@@ -332,6 +332,10 @@ return {
       copilot = {
         -- model = "claude-3.5-sonnet",
         -- model = "gpt-4o-2024-08-06",
+      },
+      ---@type AvanteSupportedProvider
+      gemini = {
+        model = "gemini-2.5-flash-preview-05-20",
       },
       -- auto_suggestions_provider = "copilot",
       hints = {
@@ -376,12 +380,6 @@ return {
           endpoint = "https://openrouter.ai/api/v1",
           api_key_name = "OPENROUTER_API_KEY",
           model = "deepseek/deepseek-chat-v3-0324:free",
-        },
-        ["openrouter-openrouter/quasar-alpha"] = {
-          __inherited_from = "openai",
-          endpoint = "https://openrouter.ai/api/v1",
-          api_key_name = "OPENROUTER_API_KEY",
-          model = "openrouter/quasar-alpha",
         },
       },
     },
