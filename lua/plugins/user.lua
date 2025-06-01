@@ -2108,6 +2108,16 @@ return {
     end,
   },
   {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    optional = true,
+    opts = function(_, opts)
+      opts.ensure_installed = require("astrocore").list_insert_unique(
+        vim.tbl_filter(function(server) return server ~= "emmet-ls" end, opts.ensure_installed),
+        { "emmet-language-server" }
+      )
+    end,
+  },
+  {
     "L3MON4D3/LuaSnip",
     config = function(plugin, opts)
       require "astronvim.plugins.configs.luasnip"(plugin, opts) -- include the default astronvim config that calls the setup call
