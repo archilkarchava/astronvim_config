@@ -328,15 +328,6 @@ return {
       file_selector = {
         provider = get_avante_file_selector_provider(),
       },
-      ---@type AvanteProvider
-      copilot = {
-        -- model = "claude-3.5-sonnet",
-        -- model = "gpt-4o-2024-08-06",
-      },
-      ---@type AvanteSupportedProvider
-      gemini = {
-        model = "gemini-2.5-flash-preview-05-20",
-      },
       -- auto_suggestions_provider = "copilot",
       hints = {
         enabled = false,
@@ -352,7 +343,16 @@ return {
       windows = {
         width = 45,
       },
-      vendors = {
+      providers = {
+        ---@type AvanteProvider
+        copilot = {
+          -- model = "claude-3.5-sonnet",
+          -- model = "gpt-4o-2024-08-06",
+        },
+        ---@type AvanteSupportedProvider
+        gemini = {
+          model = "gemini-2.5-flash-preview-05-20",
+        },
         ---@type AvanteSupportedProvider
         ["openrouter-gemini-2.5-pro-exp-03-25:free"] = {
           __inherited_from = "openai",
