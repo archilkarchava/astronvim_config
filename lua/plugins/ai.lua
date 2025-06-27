@@ -351,7 +351,7 @@ return {
         },
         ---@type AvanteSupportedProvider
         gemini = {
-          model = "gemini-2.5-flash-preview-05-20",
+          model = "gemini-2.5-flash",
         },
         ---@type AvanteSupportedProvider
         ["openrouter-gemini-2.5-pro-exp-03-25:free"] = {
