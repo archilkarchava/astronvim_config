@@ -325,7 +325,7 @@ return {
       -- behaviour = {
       --   enable_cursor_planning_mode = true,
       -- },
-      file_selector = {
+      selector = {
         provider = get_avante_file_selector_provider(),
       },
       -- auto_suggestions_provider = "copilot",
