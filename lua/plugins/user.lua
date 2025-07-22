@@ -710,6 +710,14 @@ return {
                 end,
                 desc = "Substitute around",
               },
+              ["grt"] = {
+                function()
+                  require("substitute").operator {
+                    motion = "t",
+                  }
+                end,
+                desc = "Substitute till",
+              },
               ["grr"] = { function() require("substitute").line() end, desc = "Substitute line" },
             },
             x = {
