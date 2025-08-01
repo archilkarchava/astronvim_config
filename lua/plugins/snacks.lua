@@ -189,6 +189,9 @@ local plugin_specs = {
       require("snacks").setup(opts)
       local patch_func = astrocore.patch_func
       Snacks.notifier.notify = patch_func(Snacks.notifier.notify, function(orig, msg, level, o)
+        for _, ignored_msg in ipairs(vim.g.ignored_messages) do
+          if type(msg) == "string" and msg:find(ignored_msg) then return end
+        end
         local notif_id = orig(msg, level, o)
         local title = o and o.title or ""
         if
