@@ -169,7 +169,7 @@ return {
     },
     config = function(_, opts)
       local ignored_messages = vim.g.ignored_messages
-      table.insert(ignored_messages, "%[Copilot%] Offline")
+      table.insert(ignored_messages, "%[Copilot.lua%] copilot is offline")
       vim.g.ignored_messages = ignored_messages
       require("copilot").setup(opts)
       if default_suggestions_provider ~= suggestion_providers.copilot then copilot_helpers.disable() end
