@@ -58,7 +58,11 @@ vim.keymap.set("n", ctrl_cmd_lhs "/", "<Plug>VSCodeCommentaryLine")
 vim.keymap.set({ "x", "o" }, ctrl_cmd_lhs "/", "<Plug>VSCodeCommentary")
 vim.keymap.set({ "n", "x", "o" }, "gc", "<Plug>VSCodeCommentary")
 if is_macos then vim.keymap.set({ "n", "x" }, "<C-/>", "<C-/>") end
-vim.keymap.set({ "n", "x" }, ctrl_cmd_lhs "k" .. ctrl_cmd_lhs "c", function() vsc.action "editor.action.addCommentLine" end)
+vim.keymap.set(
+  { "n", "x" },
+  ctrl_cmd_lhs "k" .. ctrl_cmd_lhs "c",
+  function() vsc.action "editor.action.addCommentLine" end
+)
 vim.keymap.set(
   { "n", "x" },
   ctrl_cmd_lhs "k" .. ctrl_cmd_lhs "u",
@@ -148,18 +152,26 @@ vim.keymap.set("n", "<Leader>B", function() vsc.action "editor.debug.action.togg
 vim.keymap.set({ "n", "x" }, ctrl_cmd_lhs "]", function() vsc.action "editor.action.indentLines" end)
 vim.keymap.set({ "n", "x" }, ctrl_cmd_lhs "[", function() vsc.action "editor.action.outdentLines" end)
 vim.keymap.set({ "n", "x" }, "<Leader>un", function() vsc.action "notifications.hideToasts" end)
-vim.keymap.set("n", "<Leader>*", function()
-  vsc.action("workbench.action.findInFiles", {
-    args = { { query = vim.fn.expand "<cword>" } },
-    count = 1,
-  })
-end)
-vim.keymap.set("x", "<Leader>*", function()
-  vsc.action("workbench.action.findInFiles", {
-    args = { { query = vsc.get_visual_selection() } },
-    count = 1,
-  })
-end)
+vim.keymap.set(
+  "n",
+  "<Leader>*",
+  function()
+    vsc.action("workbench.action.findInFiles", {
+      args = { { query = vim.fn.expand "<cword>" } },
+      count = 1,
+    })
+  end
+)
+vim.keymap.set(
+  "x",
+  "<Leader>*",
+  function()
+    vsc.action("workbench.action.findInFiles", {
+      args = { { query = vsc.get_visual_selection() } },
+      count = 1,
+    })
+  end
+)
 vim.keymap.set("n", "<leader>/", function() vsc.action("workbench.action.findInFiles", { count = 1 }) end)
 vim.keymap.set({ "n", "x" }, "za", function() vsc.action "editor.toggleFold" end)
 vim.keymap.set({ "n", "x" }, "zR", function() vsc.action "editor.unfoldAll" end)
@@ -228,11 +240,19 @@ vim.keymap.set("n", ctrl_cmd_lhs "O", function() vsc.action_marked("workbench.ac
 vim.keymap.set("n", "gF", function() vsc.action_marked("editor.action.peekDeclaration", { count = 1 }) end)
 vim.keymap.set("n", "<S-F12>", function() vsc.action_marked("editor.action.goToReferences", { count = 1 }) end)
 vim.keymap.set("n", "gH", function() vsc.action_marked("editor.action.referenceSearch.trigger", { count = 1 }) end)
-vim.keymap.set("n", ctrl_cmd_lhs "S-F12", function() vsc.action_marked("editor.action.peekImplementation", { count = 1 }) end)
+vim.keymap.set(
+  "n",
+  ctrl_cmd_lhs "S-F12",
+  function() vsc.action_marked("editor.action.peekImplementation", { count = 1 }) end
+)
 vim.keymap.set("n", "<M-S-F12>", function() vsc.action_marked("references-view.findReferences", { count = 1 }) end)
 vim.keymap.set("n", "gD", function() vsc.action_marked("editor.action.peekDefinition", { count = 1 }) end)
 vim.keymap.set("n", "<M-F12>", function() vsc.action_marked("editor.action.peekDefinition", { count = 1 }) end)
-vim.keymap.set("n", ctrl_cmd_lhs "F12", function() vsc.action_marked("editor.action.goToImplementation", { count = 1 }) end)
+vim.keymap.set(
+  "n",
+  ctrl_cmd_lhs "F12",
+  function() vsc.action_marked("editor.action.goToImplementation", { count = 1 }) end
+)
 vim.keymap.set("n", ctrl_cmd_lhs ".", "<Cmd>call VSCodeCall('editor.action.quickFix')<CR>")
 vim.keymap.set("n", "gx", function() vsc.action("editor.action.openLink", { count = 1 }) end)
 vim.keymap.set("n", "<Leader>o", function() vsc.action("workbench.action.showOutputChannels", { count = 1 }) end)
@@ -240,18 +260,22 @@ vim.keymap.set("n", "<Leader>li", function() vsc.action("workbench.action.showOu
 vim.keymap.set("n", "<Leader>Ma", "<Cmd>call VSCodeNotify('workbench.action.tasks.runTask')<CR>")
 vim.keymap.set("n", "<Leader>Mr", "<Cmd>call VSCodeNotify('workbench.action.tasks.runTask')<CR>")
 vim.keymap.set("n", "<Leader>uc", "<Cmd>call VSCodeNotify('workbench.action.toggleCenteredLayout')<CR>")
-vim.keymap.set("n", "<Leader>uT", function()
-  vsc.action("runCommands", {
-    args = {
-      commands = {
-        "editor.action.toggleStickyScroll",
-        "workbench.action.terminal.toggleStickyScroll",
-        "notebook.action.toggleNotebookStickyScroll",
-        "tree.toggleStickyScroll",
+vim.keymap.set(
+  "n",
+  "<Leader>uT",
+  function()
+    vsc.action("runCommands", {
+      args = {
+        commands = {
+          "editor.action.toggleStickyScroll",
+          "workbench.action.terminal.toggleStickyScroll",
+          "notebook.action.toggleNotebookStickyScroll",
+          "tree.toggleStickyScroll",
+        },
       },
-    },
-  })
-end)
+    })
+  end
+)
 vim.keymap.set({ "n", "x", "o" }, "[;", function()
   vsc.action("editor.action.focusStickyScroll", {
     callback = function(err)
@@ -265,11 +289,23 @@ vim.keymap.set("n", ctrl_cmd_lhs "R", function()
   vim.api.nvim_feedkeys("i", "m", false)
   vsc.action("editor.action.showSnippets", { count = 1 })
 end)
-vim.keymap.set("x", ctrl_cmd_lhs "R", function() vsc.action_insert_selection("editor.action.showSnippets", { count = 1 }) end)
-vim.keymap.set("x", ctrl_cmd_lhs ".", function() vsc.action_insert_selection("editor.action.quickFix", { count = 1 }) end)
+vim.keymap.set(
+  "x",
+  ctrl_cmd_lhs "R",
+  function() vsc.action_insert_selection("editor.action.showSnippets", { count = 1 }) end
+)
+vim.keymap.set(
+  "x",
+  ctrl_cmd_lhs ".",
+  function() vsc.action_insert_selection("editor.action.quickFix", { count = 1 }) end
+)
 vim.keymap.set("n", "<C-S-R>", function() vsc.action("editor.action.refactor", { count = 1 }) end)
 vim.keymap.set("x", "<C-S-R>", function() vsc.action_insert_selection("editor.action.refactor", { count = 1 }) end)
-vim.keymap.set("x", "<M-S-s>", function() vsc.action_insert_selection("editor.action.surroundWithSnippet", { count = 1 }) end)
+vim.keymap.set(
+  "x",
+  "<M-S-s>",
+  function() vsc.action_insert_selection("editor.action.surroundWithSnippet", { count = 1 }) end
+)
 vim.keymap.set("x", "<M-T>", function() vsc.action_insert_selection("surround.with", { count = 1 }) end)
 vim.keymap.set({ "n", "x" }, "<M-F>", "<Cmd>call VSCodeCall('editor.action.formatDocument')<CR>")
 vim.keymap.set(
