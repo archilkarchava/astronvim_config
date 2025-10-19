@@ -103,7 +103,7 @@
   "rustaceanvim": { "branch": "master", "commit": "12504405821c05874d2d1f6b5ec919f9808e2c99" },
   "schemastore.nvim": { "branch": "main", "commit": "e71cc0607284739892287f6a2d92753999179dcf" },
   "smart-splits.nvim": { "branch": "master", "commit": "9a2614505a021d8fcac3278b12e5fe3f14b80441" },
-  "snacks.nvim": { "branch": "main", "commit": "ffff5e0850cee2e4792d97136e81157053b4bc22" },
+  "snacks.nvim": { "branch": "main", "commit": "d6e34b158d892cd774b36503cbd3a9e62c7951e3" },
   "sqls.nvim": { "branch": "main", "commit": "bfb7b4090268f6163c408577070da4cc9d7450fd" },
   "substitute.nvim": { "branch": "main", "commit": "9db749a880e3dd3b0eb57f698aa8f1e1630e1f25" },
   "suda.vim": { "branch": "master", "commit": "9adda7d195222d4e2854efb2a88005a120296c47" },
