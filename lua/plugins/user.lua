@@ -13,7 +13,7 @@ return {
     "catppuccin",
     optional = true,
     opts = {
-      flavour = "mocha",
+      flavour = "latte",
       term_colors = true,
       auto_integrations = false,
       integrations = {
