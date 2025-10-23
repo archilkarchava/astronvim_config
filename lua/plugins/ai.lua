@@ -146,6 +146,8 @@ local keymaps = {
   },
 }
 
+local sidekick_prefix = "<D-a>"
+
 local function get_avante_file_selector_provider() return require("util.picker").picker end
 
 ---@type LazySpec
@@ -311,6 +313,74 @@ return {
             },
           })
         end,
+      },
+    },
+  },
+  {
+    "folke/sidekick.nvim",
+    opts = {},
+    keys = {
+      {
+        keymaps.accept_suggestion.lhs[1],
+        function()
+          -- if there is a next edit, jump to it, otherwise apply it if any
+          if not require("sidekick").nes_jump_or_apply() then
+            return keymaps.accept_suggestion.lhs[1] -- fallback to normal tab
+          end
+        end,
+        expr = true,
+        desc = "Goto/Apply Next Edit Suggestion",
+      },
+      {
+        normalize_keymap "<D-I>",
+        function() require("sidekick.cli").toggle() end,
+        desc = "Sidekick Toggle",
+        mode = { "n", "t", "i", "x" },
+      },
+      {
+        sidekick_prefix .. "a",
+        function() require("sidekick.cli").toggle() end,
+        desc = "Sidekick Toggle CLI",
+      },
+      {
+        sidekick_prefix .. "s",
+        function() require("sidekick.cli").select() end,
+        -- Or to select only installed tools:
+        -- require("sidekick.cli").select({ filter = { installed = true } })
+        desc = "Select CLI",
+      },
+      {
+        sidekick_prefix .. "d",
+        function() require("sidekick.cli").close() end,
+        desc = "Detach a CLI Session",
+      },
+      {
+        sidekick_prefix .. "t",
+        function() require("sidekick.cli").send { msg = "{this}" } end,
+        mode = { "x", "n" },
+        desc = "Send This",
+      },
+      {
+        sidekick_prefix .. "f",
+        function() require("sidekick.cli").send { msg = "{file}" } end,
+        desc = "Send File",
+      },
+      {
+        sidekick_prefix .. "v",
+        function() require("sidekick.cli").send { msg = "{selection}" } end,
+        mode = { "x" },
+        desc = "Send Visual Selection",
+      },
+      {
+        sidekick_prefix .. "p",
+        function() require("sidekick.cli").prompt() end,
+        mode = { "n", "x" },
+        desc = "Sidekick Select Prompt",
+      },
+      {
+        sidekick_prefix .. "g",
+        function() require("sidekick.cli").toggle { name = "gemini", focus = true } end,
+        desc = "Sidekick Toggle Gemini",
       },
     },
   },
