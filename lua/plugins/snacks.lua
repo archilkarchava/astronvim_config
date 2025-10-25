@@ -56,6 +56,11 @@ local plugin_specs = {
           },
         },
       },
+      {
+        "catppuccin",
+        optional = true,
+        opts = { integrations = { snacks = true } },
+      },
       -- Replaced with AstroLsp's file operations
       --[[ {
         "mini.files",
