@@ -2102,7 +2102,8 @@ return {
     "nvim-notify",
     optional = true,
     config = function(_, opts)
-      require("notify").setup(opts)
+      local notify = require "notify"
+      notify.setup(opts)
 
       local banned_messages = { "position_encoding param is required" }
 
@@ -2113,7 +2114,7 @@ return {
             if msg:find(banned, 0, true) then return end
           end
         end
-        require "notify"(msg, ...)
+        notify(msg, ...)
       end
     end,
   },
